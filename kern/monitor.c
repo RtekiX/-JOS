@@ -59,6 +59,19 @@ int
 mon_backtrace(int argc, char **argv, struct Trapframe *tf)
 {
 	// Your code here.
+	uint32_t *ebp = (uint32_t*)read_ebp(); //定义指向当前ebp寄存器的指针,uint32_t因为寄存器存储的值为32位
+	uint32_t *eip = (uint32_t*)*(ebp + 1); //eip在ebp底下，储存返回地址
+	cprintf("Stack backtrace:");
+	while(ebp != NULL){
+		cprintf("ebp %08x  eip %08x", ebp, eip); //打印ebp、eip
+		cprintf("    arg ");
+		for(int i = 0;i < 5;i++){
+			cprintf("%08x ", *(ebp + i + 2));
+		}
+		cprintf("\n");
+		ebp = (uint32_t*)(*ebp); //被调用函数的ebp指向调用它函数ebp值存放的位置
+		eip = (uint32_t*)*(ebp + 1); //eip在ebp底下，储存返回地址
+	}
 	return 0;
 }
 
