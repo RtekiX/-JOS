@@ -163,43 +163,42 @@ static void
 cga_putc(int c)
 {
 	// if no attribute given, then use black on white
-	if (!(c & ~0xFF)) // set color
+	if (!(c & ~0xFF))
 		c |= 0x0700;
 
 	switch (c & 0xff) {
-	case '\b':   //退格
+	case '\b':
 		if (crt_pos > 0) {
 			crt_pos--;
 			crt_buf[crt_pos] = (c & ~0xff) | ' ';
 		}
 		break;
-	case '\n':   //换行
+	case '\n':
 		crt_pos += CRT_COLS;
 		/* fallthru */
-	case '\r':   //将光标位置移到本行开头
+	case '\r':
 		crt_pos -= (crt_pos % CRT_COLS);
 		break;
-	case '\t':   //水平制表TAB
+	case '\t':
 		cons_putc(' ');
 		cons_putc(' ');
 		cons_putc(' ');
 		cons_putc(' ');
 		cons_putc(' ');
 		break;
-	default:   //如果不是转义字符就正常打印，光标位置+1
+	default:
 		crt_buf[crt_pos++] = c;		/* write the character */
 		break;
 	}
 
 	// What is the purpose of this?
-	if (crt_pos >= CRT_SIZE) { //如果光标超出了缓冲区大小，即超出当前屏幕范围
+	if (crt_pos >= CRT_SIZE) {
 		int i;
-        //    缓冲区     缓冲区下一行         缓冲区大小减去一行
-        //把输出缓冲区的第一行移除，把剩下的内容替换当前缓冲区的内容		
+
 		memmove(crt_buf, crt_buf + CRT_COLS, (CRT_SIZE - CRT_COLS) * sizeof(uint16_t));
 		for (i = CRT_SIZE - CRT_COLS; i < CRT_SIZE; i++)
-			crt_buf[i] = 0x0700 | ' '; //将最后一行清空，全部置为' '
-		crt_pos -= CRT_COLS;  //光标移到最后一行的开头
+			crt_buf[i] = 0x0700 | ' ';
+		crt_pos -= CRT_COLS;
 	}
 
 	/* move that little blinky thing */
