@@ -73,7 +73,7 @@ seta20.2:
     7c2a:	0f 22 c0             	mov    %eax,%cr0
   
   # Jump to next instruction, but in 32-bit code segment.
-  # Switches processor into 32-bit mode.，跳转到0x8
+  # Switches processor into 32-bit mode.
   ljmp    $PROT_MODE_CSEG, $protcseg
     7c2d:	ea                   	.byte 0xea
     7c2e:	32 7c 08 00          	xor    0x0(%eax,%ecx,1),%bh

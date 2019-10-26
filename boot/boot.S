@@ -51,7 +51,7 @@ seta20.2:
   movl    %eax, %cr0
   
   # Jump to next instruction, but in 32-bit code segment.
-  # Switches processor into 32-bit mode.，跳转到0x8
+  # Switches processor into 32-bit mode.
   ljmp    $PROT_MODE_CSEG, $protcseg
 
   .code32                     # Assemble for 32-bit mode

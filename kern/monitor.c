@@ -58,7 +58,7 @@ mon_kerninfo(int argc, char **argv, struct Trapframe *tf)
 int
 mon_backtrace(int argc, char **argv, struct Trapframe *tf)
 {
-	// Your code here.
+		// Your code here.
 	uint32_t *ebp = (uint32_t*)read_ebp(); //定义指向当前ebp寄存器的指针,uint32_t因为寄存器存储的值为32位
 	uint32_t *eip = (uint32_t*)*(ebp + 1); //eip在ebp底下，储存返回地址
 	cprintf("Stack backtrace:");
