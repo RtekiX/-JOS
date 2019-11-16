@@ -389,6 +389,7 @@ page_decref(struct PageInfo* pp)
 pte_t *
 pgdir_walk(pde_t *pgdir, const void *va, int create)
 {
+	// Fill this function in
 	/*
 	*一个虚拟地址共32位，最高10位作为页目录索引，11-20位作为页表索引
 	*最后12位为偏移量。通过虚拟地址找到物理页表地址时，首先通过高10位
