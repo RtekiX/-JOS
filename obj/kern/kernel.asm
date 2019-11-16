@@ -1432,7 +1432,11 @@ f01008ce <boot_alloc>:
 	// which points to the end of the kernel's bss segment:
 	// the first virtual address that the linker did *not* assign
 	// to any kernel code or global variables.
+<<<<<<< HEAD
 	if (!nextfree) {//让nextfree指向一个空闲页地址
+=======
+	if (!nextfree) {
+>>>>>>> lab2
 f01008ce:	83 3d 38 65 11 f0 00 	cmpl   $0x0,0xf0116538
 f01008d5:	75 5f                	jne    f0100936 <boot_alloc+0x68>
 		extern char end[];
@@ -1455,9 +1459,15 @@ f01008f8:	81 c1 00 00 0f 00    	add    $0xf0000,%ecx
 f01008fe:	c1 e1 0c             	shl    $0xc,%ecx
 f0100901:	39 ca                	cmp    %ecx,%edx
 f0100903:	76 17                	jbe    f010091c <boot_alloc+0x4e>
+<<<<<<< HEAD
 
 
 //分配足够容纳n字节的内存，返回虚拟地址
+=======
+// If we're out of memory, boot_alloc should panic.
+// This function may ONLY be used during initialization,
+// before the page_free_list list has been set up.
+>>>>>>> lab2
 static void *
 boot_alloc(uint32_t n)
 {
@@ -1469,6 +1479,7 @@ f0100908:	83 ec 0c             	sub    $0xc,%esp
 	// LAB 2: Your code here.
 	if (n > 0) {
 		if ((uint32_t)nextfree > KERNBASE + (npages * PGSIZE)) {
+<<<<<<< HEAD
 			panic("out of memory"); //如果下一个空闲地址超过了内核允许分配的内存边界那么报错
 f010090b:	68 50 3b 10 f0       	push   $0xf0103b50
 f0100910:	6a 6a                	push   $0x6a
@@ -1476,6 +1487,15 @@ f0100912:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0100917:	e8 6f f7 ff ff       	call   f010008b <_panic>
 		} else { //否则将当前nextfree指向的空闲内存的开始地址返回给result             
 			result = nextfree; //并将nextfree的指针后移n，留出n个字节的空间
+=======
+			panic("out of memory"); // If we're out of memory, boot_alloc should panic.
+f010090b:	68 50 3b 10 f0       	push   $0xf0103b50
+f0100910:	6a 67                	push   $0x67
+f0100912:	68 5e 3b 10 f0       	push   $0xf0103b5e
+f0100917:	e8 6f f7 ff ff       	call   f010008b <_panic>
+		} else {               // If n>0, allocates enough pages of contiguous physical memory to hold 'n'
+			result = nextfree; // bytes.  Doesn't initialize the memory.  Returns a kernel virtual address.
+>>>>>>> lab2
 			nextfree = ROUNDUP(nextfree + n, PGSIZE);
 f010091c:	8d 84 02 ff 0f 00 00 	lea    0xfff(%edx,%eax,1),%eax
 f0100923:	25 00 f0 ff ff       	and    $0xfffff000,%eax
@@ -1486,7 +1506,11 @@ f010092f:	c3                   	ret
 		}
 	}
 	if (n == 0) {  
+<<<<<<< HEAD
 		return nextfree;//如果n为0，按照要求直接返回nextfree，不做分配
+=======
+		return nextfree;// If n==0, returns the address of the next free page without allocating anything.
+>>>>>>> lab2
 f0100930:	a1 38 65 11 f0       	mov    0xf0116538,%eax
 f0100935:	c3                   	ret    
 	// Allocate a chunk large enough to hold 'n' bytes, then update
@@ -1536,7 +1560,11 @@ f010095d:	83 ec 08             	sub    $0x8,%esp
 		_panic(file, line, "KADDR called with invalid pa %08lx", pa);
 f0100960:	50                   	push   %eax
 f0100961:	68 68 3e 10 f0       	push   $0xf0103e68
+<<<<<<< HEAD
 f0100966:	68 04 03 00 00       	push   $0x304
+=======
+f0100966:	68 e5 02 00 00       	push   $0x2e5
+>>>>>>> lab2
 f010096b:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0100970:	e8 16 f7 ff ff       	call   f010008b <_panic>
 
@@ -1596,7 +1624,11 @@ f01009b1:	e9 7f 02 00 00       	jmp    f0100c35 <check_page_free_list+0x295>
 		panic("'page_free_list' is a null pointer!");
 f01009b6:	83 ec 04             	sub    $0x4,%esp
 f01009b9:	68 8c 3e 10 f0       	push   $0xf0103e8c
+<<<<<<< HEAD
 f01009be:	68 47 02 00 00       	push   $0x247
+=======
+f01009be:	68 28 02 00 00       	push   $0x228
+>>>>>>> lab2
 f01009c3:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01009c8:	e8 be f6 ff ff       	call   f010008b <_panic>
 
@@ -1746,7 +1778,11 @@ f0100aae:	39 ca                	cmp    %ecx,%edx
 f0100ab0:	73 19                	jae    f0100acb <check_page_free_list+0x12b>
 f0100ab2:	68 78 3b 10 f0       	push   $0xf0103b78
 f0100ab7:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0100abc:	68 61 02 00 00       	push   $0x261
+=======
+f0100abc:	68 42 02 00 00       	push   $0x242
+>>>>>>> lab2
 f0100ac1:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0100ac6:	e8 c0 f5 ff ff       	call   f010008b <_panic>
 		assert(pp < pages + npages);
@@ -1754,7 +1790,11 @@ f0100acb:	39 fa                	cmp    %edi,%edx
 f0100acd:	72 19                	jb     f0100ae8 <check_page_free_list+0x148>
 f0100acf:	68 99 3b 10 f0       	push   $0xf0103b99
 f0100ad4:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0100ad9:	68 62 02 00 00       	push   $0x262
+=======
+f0100ad9:	68 43 02 00 00       	push   $0x243
+>>>>>>> lab2
 f0100ade:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0100ae3:	e8 a3 f5 ff ff       	call   f010008b <_panic>
 		assert(((char *) pp - (char *) pages) % sizeof(*pp) == 0);
@@ -1764,7 +1804,11 @@ f0100aed:	a8 07                	test   $0x7,%al
 f0100aef:	74 19                	je     f0100b0a <check_page_free_list+0x16a>
 f0100af1:	68 b0 3e 10 f0       	push   $0xf0103eb0
 f0100af6:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0100afb:	68 63 02 00 00       	push   $0x263
+=======
+f0100afb:	68 44 02 00 00       	push   $0x244
+>>>>>>> lab2
 f0100b00:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0100b05:	e8 81 f5 ff ff       	call   f010008b <_panic>
 void	tlb_invalidate(pde_t *pgdir, void *va);
@@ -1782,7 +1826,11 @@ f0100b10:	85 c0                	test   %eax,%eax
 f0100b12:	75 19                	jne    f0100b2d <check_page_free_list+0x18d>
 f0100b14:	68 ad 3b 10 f0       	push   $0xf0103bad
 f0100b19:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0100b1e:	68 66 02 00 00       	push   $0x266
+=======
+f0100b1e:	68 47 02 00 00       	push   $0x247
+>>>>>>> lab2
 f0100b23:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0100b28:	e8 5e f5 ff ff       	call   f010008b <_panic>
 		assert(page2pa(pp) != IOPHYSMEM);
@@ -1790,7 +1838,11 @@ f0100b2d:	3d 00 00 0a 00       	cmp    $0xa0000,%eax
 f0100b32:	75 19                	jne    f0100b4d <check_page_free_list+0x1ad>
 f0100b34:	68 be 3b 10 f0       	push   $0xf0103bbe
 f0100b39:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0100b3e:	68 67 02 00 00       	push   $0x267
+=======
+f0100b3e:	68 48 02 00 00       	push   $0x248
+>>>>>>> lab2
 f0100b43:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0100b48:	e8 3e f5 ff ff       	call   f010008b <_panic>
 		assert(page2pa(pp) != EXTPHYSMEM - PGSIZE);
@@ -1798,7 +1850,11 @@ f0100b4d:	3d 00 f0 0f 00       	cmp    $0xff000,%eax
 f0100b52:	75 19                	jne    f0100b6d <check_page_free_list+0x1cd>
 f0100b54:	68 e4 3e 10 f0       	push   $0xf0103ee4
 f0100b59:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0100b5e:	68 68 02 00 00       	push   $0x268
+=======
+f0100b5e:	68 49 02 00 00       	push   $0x249
+>>>>>>> lab2
 f0100b63:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0100b68:	e8 1e f5 ff ff       	call   f010008b <_panic>
 		assert(page2pa(pp) != EXTPHYSMEM);
@@ -1806,7 +1862,11 @@ f0100b6d:	3d 00 00 10 00       	cmp    $0x100000,%eax
 f0100b72:	75 19                	jne    f0100b8d <check_page_free_list+0x1ed>
 f0100b74:	68 d7 3b 10 f0       	push   $0xf0103bd7
 f0100b79:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0100b7e:	68 69 02 00 00       	push   $0x269
+=======
+f0100b7e:	68 4a 02 00 00       	push   $0x24a
+>>>>>>> lab2
 f0100b83:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0100b88:	e8 fe f4 ff ff       	call   f010008b <_panic>
 		assert(page2pa(pp) < EXTPHYSMEM || (char *) page2kva(pp) >= first_free_page);
@@ -1833,7 +1893,11 @@ f0100bb5:	39 45 cc             	cmp    %eax,-0x34(%ebp)
 f0100bb8:	76 1e                	jbe    f0100bd8 <check_page_free_list+0x238>
 f0100bba:	68 08 3f 10 f0       	push   $0xf0103f08
 f0100bbf:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0100bc4:	68 6a 02 00 00       	push   $0x26a
+=======
+f0100bc4:	68 4b 02 00 00       	push   $0x24b
+>>>>>>> lab2
 f0100bc9:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0100bce:	e8 b8 f4 ff ff       	call   f010008b <_panic>
 
@@ -1864,7 +1928,11 @@ f0100be9:	85 f6                	test   %esi,%esi
 f0100beb:	7f 19                	jg     f0100c06 <check_page_free_list+0x266>
 f0100bed:	68 f1 3b 10 f0       	push   $0xf0103bf1
 f0100bf2:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0100bf7:	68 72 02 00 00       	push   $0x272
+=======
+f0100bf7:	68 53 02 00 00       	push   $0x253
+>>>>>>> lab2
 f0100bfc:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0100c01:	e8 85 f4 ff ff       	call   f010008b <_panic>
 	assert(nfree_extmem > 0);
@@ -1872,7 +1940,11 @@ f0100c06:	85 db                	test   %ebx,%ebx
 f0100c08:	7f 42                	jg     f0100c4c <check_page_free_list+0x2ac>
 f0100c0a:	68 03 3c 10 f0       	push   $0xf0103c03
 f0100c0f:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0100c14:	68 73 02 00 00       	push   $0x273
+=======
+f0100c14:	68 54 02 00 00       	push   $0x254
+>>>>>>> lab2
 f0100c19:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0100c1e:	e8 68 f4 ff ff       	call   f010008b <_panic>
 	struct PageInfo *pp;
@@ -1909,10 +1981,17 @@ f0100c52:	5d                   	pop    %ebp
 f0100c53:	c3                   	ret    
 
 f0100c54 <page_init>:
+<<<<<<< HEAD
 // memory via the page_free_list.
 //
 
 void //初始化页结构，将所有的页表项PageInfo与4K大小的页映射。
+=======
+// allocator functions below to allocate and deallocate physical
+// memory via the page_free_list.
+//
+void
+>>>>>>> lab2
 page_init(void)
 {
 f0100c54:	55                   	push   %ebp
@@ -1930,16 +2009,27 @@ f0100c5a:	83 ec 1c             	sub    $0x1c,%esp
 f0100c5d:	b8 00 00 00 00       	mov    $0x0,%eax
 f0100c62:	e8 67 fc ff ff       	call   f01008ce <boot_alloc>
 	for (i = 0; i < npages; i++) {
+<<<<<<< HEAD
 		if(i == 0) { //首先将物理页0设置为正在使用
+=======
+		if(i == 0) {
+>>>>>>> lab2
 			pages[i].pp_ref = 1; //page 0 in use
 			pages[i].pp_link = NULL;
 		} else if(i < npages_basemem) {//0x00000~0xA0000
 f0100c67:	8b 35 40 65 11 f0    	mov    0xf0116540,%esi
 f0100c6d:	8b 1d 3c 65 11 f0    	mov    0xf011653c,%ebx
+<<<<<<< HEAD
             page_free_list = &pages[i];//page_free_list指向当前页的地址
 		} else if(i >= IOPHYSMEM/PGSIZE && i < EXTPHYSMEM/PGSIZE) { //0xA0000~0x100000
 		//Then comes the IO hole [IOPHYSMEM, EXTPHYSMEM), which must never be allocated.
 	    //用于IO的物理内存是不能被分配的，设置为在用
+=======
+            page_free_list = &pages[i];
+		} else if(i >= IOPHYSMEM/PGSIZE && i < EXTPHYSMEM/PGSIZE) { //0xA0000~0x100000
+		//  3) Then comes the IO hole [IOPHYSMEM, EXTPHYSMEM), which must
+	    //     never be allocated.
+>>>>>>> lab2
 			pages[i].pp_ref = 1; 
 		} else  if (i >= IOPHYSMEM / PGSIZE && i < (nextfree - KERNBASE)/ PGSIZE) { //0xF0000000
 f0100c73:	05 00 00 00 10       	add    $0x10000000,%eax
@@ -1955,7 +2045,11 @@ f0100c7e:	ba 00 00 00 00       	mov    $0x0,%edx
 f0100c83:	bf 00 00 00 00       	mov    $0x0,%edi
 f0100c88:	b8 00 00 00 00       	mov    $0x0,%eax
 f0100c8d:	e9 9a 00 00 00       	jmp    f0100d2c <page_init+0xd8>
+<<<<<<< HEAD
 		if(i == 0) { //首先将物理页0设置为正在使用
+=======
+		if(i == 0) {
+>>>>>>> lab2
 f0100c92:	85 c0                	test   %eax,%eax
 f0100c94:	75 14                	jne    f0100caa <page_init+0x56>
 			pages[i].pp_ref = 1; //page 0 in use
@@ -1967,6 +2061,7 @@ f0100ca8:	eb 7c                	jmp    f0100d26 <page_init+0xd2>
 		} else if(i < npages_basemem) {//0x00000~0xA0000
 f0100caa:	39 f0                	cmp    %esi,%eax
 f0100cac:	73 1f                	jae    f0100ccd <page_init+0x79>
+<<<<<<< HEAD
 			//The rest of base memory, [PGSIZE, npages_basemem * PGSIZE)is free.
 	        //从第一页到第npage页是可以使用的     
 			pages[i].pp_ref = 0; //将此页设置为可用
@@ -1976,6 +2071,17 @@ f0100cb6:	66 c7 41 04 00 00    	movw   $0x0,0x4(%ecx)
             pages[i].pp_link = page_free_list;//将此页与当前page_free_list指向的空闲页映射
 f0100cbc:	89 19                	mov    %ebx,(%ecx)
             page_free_list = &pages[i];//page_free_list指向当前页的地址
+=======
+			//  2) The rest of base memory, [PGSIZE, npages_basemem * PGSIZE)
+	        //     is free.
+			pages[i].pp_ref = 0;
+f0100cae:	89 d1                	mov    %edx,%ecx
+f0100cb0:	03 0d 6c 69 11 f0    	add    0xf011696c,%ecx
+f0100cb6:	66 c7 41 04 00 00    	movw   $0x0,0x4(%ecx)
+            pages[i].pp_link = page_free_list;
+f0100cbc:	89 19                	mov    %ebx,(%ecx)
+            page_free_list = &pages[i];
+>>>>>>> lab2
 f0100cbe:	89 d3                	mov    %edx,%ebx
 f0100cc0:	03 1d 6c 69 11 f0    	add    0xf011696c,%ebx
 f0100cc6:	bf 01 00 00 00       	mov    $0x1,%edi
@@ -1984,8 +2090,13 @@ f0100ccb:	eb 59                	jmp    f0100d26 <page_init+0xd2>
 f0100ccd:	8d 88 60 ff ff ff    	lea    -0xa0(%eax),%ecx
 f0100cd3:	83 f9 5f             	cmp    $0x5f,%ecx
 f0100cd6:	77 0f                	ja     f0100ce7 <page_init+0x93>
+<<<<<<< HEAD
 		//Then comes the IO hole [IOPHYSMEM, EXTPHYSMEM), which must never be allocated.
 	    //用于IO的物理内存是不能被分配的，设置为在用
+=======
+		//  3) Then comes the IO hole [IOPHYSMEM, EXTPHYSMEM), which must
+	    //     never be allocated.
+>>>>>>> lab2
 			pages[i].pp_ref = 1; 
 f0100cd8:	8b 0d 6c 69 11 f0    	mov    0xf011696c,%ecx
 f0100cde:	66 c7 44 11 04 01 00 	movw   $0x1,0x4(%ecx,%edx,1)
@@ -1995,8 +2106,11 @@ f0100ce7:	3d 9f 00 00 00       	cmp    $0x9f,%eax
 f0100cec:	76 1b                	jbe    f0100d09 <page_init+0xb5>
 f0100cee:	3b 45 e4             	cmp    -0x1c(%ebp),%eax
 f0100cf1:	73 16                	jae    f0100d09 <page_init+0xb5>
+<<<<<<< HEAD
 		//从IOPHYSMEM开始有一部分内存是被使用的，用于保存kernel，这一部分不能被分配
 		//直到nextfree开头
+=======
+>>>>>>> lab2
             pages[i].pp_ref = 1;
 f0100cf3:	89 d1                	mov    %edx,%ecx
 f0100cf5:	03 0d 6c 69 11 f0    	add    0xf011696c,%ecx
@@ -2005,7 +2119,10 @@ f0100cfb:	66 c7 41 04 01 00    	movw   $0x1,0x4(%ecx)
 f0100d01:	c7 01 00 00 00 00    	movl   $0x0,(%ecx)
 f0100d07:	eb 1d                	jmp    f0100d26 <page_init+0xd2>
         } else {
+<<<<<<< HEAD
 		//其余的部分可以被分配
+=======
+>>>>>>> lab2
 			pages[i].pp_ref = 0;
 f0100d09:	89 d1                	mov    %edx,%ecx
 f0100d0b:	03 0d 6c 69 11 f0    	add    0xf011696c,%ecx
@@ -2047,7 +2164,11 @@ f0100d4c <page_alloc>:
 // Returns NULL if out of free memory.
 //
 // Hint: use page2kva and memset
+<<<<<<< HEAD
 struct PageInfo * //分配一个物理页，返回物理页的指针
+=======
+struct PageInfo *
+>>>>>>> lab2
 page_alloc(int alloc_flags)
 {
 f0100d4c:	55                   	push   %ebp
@@ -2056,6 +2177,7 @@ f0100d4f:	53                   	push   %ebx
 f0100d50:	83 ec 04             	sub    $0x4,%esp
 	// Fill this function in
 	struct PageInfo *NewPage;
+<<<<<<< HEAD
 	if(page_free_list == NULL) { //如果page_free_list没有空闲内存了
 f0100d53:	8b 1d 3c 65 11 f0    	mov    0xf011653c,%ebx
 f0100d59:	85 db                	test   %ebx,%ebx
@@ -2064,14 +2186,27 @@ f0100d5b:	74 58                	je     f0100db5 <page_alloc+0x69>
 	}
 	NewPage = page_free_list; //从page_free_list分配一个空闲的物理页
 	page_free_list = page_free_list->pp_link; //将page_free_list指向下一张空闲的页
+=======
+	if(page_free_list == NULL) {
+f0100d53:	8b 1d 3c 65 11 f0    	mov    0xf011653c,%ebx
+f0100d59:	85 db                	test   %ebx,%ebx
+f0100d5b:	74 58                	je     f0100db5 <page_alloc+0x69>
+		return NULL;
+	}
+	NewPage = page_free_list; //分配新的物理页
+	page_free_list = page_free_list->pp_link;
+>>>>>>> lab2
 f0100d5d:	8b 03                	mov    (%ebx),%eax
 f0100d5f:	a3 3c 65 11 f0       	mov    %eax,0xf011653c
 	NewPage->pp_link = NULL;
 f0100d64:	c7 03 00 00 00 00    	movl   $0x0,(%ebx)
 // Allocates a physical page.  If (alloc_flags & ALLOC_ZERO), fills the entire
 // returned physical page with '\0' bytes.  Does NOT increment the reference
+<<<<<<< HEAD
 //分配一个物理页，如果alloc_flags和ALLOC_ZERO均为真，将这个物理页清为0
 //不增加reference数
+=======
+>>>>>>> lab2
 	if (alloc_flags & ALLOC_ZERO) {
 f0100d6a:	f6 45 08 01          	testb  $0x1,0x8(%ebp)
 f0100d6e:	74 45                	je     f0100db5 <page_alloc+0x69>
@@ -2110,8 +2245,13 @@ f0100dac:	50                   	push   %eax
 f0100dad:	e8 33 24 00 00       	call   f01031e5 <memset>
 f0100db2:	83 c4 10             	add    $0x10,%esp
 	}
+<<<<<<< HEAD
 	//page2kva根据当前的struct PageInfo类型的指针得出相应的虚拟地址
 	return NewPage; //返回分配的物理页
+=======
+	//page2kva是根据当前的struct PageInfo类型的指针得出相应的虚拟地址
+	return NewPage;
+>>>>>>> lab2
 }
 f0100db5:	89 d8                	mov    %ebx,%eax
 f0100db7:	8b 5d fc             	mov    -0x4(%ebp),%ebx
@@ -2122,7 +2262,11 @@ f0100dbc <page_free>:
 // Return a page to the free list.
 // (This function should only be called when pp->pp_ref reaches 0.)
 //
+<<<<<<< HEAD
 void //释放一个页，让其返回到空闲页链表中
+=======
+void
+>>>>>>> lab2
 page_free(struct PageInfo *pp)
 {
 f0100dbc:	55                   	push   %ebp
@@ -2132,14 +2276,21 @@ f0100dc2:	8b 45 08             	mov    0x8(%ebp),%eax
 	// Fill this function in
 	// Hint: You may want to panic if pp->pp_ref is nonzero or
 	// pp->pp_link is not NULL.
+<<<<<<< HEAD
 	//如果参数中指向的页reference数不为0或它还连接了一张物理页
 	//那么释放失败，此函数只能在pp->ref为0时被调用
+=======
+>>>>>>> lab2
 	assert(pp->pp_ref == 0); //if not, panic
 f0100dc5:	66 83 78 04 00       	cmpw   $0x0,0x4(%eax)
 f0100dca:	74 19                	je     f0100de5 <page_free+0x29>
 f0100dcc:	68 14 3c 10 f0       	push   $0xf0103c14
 f0100dd1:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0100dd6:	68 5c 01 00 00       	push   $0x15c
+=======
+f0100dd6:	68 4e 01 00 00       	push   $0x14e
+>>>>>>> lab2
 f0100ddb:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0100de0:	e8 a6 f2 ff ff       	call   f010008b <_panic>
 	assert(pp->pp_link == NULL);//if not, panic
@@ -2147,10 +2298,16 @@ f0100de5:	83 38 00             	cmpl   $0x0,(%eax)
 f0100de8:	74 19                	je     f0100e03 <page_free+0x47>
 f0100dea:	68 24 3c 10 f0       	push   $0xf0103c24
 f0100def:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0100df4:	68 5d 01 00 00       	push   $0x15d
 f0100df9:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0100dfe:	e8 88 f2 ff ff       	call   f010008b <_panic>
 	//将这个page的指针指向pagefreelist，把这张页还给page_free_list
+=======
+f0100df4:	68 4f 01 00 00       	push   $0x14f
+f0100df9:	68 5e 3b 10 f0       	push   $0xf0103b5e
+f0100dfe:	e8 88 f2 ff ff       	call   f010008b <_panic>
+>>>>>>> lab2
 	pp->pp_link = page_free_list;// Return a page to the free list.
 f0100e03:	8b 15 3c 65 11 f0    	mov    0xf011653c,%edx
 f0100e09:	89 10                	mov    %edx,(%eax)
@@ -2187,10 +2344,17 @@ f0100e37:	c9                   	leave
 f0100e38:	c3                   	ret    
 
 f0100e39 <pgdir_walk>:
+<<<<<<< HEAD
 // table and page directory entries.
 //
 //pgdir是页目录，里面的每一个元素都指向一个页表物理地址
 pte_t *
+=======
+// Hint 3: look at inc/mmu.h for useful macros that mainipulate page
+// table and page directory entries.
+//
+pte_t *  //pgdir是页目录，里面元素指向页表，该函数返回page table entry页表入口
+>>>>>>> lab2
 pgdir_walk(pde_t *pgdir, const void *va, int create)
 {
 f0100e39:	55                   	push   %ebp
@@ -2198,6 +2362,7 @@ f0100e3a:	89 e5                	mov    %esp,%ebp
 f0100e3c:	56                   	push   %esi
 f0100e3d:	53                   	push   %ebx
 f0100e3e:	8b 45 0c             	mov    0xc(%ebp),%eax
+<<<<<<< HEAD
 	*确定页目录，然后根据中间10位的页表索引在对应的页目录里找到页表
 	*对应的物理地址，最后物理地址加上偏移量便找到了虚拟地址对应的物理地址
 	*pgdir_walk根据pgdir和虚拟地址va获得虚拟地址va所在的页表项的物理地址
@@ -2208,14 +2373,27 @@ f0100e41:	89 c6                	mov    %eax,%esi
 f0100e43:	c1 ee 0c             	shr    $0xc,%esi
 f0100e46:	81 e6 ff 03 00 00    	and    $0x3ff,%esi
     if (pgdir[pd_index] & PTE_P) {  //如果页目录存在且具有操作权限
+=======
+	// Fill this function in
+	int pd_index = PDX(va); //PDX根据虚拟地址找到页目录索引
+    int pte_index = PTX(va);//PTX根据虚拟地址找到页表索引
+f0100e41:	89 c6                	mov    %eax,%esi
+f0100e43:	c1 ee 0c             	shr    $0xc,%esi
+f0100e46:	81 e6 ff 03 00 00    	and    $0x3ff,%esi
+    if (pgdir[pd_index] & PTE_P) {  //if exist page
+>>>>>>> lab2
 f0100e4c:	c1 e8 16             	shr    $0x16,%eax
 f0100e4f:	8d 1c 85 00 00 00 00 	lea    0x0(,%eax,4),%ebx
 f0100e56:	03 5d 08             	add    0x8(%ebp),%ebx
 f0100e59:	8b 03                	mov    (%ebx),%eax
 f0100e5b:	a8 01                	test   $0x1,%al
 f0100e5d:	74 30                	je     f0100e8f <pgdir_walk+0x56>
+<<<<<<< HEAD
 		//那么获得该页目录的物理地址，再转化为虚拟地址
 		//PTE_ADDR得到页目录的物理地址，KADDR将物理地址转换为虚拟地址
+=======
+		//PTE_ADDR得到页表的物理地址，KADDR将物理地址转换为虚拟地址
+>>>>>>> lab2
         pte_t *pt_addr_v = KADDR(PTE_ADDR(pgdir[pd_index]));
 f0100e5f:	25 00 f0 ff ff       	and    $0xfffff000,%eax
 #define KADDR(pa) _kaddr(__FILE__, __LINE__, pa)
@@ -2231,6 +2409,7 @@ f0100e6f:	77 15                	ja     f0100e86 <pgdir_walk+0x4d>
 		_panic(file, line, "KADDR called with invalid pa %08lx", pa);
 f0100e71:	50                   	push   %eax
 f0100e72:	68 68 3e 10 f0       	push   $0xf0103e68
+<<<<<<< HEAD
 f0100e77:	68 94 01 00 00       	push   $0x194
 f0100e7c:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0100e81:	e8 05 f2 ff ff       	call   f010008b <_panic>
@@ -2243,6 +2422,19 @@ f0100e8d:	eb 6b                	jmp    f0100efa <pgdir_walk+0xc1>
 f0100e8f:	83 7d 10 00          	cmpl   $0x0,0x10(%ebp)
 f0100e93:	74 59                	je     f0100eee <pgdir_walk+0xb5>
 			struct PageInfo *NewPt = page_alloc(ALLOC_ZERO); //那么分配一张新页
+=======
+f0100e77:	68 7d 01 00 00       	push   $0x17d
+f0100e7c:	68 5e 3b 10 f0       	push   $0xf0103b5e
+f0100e81:	e8 05 f2 ff ff       	call   f010008b <_panic>
+        return (pte_t*)(pt_addr_v + pte_index); //PTX根据虚拟地址找到页表索引
+f0100e86:	8d 84 b0 00 00 00 f0 	lea    -0x10000000(%eax,%esi,4),%eax
+f0100e8d:	eb 6b                	jmp    f0100efa <pgdir_walk+0xc1>
+    } else {            //if not exist page
+        if (create) {
+f0100e8f:	83 7d 10 00          	cmpl   $0x0,0x10(%ebp)
+f0100e93:	74 59                	je     f0100eee <pgdir_walk+0xb5>
+			struct PageInfo *NewPt = page_alloc(ALLOC_ZERO); //创建新页表
+>>>>>>> lab2
 f0100e95:	83 ec 0c             	sub    $0xc,%esp
 f0100e98:	6a 01                	push   $0x1
 f0100e9a:	e8 ad fe ff ff       	call   f0100d4c <page_alloc>
@@ -2262,9 +2454,14 @@ page2pa(struct PageInfo *pp)
 f0100eab:	2b 05 6c 69 11 f0    	sub    0xf011696c,%eax
 f0100eb1:	c1 f8 03             	sar    $0x3,%eax
 f0100eb4:	c1 e0 0c             	shl    $0xc,%eax
+<<<<<<< HEAD
 			//page2pa将一个页表指针转换为物理地址
 			//将虚拟地址va的页目录基地址与新页表的物理地址关联并设置权限位
             pgdir[pd_index] = page2pa(NewPt)|PTE_U|PTE_W|PTE_P; 
+=======
+			//将页转换为物理地址并设定权限
+            pgdir[pd_index] = page2pa(NewPt)|PTE_U|PTE_W|PTE_P; //
+>>>>>>> lab2
 f0100eb7:	89 c2                	mov    %eax,%edx
 f0100eb9:	83 ca 07             	or     $0x7,%edx
 f0100ebc:	89 13                	mov    %edx,(%ebx)
@@ -2282,10 +2479,16 @@ f0100ece:	72 15                	jb     f0100ee5 <pgdir_walk+0xac>
 		_panic(file, line, "KADDR called with invalid pa %08lx", pa);
 f0100ed0:	50                   	push   %eax
 f0100ed1:	68 68 3e 10 f0       	push   $0xf0103e68
+<<<<<<< HEAD
 f0100ed6:	68 a1 01 00 00       	push   $0x1a1
 f0100edb:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0100ee0:	e8 a6 f1 ff ff       	call   f010008b <_panic>
 			//最后根据页目录的虚拟地址和页表索引找到va对应的页表项物理地址
+=======
+f0100ed6:	68 87 01 00 00       	push   $0x187
+f0100edb:	68 5e 3b 10 f0       	push   $0xf0103b5e
+f0100ee0:	e8 a6 f1 ff ff       	call   f010008b <_panic>
+>>>>>>> lab2
             pte_t *pt_addr_v = KADDR(PTE_ADDR(pgdir[pd_index]));
             return (pte_t*)(pt_addr_v + pte_index);
 f0100ee5:	8d 84 b0 00 00 00 f0 	lea    -0x10000000(%eax,%esi,4),%eax
@@ -2293,6 +2496,7 @@ f0100eec:	eb 0c                	jmp    f0100efa <pgdir_walk+0xc1>
         } else return NULL;
 f0100eee:	b8 00 00 00 00       	mov    $0x0,%eax
 f0100ef3:	eb 05                	jmp    f0100efa <pgdir_walk+0xc1>
+<<<<<<< HEAD
         return (pte_t*)(pt_addr_v + pte_index);
     } else {            //if not exist page
         if (create) {//如果不存在该页并允许新建
@@ -2301,6 +2505,16 @@ f0100ef3:	eb 05                	jmp    f0100efa <pgdir_walk+0xc1>
 				return NULL;
 f0100ef5:	b8 00 00 00 00       	mov    $0x0,%eax
 			//最后根据页目录的虚拟地址和页表索引找到va对应的页表项物理地址
+=======
+        return (pte_t*)(pt_addr_v + pte_index); //PTX根据虚拟地址找到页表索引
+    } else {            //if not exist page
+        if (create) {
+			struct PageInfo *NewPt = page_alloc(ALLOC_ZERO); //创建新页表
+			if(NewPt == NULL)
+				return NULL;
+f0100ef5:	b8 00 00 00 00       	mov    $0x0,%eax
+            pgdir[pd_index] = page2pa(NewPt)|PTE_U|PTE_W|PTE_P; //
+>>>>>>> lab2
             pte_t *pt_addr_v = KADDR(PTE_ADDR(pgdir[pd_index]));
             return (pte_t*)(pt_addr_v + pte_index);
         } else return NULL;
@@ -2313,9 +2527,15 @@ f0100eff:	5d                   	pop    %ebp
 f0100f00:	c3                   	ret    
 
 f0100f01 <boot_map_region>:
+<<<<<<< HEAD
 //
 // Hint: the TA solution uses pgdir_walk
 
+=======
+// mapped pages.
+//
+// Hint: the TA solution uses pgdir_walk
+>>>>>>> lab2
 static void
 boot_map_region(pde_t *pgdir, uintptr_t va, size_t size, physaddr_t pa, int perm)
 {
@@ -2326,8 +2546,12 @@ f0100f05:	56                   	push   %esi
 f0100f06:	53                   	push   %ebx
 f0100f07:	83 ec 1c             	sub    $0x1c,%esp
 f0100f0a:	89 45 e0             	mov    %eax,-0x20(%ebp)
+<<<<<<< HEAD
 	//boot_map_region将虚拟地址[va, va+size)映射到物理地址[pa, pa+size)
 	//函数参数依次为页目录，虚拟地址起始，映射的大小，物理地址起始，权限位
+=======
+	// 将虚拟地址[va, va+size)映射到物理地址[pa, pa+size)
+>>>>>>> lab2
 	// Fill this function in
     size = ROUNDUP(size, PGSIZE);
 f0100f0d:	81 c1 ff 0f 00 00    	add    $0xfff,%ecx
@@ -2337,36 +2561,58 @@ f0100f16:	89 4d e4             	mov    %ecx,-0x1c(%ebp)
     for (size_t i = 0; i < page_num; i++) {
 f0100f19:	89 d3                	mov    %edx,%ebx
 f0100f1b:	be 00 00 00 00       	mov    $0x0,%esi
+<<<<<<< HEAD
 		//利用pgdir_walk函数找到虚拟地址对应的页表项物理地址
         pte_t *pgtable_entry_ptr = pgdir_walk(pgdir, (char *)(va + i * PGSIZE), true);
 		//将找到的物理页表设置物理地址中的起始位置和权限
+=======
+
+        pte_t *pgtable_entry_ptr = pgdir_walk(pgdir, (char *)(va + i * PGSIZE), true);
+>>>>>>> lab2
         *pgtable_entry_ptr = (pa + i * PGSIZE) | perm | PTE_P;
 f0100f20:	8b 7d 08             	mov    0x8(%ebp),%edi
 f0100f23:	29 d7                	sub    %edx,%edi
 f0100f25:	8b 45 0c             	mov    0xc(%ebp),%eax
 f0100f28:	83 c8 01             	or     $0x1,%eax
 f0100f2b:	89 45 dc             	mov    %eax,-0x24(%ebp)
+<<<<<<< HEAD
 	//boot_map_region将虚拟地址[va, va+size)映射到物理地址[pa, pa+size)
 	//函数参数依次为页目录，虚拟地址起始，映射的大小，物理地址起始，权限位
+=======
+{
+	// 将虚拟地址[va, va+size)映射到物理地址[pa, pa+size)
+>>>>>>> lab2
 	// Fill this function in
     size = ROUNDUP(size, PGSIZE);
     size_t page_num = PGNUM(size);
     for (size_t i = 0; i < page_num; i++) {
 f0100f2e:	eb 22                	jmp    f0100f52 <boot_map_region+0x51>
+<<<<<<< HEAD
 		//利用pgdir_walk函数找到虚拟地址对应的页表项物理地址
+=======
+
+>>>>>>> lab2
         pte_t *pgtable_entry_ptr = pgdir_walk(pgdir, (char *)(va + i * PGSIZE), true);
 f0100f30:	83 ec 04             	sub    $0x4,%esp
 f0100f33:	6a 01                	push   $0x1
 f0100f35:	53                   	push   %ebx
 f0100f36:	ff 75 e0             	pushl  -0x20(%ebp)
 f0100f39:	e8 fb fe ff ff       	call   f0100e39 <pgdir_walk>
+<<<<<<< HEAD
 		//将找到的物理页表设置物理地址中的起始位置和权限
+=======
+>>>>>>> lab2
         *pgtable_entry_ptr = (pa + i * PGSIZE) | perm | PTE_P;
 f0100f3e:	8d 14 1f             	lea    (%edi,%ebx,1),%edx
 f0100f41:	0b 55 dc             	or     -0x24(%ebp),%edx
 f0100f44:	89 10                	mov    %edx,(%eax)
+<<<<<<< HEAD
 	//boot_map_region将虚拟地址[va, va+size)映射到物理地址[pa, pa+size)
 	//函数参数依次为页目录，虚拟地址起始，映射的大小，物理地址起始，权限位
+=======
+{
+	// 将虚拟地址[va, va+size)映射到物理地址[pa, pa+size)
+>>>>>>> lab2
 	// Fill this function in
     size = ROUNDUP(size, PGSIZE);
     size_t page_num = PGNUM(size);
@@ -2376,9 +2622,14 @@ f0100f49:	81 c3 00 10 00 00    	add    $0x1000,%ebx
 f0100f4f:	83 c4 10             	add    $0x10,%esp
 f0100f52:	3b 75 e4             	cmp    -0x1c(%ebp),%esi
 f0100f55:	75 d9                	jne    f0100f30 <boot_map_region+0x2f>
+<<<<<<< HEAD
 		//利用pgdir_walk函数找到虚拟地址对应的页表项物理地址
         pte_t *pgtable_entry_ptr = pgdir_walk(pgdir, (char *)(va + i * PGSIZE), true);
 		//将找到的物理页表设置物理地址中的起始位置和权限
+=======
+
+        pte_t *pgtable_entry_ptr = pgdir_walk(pgdir, (char *)(va + i * PGSIZE), true);
+>>>>>>> lab2
         *pgtable_entry_ptr = (pa + i * PGSIZE) | perm | PTE_P;
     }
 }
@@ -2393,7 +2644,11 @@ f0100f5f <page_lookup>:
 //
 // Hint: the TA solution uses pgdir_walk and pa2page.
 //
+<<<<<<< HEAD
 struct PageInfo * //返回虚拟地址va对应的物理页
+=======
+struct PageInfo * //返回虚拟地址va的页
+>>>>>>> lab2
 page_lookup(pde_t *pgdir, void *va, pte_t **pte_store)
 {
 f0100f5f:	55                   	push   %ebp
@@ -2402,7 +2657,10 @@ f0100f62:	53                   	push   %ebx
 f0100f63:	83 ec 08             	sub    $0x8,%esp
 f0100f66:	8b 5d 10             	mov    0x10(%ebp),%ebx
 	// Fill this function in
+<<<<<<< HEAD
 	//首先用pgdir_walk寻找是否存在对应的物理页
+=======
+>>>>>>> lab2
 	pte_t *pte = pgdir_walk(pgdir, va, 0);//如果不存在不创建新页表
 f0100f69:	6a 00                	push   $0x0
 f0100f6b:	ff 75 0c             	pushl  0xc(%ebp)
@@ -2416,7 +2674,11 @@ f0100f7b:	74 32                	je     f0100faf <page_lookup+0x50>
 	} else if(pte_store != 0){
 f0100f7d:	85 db                	test   %ebx,%ebx
 f0100f7f:	74 02                	je     f0100f83 <page_lookup+0x24>
+<<<<<<< HEAD
 		*pte_store = pte; //如果pte_store不为0，那么储存这个页的地址
+=======
+		*pte_store = pte; //如果pte_store不为0就将pte这一页存在这个地址中
+>>>>>>> lab2
 f0100f81:	89 03                	mov    %eax,(%ebx)
 }
 
@@ -2438,21 +2700,37 @@ f0100f9f:	e8 e7 f0 ff ff       	call   f010008b <_panic>
 f0100fa4:	8b 15 6c 69 11 f0    	mov    0xf011696c,%edx
 f0100faa:	8d 04 c2             	lea    (%edx,%eax,8),%eax
 	}
+<<<<<<< HEAD
 	//PTE_ADDR得到页表的物理地址，pa2page将物理地址转为物理页指针
 	return pa2page(PTE_ADDR(*pte));
 f0100fad:	eb 05                	jmp    f0100fb4 <page_lookup+0x55>
 {
 	// Fill this function in
 	//首先用pgdir_walk寻找是否存在对应的物理页
+=======
+	//PTE_ADDR得到页表的物理地址
+	return pa2page(PTE_ADDR(*pte));//物理地址向pageinfo转换
+f0100fad:	eb 05                	jmp    f0100fb4 <page_lookup+0x55>
+page_lookup(pde_t *pgdir, void *va, pte_t **pte_store)
+{
+	// Fill this function in
+>>>>>>> lab2
 	pte_t *pte = pgdir_walk(pgdir, va, 0);//如果不存在不创建新页表
 	if(pte == NULL) { //不存在则返回NULL
 		return NULL;
 f0100faf:	b8 00 00 00 00       	mov    $0x0,%eax
 	} else if(pte_store != 0){
+<<<<<<< HEAD
 		*pte_store = pte; //如果pte_store不为0，那么储存这个页的地址
 	}
 	//PTE_ADDR得到页表的物理地址，pa2page将物理地址转为物理页指针
 	return pa2page(PTE_ADDR(*pte));
+=======
+		*pte_store = pte; //如果pte_store不为0就将pte这一页存在这个地址中
+	}
+	//PTE_ADDR得到页表的物理地址
+	return pa2page(PTE_ADDR(*pte));//物理地址向pageinfo转换
+>>>>>>> lab2
 }
 f0100fb4:	8b 5d fc             	mov    -0x4(%ebp),%ebx
 f0100fb7:	c9                   	leave  
@@ -2472,8 +2750,12 @@ f0100fbd:	83 ec 18             	sub    $0x18,%esp
 f0100fc0:	8b 5d 0c             	mov    0xc(%ebp),%ebx
 	// Fill this function in
 	pte_t *pte;
+<<<<<<< HEAD
 	//找到va关联的页表
 	struct PageInfo *Fpage = page_lookup(pgdir, va, &pte);
+=======
+	struct PageInfo *Fpage = page_lookup(pgdir, va, &pte);//寻找va对应的页表并与pte关联
+>>>>>>> lab2
 f0100fc3:	8d 45 f4             	lea    -0xc(%ebp),%eax
 f0100fc6:	50                   	push   %eax
 f0100fc7:	53                   	push   %ebx
@@ -2489,7 +2771,11 @@ f0100fd5:	74 18                	je     f0100fef <page_remove+0x36>
 f0100fd7:	83 ec 0c             	sub    $0xc,%esp
 f0100fda:	50                   	push   %eax
 f0100fdb:	e8 32 fe ff ff       	call   f0100e12 <page_decref>
+<<<<<<< HEAD
 	*pte = 0; //并且移除映射
+=======
+	*pte = 0; 
+>>>>>>> lab2
 f0100fe0:	8b 45 f4             	mov    -0xc(%ebp),%eax
 f0100fe3:	c7 00 00 00 00 00    	movl   $0x0,(%eax)
 }
@@ -2522,23 +2808,39 @@ f0100ffa:	83 ec 10             	sub    $0x10,%esp
 f0100ffd:	8b 75 08             	mov    0x8(%ebp),%esi
 f0101000:	8b 5d 0c             	mov    0xc(%ebp),%ebx
 	// Fill this function in
+<<<<<<< HEAD
     pte_t *pte = pgdir_walk(pgdir, va, 1);//首先利用pgdir_walk找到va的物理页地址
+=======
+    pte_t *pte = pgdir_walk(pgdir, va, 1);
+>>>>>>> lab2
 f0101003:	6a 01                	push   $0x1
 f0101005:	ff 75 10             	pushl  0x10(%ebp)
 f0101008:	56                   	push   %esi
 f0101009:	e8 2b fe ff ff       	call   f0100e39 <pgdir_walk>
+<<<<<<< HEAD
     if (pte == NULL) { //如果没找到，那么建立映射失败
+=======
+    if (pte == NULL) { //如果页表无法被初始化，则插入失败，outofmemory
+>>>>>>> lab2
 f010100e:	83 c4 10             	add    $0x10,%esp
 f0101011:	85 c0                	test   %eax,%eax
 f0101013:	74 6b                	je     f0101080 <page_insert+0x8c>
 f0101015:	89 c7                	mov    %eax,%edi
+<<<<<<< HEAD
         return -E_NO_MEM;//页表无法被分配
+=======
+        return -E_NO_MEM;
+>>>>>>> lab2
     }  
     if (*pte & PTE_P) { //如果pte存在
 f0101017:	8b 00                	mov    (%eax),%eax
 f0101019:	a8 01                	test   $0x1,%al
 f010101b:	74 33                	je     f0101050 <page_insert+0x5c>
+<<<<<<< HEAD
         if (PTE_ADDR(*pte) == page2pa(pp)) { //且物理页表的地址与pp的物理地址相同
+=======
+        if (PTE_ADDR(*pte) == page2pa(pp)) { //且pte对应的物理地址就是pp的物理地址
+>>>>>>> lab2
 f010101d:	25 00 f0 ff ff       	and    $0xfffff000,%eax
 f0101022:	89 da                	mov    %ebx,%edx
 f0101024:	2b 15 6c 69 11 f0    	sub    0xf011696c,%edx
@@ -2548,13 +2850,22 @@ f0101030:	39 d0                	cmp    %edx,%eax
 f0101032:	75 0d                	jne    f0101041 <page_insert+0x4d>
 f0101034:	8b 45 10             	mov    0x10(%ebp),%eax
 f0101037:	0f 01 38             	invlpg (%eax)
+<<<<<<< HEAD
             tlb_invalidate(pgdir, va); //则映射已经建立
+=======
+            tlb_invalidate(pgdir, va); //则不需要插入
+>>>>>>> lab2
             pp->pp_ref--; //为了抵消之后的pp_ref++效果，在这里--
 f010103a:	66 83 6b 04 01       	subw   $0x1,0x4(%ebx)
 f010103f:	eb 0f                	jmp    f0101050 <page_insert+0x5c>
         }
+<<<<<<< HEAD
         else { //如果物理页表的地址与PP地址不同
             page_remove(pgdir, va); //则先移除这个映射
+=======
+        else { //如果pte对应的物理地址使另外的虚拟地址
+            page_remove(pgdir, va); //则移除这个映射
+>>>>>>> lab2
 f0101041:	83 ec 08             	sub    $0x8,%esp
 f0101044:	ff 75 10             	pushl  0x10(%ebp)
 f0101047:	56                   	push   %esi
@@ -2562,7 +2873,11 @@ f0101048:	e8 6c ff ff ff       	call   f0100fb9 <page_remove>
 f010104d:	83 c4 10             	add    $0x10,%esp
         }
     }
+<<<<<<< HEAD
     *pte = page2pa(pp) | perm | PTE_P; //建立新的映射，并设置权限
+=======
+    *pte = page2pa(pp) | perm | PTE_P; //插入新的映射，并设置权限
+>>>>>>> lab2
 f0101050:	89 d8                	mov    %ebx,%eax
 f0101052:	2b 05 6c 69 11 f0    	sub    0xf011696c,%eax
 f0101058:	c1 f8 03             	sar    $0x3,%eax
@@ -2571,9 +2886,15 @@ f010105e:	8b 55 14             	mov    0x14(%ebp),%edx
 f0101061:	83 ca 01             	or     $0x1,%edx
 f0101064:	09 d0                	or     %edx,%eax
 f0101066:	89 07                	mov    %eax,(%edi)
+<<<<<<< HEAD
     pp->pp_ref++; //pp的引用计数加一
 f0101068:	66 83 43 04 01       	addw   $0x1,0x4(%ebx)
     pgdir[PDX(va)] |= perm; //页目录的权限加上perm
+=======
+    pp->pp_ref++; //pp_ref自增
+f0101068:	66 83 43 04 01       	addw   $0x1,0x4(%ebx)
+    pgdir[PDX(va)] |= perm; //将映射加入pagedictionary中
+>>>>>>> lab2
 f010106d:	8b 45 10             	mov    0x10(%ebp),%eax
 f0101070:	c1 e8 16             	shr    $0x16,%eax
 f0101073:	8b 4d 14             	mov    0x14(%ebp),%ecx
@@ -2584,6 +2905,7 @@ f010107e:	eb 05                	jmp    f0101085 <page_insert+0x91>
 page_insert(pde_t *pgdir, struct PageInfo *pp, void *va, int perm)
 {
 	// Fill this function in
+<<<<<<< HEAD
     pte_t *pte = pgdir_walk(pgdir, va, 1);//首先利用pgdir_walk找到va的物理页地址
     if (pte == NULL) { //如果没找到，那么建立映射失败
         return -E_NO_MEM;//页表无法被分配
@@ -2592,6 +2914,16 @@ f0101080:	b8 fc ff ff ff       	mov    $0xfffffffc,%eax
     *pte = page2pa(pp) | perm | PTE_P; //建立新的映射，并设置权限
     pp->pp_ref++; //pp的引用计数加一
     pgdir[PDX(va)] |= perm; //页目录的权限加上perm
+=======
+    pte_t *pte = pgdir_walk(pgdir, va, 1);
+    if (pte == NULL) { //如果页表无法被初始化，则插入失败，outofmemory
+        return -E_NO_MEM;
+f0101080:	b8 fc ff ff ff       	mov    $0xfffffffc,%eax
+    }
+    *pte = page2pa(pp) | perm | PTE_P; //插入新的映射，并设置权限
+    pp->pp_ref++; //pp_ref自增
+    pgdir[PDX(va)] |= perm; //将映射加入pagedictionary中
+>>>>>>> lab2
     return 0;
 }
 f0101085:	8d 65 f4             	lea    -0xc(%ebp),%esp
@@ -2698,11 +3030,19 @@ f010113b:	e8 3b 16 00 00       	call   f010277b <cprintf>
 
 	//////////////////////////////////////////////////////////////////////
 	// create initial page directory.
+<<<<<<< HEAD
 	kern_pgdir = (pde_t *) boot_alloc(PGSIZE); //为内核页目录分配一个页表的空间
 f0101140:	b8 00 10 00 00       	mov    $0x1000,%eax
 f0101145:	e8 84 f7 ff ff       	call   f01008ce <boot_alloc>
 f010114a:	a3 68 69 11 f0       	mov    %eax,0xf0116968
 	memset(kern_pgdir, 0, PGSIZE); //将内核页目录初始化为0
+=======
+	kern_pgdir = (pde_t *) boot_alloc(PGSIZE);
+f0101140:	b8 00 10 00 00       	mov    $0x1000,%eax
+f0101145:	e8 84 f7 ff ff       	call   f01008ce <boot_alloc>
+f010114a:	a3 68 69 11 f0       	mov    %eax,0xf0116968
+	memset(kern_pgdir, 0, PGSIZE);
+>>>>>>> lab2
 f010114f:	83 c4 0c             	add    $0xc,%esp
 f0101152:	68 00 10 00 00       	push   $0x1000
 f0101157:	6a 00                	push   $0x0
@@ -2727,26 +3067,45 @@ f010116c:	77 15                	ja     f0101183 <mem_init+0xf6>
 		_panic(file, line, "PADDR called with invalid kva %08lx", kva);
 f010116e:	50                   	push   %eax
 f010116f:	68 ac 3f 10 f0       	push   $0xf0103fac
+<<<<<<< HEAD
 f0101174:	68 98 00 00 00       	push   $0x98
+=======
+f0101174:	68 95 00 00 00       	push   $0x95
+>>>>>>> lab2
 f0101179:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010117e:	e8 08 ef ff ff       	call   f010008b <_panic>
 f0101183:	8d 90 00 00 00 10    	lea    0x10000000(%eax),%edx
 f0101189:	83 ca 05             	or     $0x5,%edx
 f010118c:	89 90 f4 0e 00 00    	mov    %edx,0xef4(%eax)
+<<<<<<< HEAD
 	// array.  'npages' is the number of physical pages in memory.  Use memset
 	// to initialize all fields of each struct PageInfo to 0.
 	// Your code goes here:
 	
 	//这一部分将所有的页表初始化为0，首先确定页表大小为页表结构体大小*页表数
+=======
+	// The kernel uses this array to keep track of physical pages: for
+	// each physical page, there is a corresponding struct PageInfo in this
+	// array.  'npages' is the number of physical pages in memory.  Use memset
+	// to initialize all fields of each struct PageInfo to 0.
+	// Your code goes here:
+>>>>>>> lab2
 	uint32_t PageInfo_Size = sizeof(struct PageInfo) * npages; 
 f0101192:	a1 64 69 11 f0       	mov    0xf0116964,%eax
 f0101197:	c1 e0 03             	shl    $0x3,%eax
 f010119a:	89 c7                	mov    %eax,%edi
 f010119c:	89 45 cc             	mov    %eax,-0x34(%ebp)
+<<<<<<< HEAD
 	pages = (struct PageInfo*)boot_alloc(PageInfo_Size);//为物理页表分配等同大小的空间
 f010119f:	e8 2a f7 ff ff       	call   f01008ce <boot_alloc>
 f01011a4:	a3 6c 69 11 f0       	mov    %eax,0xf011696c
 	memset(pages, 0, PageInfo_Size); //将物理页表初始化为0
+=======
+	pages = (struct PageInfo*)boot_alloc(PageInfo_Size);
+f010119f:	e8 2a f7 ff ff       	call   f01008ce <boot_alloc>
+f01011a4:	a3 6c 69 11 f0       	mov    %eax,0xf011696c
+	memset(pages, 0, PageInfo_Size);
+>>>>>>> lab2
 f01011a9:	83 ec 04             	sub    $0x4,%esp
 f01011ac:	57                   	push   %edi
 f01011ad:	6a 00                	push   $0x0
@@ -2757,7 +3116,11 @@ f01011b0:	e8 30 20 00 00       	call   f01031e5 <memset>
 	// memory management will go through the page_* functions. In
 	// particular, we can now map memory using boot_map_region
 	// or page_insert
+<<<<<<< HEAD
 	page_init(); //这里初始化页结构
+=======
+	page_init();
+>>>>>>> lab2
 f01011b5:	e8 9a fa ff ff       	call   f0100c54 <page_init>
 
 	check_page_free_list(1);
@@ -2775,7 +3138,11 @@ f01011ce:	75 17                	jne    f01011e7 <mem_init+0x15a>
 		panic("'pages' is a null pointer!");
 f01011d0:	83 ec 04             	sub    $0x4,%esp
 f01011d3:	68 38 3c 10 f0       	push   $0xf0103c38
+<<<<<<< HEAD
 f01011d8:	68 84 02 00 00       	push   $0x284
+=======
+f01011d8:	68 65 02 00 00       	push   $0x265
+>>>>>>> lab2
 f01011dd:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01011e2:	e8 a4 ee ff ff       	call   f010008b <_panic>
 
@@ -2809,7 +3176,11 @@ f010120b:	85 c0                	test   %eax,%eax
 f010120d:	75 19                	jne    f0101228 <mem_init+0x19b>
 f010120f:	68 53 3c 10 f0       	push   $0xf0103c53
 f0101214:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101219:	68 8c 02 00 00       	push   $0x28c
+=======
+f0101219:	68 6d 02 00 00       	push   $0x26d
+>>>>>>> lab2
 f010121e:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101223:	e8 63 ee ff ff       	call   f010008b <_panic>
 	assert((pp1 = page_alloc(0)));
@@ -2822,7 +3193,11 @@ f0101237:	85 c0                	test   %eax,%eax
 f0101239:	75 19                	jne    f0101254 <mem_init+0x1c7>
 f010123b:	68 69 3c 10 f0       	push   $0xf0103c69
 f0101240:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101245:	68 8d 02 00 00       	push   $0x28d
+=======
+f0101245:	68 6e 02 00 00       	push   $0x26e
+>>>>>>> lab2
 f010124a:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010124f:	e8 37 ee ff ff       	call   f010008b <_panic>
 	assert((pp2 = page_alloc(0)));
@@ -2835,7 +3210,11 @@ f0101264:	85 c0                	test   %eax,%eax
 f0101266:	75 19                	jne    f0101281 <mem_init+0x1f4>
 f0101268:	68 7f 3c 10 f0       	push   $0xf0103c7f
 f010126d:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101272:	68 8e 02 00 00       	push   $0x28e
+=======
+f0101272:	68 6f 02 00 00       	push   $0x26f
+>>>>>>> lab2
 f0101277:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010127c:	e8 0a ee ff ff       	call   f010008b <_panic>
 
@@ -2845,7 +3224,11 @@ f0101281:	39 f7                	cmp    %esi,%edi
 f0101283:	75 19                	jne    f010129e <mem_init+0x211>
 f0101285:	68 95 3c 10 f0       	push   $0xf0103c95
 f010128a:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f010128f:	68 91 02 00 00       	push   $0x291
+=======
+f010128f:	68 72 02 00 00       	push   $0x272
+>>>>>>> lab2
 f0101294:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101299:	e8 ed ed ff ff       	call   f010008b <_panic>
 	assert(pp2 && pp2 != pp1 && pp2 != pp0);
@@ -2856,7 +3239,11 @@ f01012a5:	39 c7                	cmp    %eax,%edi
 f01012a7:	75 19                	jne    f01012c2 <mem_init+0x235>
 f01012a9:	68 d0 3f 10 f0       	push   $0xf0103fd0
 f01012ae:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f01012b3:	68 92 02 00 00       	push   $0x292
+=======
+f01012b3:	68 73 02 00 00       	push   $0x273
+>>>>>>> lab2
 f01012b8:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01012bd:	e8 c9 ed ff ff       	call   f010008b <_panic>
 void	tlb_invalidate(pde_t *pgdir, void *va);
@@ -2877,7 +3264,11 @@ f01012db:	39 d0                	cmp    %edx,%eax
 f01012dd:	72 19                	jb     f01012f8 <mem_init+0x26b>
 f01012df:	68 a7 3c 10 f0       	push   $0xf0103ca7
 f01012e4:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f01012e9:	68 93 02 00 00       	push   $0x293
+=======
+f01012e9:	68 74 02 00 00       	push   $0x274
+>>>>>>> lab2
 f01012ee:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01012f3:	e8 93 ed ff ff       	call   f010008b <_panic>
 	assert(page2pa(pp1) < npages*PGSIZE);
@@ -2889,7 +3280,11 @@ f0101302:	39 c2                	cmp    %eax,%edx
 f0101304:	77 19                	ja     f010131f <mem_init+0x292>
 f0101306:	68 c4 3c 10 f0       	push   $0xf0103cc4
 f010130b:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101310:	68 94 02 00 00       	push   $0x294
+=======
+f0101310:	68 75 02 00 00       	push   $0x275
+>>>>>>> lab2
 f0101315:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010131a:	e8 6c ed ff ff       	call   f010008b <_panic>
 	assert(page2pa(pp2) < npages*PGSIZE);
@@ -2901,7 +3296,11 @@ f010132a:	39 c2                	cmp    %eax,%edx
 f010132c:	77 19                	ja     f0101347 <mem_init+0x2ba>
 f010132e:	68 e1 3c 10 f0       	push   $0xf0103ce1
 f0101333:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101338:	68 95 02 00 00       	push   $0x295
+=======
+f0101338:	68 76 02 00 00       	push   $0x276
+>>>>>>> lab2
 f010133d:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101342:	e8 44 ed ff ff       	call   f010008b <_panic>
 
@@ -2923,7 +3322,11 @@ f0101366:	85 c0                	test   %eax,%eax
 f0101368:	74 19                	je     f0101383 <mem_init+0x2f6>
 f010136a:	68 fe 3c 10 f0       	push   $0xf0103cfe
 f010136f:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101374:	68 9c 02 00 00       	push   $0x29c
+=======
+f0101374:	68 7d 02 00 00       	push   $0x27d
+>>>>>>> lab2
 f0101379:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010137e:	e8 08 ed ff ff       	call   f010008b <_panic>
 
@@ -2949,7 +3352,11 @@ f01013b0:	85 c0                	test   %eax,%eax
 f01013b2:	75 19                	jne    f01013cd <mem_init+0x340>
 f01013b4:	68 53 3c 10 f0       	push   $0xf0103c53
 f01013b9:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f01013be:	68 a3 02 00 00       	push   $0x2a3
+=======
+f01013be:	68 84 02 00 00       	push   $0x284
+>>>>>>> lab2
 f01013c3:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01013c8:	e8 be ec ff ff       	call   f010008b <_panic>
 	assert((pp1 = page_alloc(0)));
@@ -2962,7 +3369,11 @@ f01013dc:	85 c0                	test   %eax,%eax
 f01013de:	75 19                	jne    f01013f9 <mem_init+0x36c>
 f01013e0:	68 69 3c 10 f0       	push   $0xf0103c69
 f01013e5:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f01013ea:	68 a4 02 00 00       	push   $0x2a4
+=======
+f01013ea:	68 85 02 00 00       	push   $0x285
+>>>>>>> lab2
 f01013ef:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01013f4:	e8 92 ec ff ff       	call   f010008b <_panic>
 	assert((pp2 = page_alloc(0)));
@@ -2975,7 +3386,11 @@ f0101409:	85 c0                	test   %eax,%eax
 f010140b:	75 19                	jne    f0101426 <mem_init+0x399>
 f010140d:	68 7f 3c 10 f0       	push   $0xf0103c7f
 f0101412:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101417:	68 a5 02 00 00       	push   $0x2a5
+=======
+f0101417:	68 86 02 00 00       	push   $0x286
+>>>>>>> lab2
 f010141c:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101421:	e8 65 ec ff ff       	call   f010008b <_panic>
 	assert(pp0);
@@ -2984,7 +3399,11 @@ f0101426:	39 fe                	cmp    %edi,%esi
 f0101428:	75 19                	jne    f0101443 <mem_init+0x3b6>
 f010142a:	68 95 3c 10 f0       	push   $0xf0103c95
 f010142f:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101434:	68 a7 02 00 00       	push   $0x2a7
+=======
+f0101434:	68 88 02 00 00       	push   $0x288
+>>>>>>> lab2
 f0101439:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010143e:	e8 48 ec ff ff       	call   f010008b <_panic>
 	assert(pp2 && pp2 != pp1 && pp2 != pp0);
@@ -2995,7 +3414,11 @@ f010144a:	39 c6                	cmp    %eax,%esi
 f010144c:	75 19                	jne    f0101467 <mem_init+0x3da>
 f010144e:	68 d0 3f 10 f0       	push   $0xf0103fd0
 f0101453:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101458:	68 a8 02 00 00       	push   $0x2a8
+=======
+f0101458:	68 89 02 00 00       	push   $0x289
+>>>>>>> lab2
 f010145d:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101462:	e8 24 ec ff ff       	call   f010008b <_panic>
 	assert(!page_alloc(0));
@@ -3007,7 +3430,11 @@ f0101474:	85 c0                	test   %eax,%eax
 f0101476:	74 19                	je     f0101491 <mem_init+0x404>
 f0101478:	68 fe 3c 10 f0       	push   $0xf0103cfe
 f010147d:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101482:	68 a9 02 00 00       	push   $0x2a9
+=======
+f0101482:	68 8a 02 00 00       	push   $0x28a
+>>>>>>> lab2
 f0101487:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010148c:	e8 fa eb ff ff       	call   f010008b <_panic>
 f0101491:	89 f0                	mov    %esi,%eax
@@ -3050,7 +3477,11 @@ f01014ea:	85 c0                	test   %eax,%eax
 f01014ec:	75 19                	jne    f0101507 <mem_init+0x47a>
 f01014ee:	68 0d 3d 10 f0       	push   $0xf0103d0d
 f01014f3:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f01014f8:	68 ae 02 00 00       	push   $0x2ae
+=======
+f01014f8:	68 8f 02 00 00       	push   $0x28f
+>>>>>>> lab2
 f01014fd:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101502:	e8 84 eb ff ff       	call   f010008b <_panic>
 	assert(pp && pp0 == pp);
@@ -3058,7 +3489,11 @@ f0101507:	39 c6                	cmp    %eax,%esi
 f0101509:	74 19                	je     f0101524 <mem_init+0x497>
 f010150b:	68 2b 3d 10 f0       	push   $0xf0103d2b
 f0101510:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101515:	68 af 02 00 00       	push   $0x2af
+=======
+f0101515:	68 90 02 00 00       	push   $0x290
+>>>>>>> lab2
 f010151a:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010151f:	e8 67 eb ff ff       	call   f010008b <_panic>
 void	tlb_invalidate(pde_t *pgdir, void *va);
@@ -3097,7 +3532,11 @@ f010155d:	80 38 00             	cmpb   $0x0,(%eax)
 f0101560:	74 19                	je     f010157b <mem_init+0x4ee>
 f0101562:	68 3b 3d 10 f0       	push   $0xf0103d3b
 f0101567:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f010156c:	68 b2 02 00 00       	push   $0x2b2
+=======
+f010156c:	68 93 02 00 00       	push   $0x293
+>>>>>>> lab2
 f0101571:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101576:	e8 10 eb ff ff       	call   f010008b <_panic>
 f010157b:	83 c0 01             	add    $0x1,%eax
@@ -3151,7 +3590,11 @@ f01015b9:	85 db                	test   %ebx,%ebx
 f01015bb:	74 19                	je     f01015d6 <mem_init+0x549>
 f01015bd:	68 45 3d 10 f0       	push   $0xf0103d45
 f01015c2:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f01015c7:	68 bf 02 00 00       	push   $0x2bf
+=======
+f01015c7:	68 a0 02 00 00       	push   $0x2a0
+>>>>>>> lab2
 f01015cc:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01015d1:	e8 b5 ea ff ff       	call   f010008b <_panic>
 
@@ -3173,7 +3616,11 @@ f01015f5:	85 c0                	test   %eax,%eax
 f01015f7:	75 19                	jne    f0101612 <mem_init+0x585>
 f01015f9:	68 53 3c 10 f0       	push   $0xf0103c53
 f01015fe:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101603:	68 18 03 00 00       	push   $0x318
+=======
+f0101603:	68 f9 02 00 00       	push   $0x2f9
+>>>>>>> lab2
 f0101608:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010160d:	e8 79 ea ff ff       	call   f010008b <_panic>
 	assert((pp1 = page_alloc(0)));
@@ -3186,7 +3633,11 @@ f0101621:	85 c0                	test   %eax,%eax
 f0101623:	75 19                	jne    f010163e <mem_init+0x5b1>
 f0101625:	68 69 3c 10 f0       	push   $0xf0103c69
 f010162a:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f010162f:	68 19 03 00 00       	push   $0x319
+=======
+f010162f:	68 fa 02 00 00       	push   $0x2fa
+>>>>>>> lab2
 f0101634:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101639:	e8 4d ea ff ff       	call   f010008b <_panic>
 	assert((pp2 = page_alloc(0)));
@@ -3199,7 +3650,11 @@ f010164d:	85 c0                	test   %eax,%eax
 f010164f:	75 19                	jne    f010166a <mem_init+0x5dd>
 f0101651:	68 7f 3c 10 f0       	push   $0xf0103c7f
 f0101656:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f010165b:	68 1a 03 00 00       	push   $0x31a
+=======
+f010165b:	68 fb 02 00 00       	push   $0x2fb
+>>>>>>> lab2
 f0101660:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101665:	e8 21 ea ff ff       	call   f010008b <_panic>
 
@@ -3209,7 +3664,11 @@ f010166a:	39 5d d4             	cmp    %ebx,-0x2c(%ebp)
 f010166d:	75 19                	jne    f0101688 <mem_init+0x5fb>
 f010166f:	68 95 3c 10 f0       	push   $0xf0103c95
 f0101674:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101679:	68 1d 03 00 00       	push   $0x31d
+=======
+f0101679:	68 fe 02 00 00       	push   $0x2fe
+>>>>>>> lab2
 f010167e:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101683:	e8 03 ea ff ff       	call   f010008b <_panic>
 	assert(pp2 && pp2 != pp1 && pp2 != pp0);
@@ -3219,7 +3678,11 @@ f010168c:	39 45 d4             	cmp    %eax,-0x2c(%ebp)
 f010168f:	75 19                	jne    f01016aa <mem_init+0x61d>
 f0101691:	68 d0 3f 10 f0       	push   $0xf0103fd0
 f0101696:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f010169b:	68 1e 03 00 00       	push   $0x31e
+=======
+f010169b:	68 ff 02 00 00       	push   $0x2ff
+>>>>>>> lab2
 f01016a0:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01016a5:	e8 e1 e9 ff ff       	call   f010008b <_panic>
 
@@ -3241,7 +3704,11 @@ f01016c9:	85 c0                	test   %eax,%eax
 f01016cb:	74 19                	je     f01016e6 <mem_init+0x659>
 f01016cd:	68 fe 3c 10 f0       	push   $0xf0103cfe
 f01016d2:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f01016d7:	68 25 03 00 00       	push   $0x325
+=======
+f01016d7:	68 06 03 00 00       	push   $0x306
+>>>>>>> lab2
 f01016dc:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01016e1:	e8 a5 e9 ff ff       	call   f010008b <_panic>
 
@@ -3258,7 +3725,11 @@ f01016fd:	85 c0                	test   %eax,%eax
 f01016ff:	74 19                	je     f010171a <mem_init+0x68d>
 f0101701:	68 10 40 10 f0       	push   $0xf0104010
 f0101706:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f010170b:	68 28 03 00 00       	push   $0x328
+=======
+f010170b:	68 09 03 00 00       	push   $0x309
+>>>>>>> lab2
 f0101710:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101715:	e8 71 e9 ff ff       	call   f010008b <_panic>
 
@@ -3274,7 +3745,11 @@ f010172d:	85 c0                	test   %eax,%eax
 f010172f:	78 19                	js     f010174a <mem_init+0x6bd>
 f0101731:	68 48 40 10 f0       	push   $0xf0104048
 f0101736:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f010173b:	68 2b 03 00 00       	push   $0x32b
+=======
+f010173b:	68 0c 03 00 00       	push   $0x30c
+>>>>>>> lab2
 f0101740:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101745:	e8 41 e9 ff ff       	call   f010008b <_panic>
 
@@ -3294,7 +3769,11 @@ f0101768:	85 c0                	test   %eax,%eax
 f010176a:	74 19                	je     f0101785 <mem_init+0x6f8>
 f010176c:	68 78 40 10 f0       	push   $0xf0104078
 f0101771:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101776:	68 2f 03 00 00       	push   $0x32f
+=======
+f0101776:	68 10 03 00 00       	push   $0x310
+>>>>>>> lab2
 f010177b:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101780:	e8 06 e9 ff ff       	call   f010008b <_panic>
 	assert(PTE_ADDR(kern_pgdir[0]) == page2pa(pp0));
@@ -3318,7 +3797,11 @@ f01017a8:	39 c2                	cmp    %eax,%edx
 f01017aa:	74 19                	je     f01017c5 <mem_init+0x738>
 f01017ac:	68 a8 40 10 f0       	push   $0xf01040a8
 f01017b1:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f01017b6:	68 30 03 00 00       	push   $0x330
+=======
+f01017b6:	68 11 03 00 00       	push   $0x311
+>>>>>>> lab2
 f01017bb:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01017c0:	e8 c6 e8 ff ff       	call   f010008b <_panic>
 	assert(check_va2pa(kern_pgdir, 0x0) == page2pa(pp1));
@@ -3333,7 +3816,11 @@ f01017dc:	39 d0                	cmp    %edx,%eax
 f01017de:	74 19                	je     f01017f9 <mem_init+0x76c>
 f01017e0:	68 d0 40 10 f0       	push   $0xf01040d0
 f01017e5:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f01017ea:	68 31 03 00 00       	push   $0x331
+=======
+f01017ea:	68 12 03 00 00       	push   $0x312
+>>>>>>> lab2
 f01017ef:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01017f4:	e8 92 e8 ff ff       	call   f010008b <_panic>
 	assert(pp1->pp_ref == 1);
@@ -3341,7 +3828,11 @@ f01017f9:	66 83 7b 04 01       	cmpw   $0x1,0x4(%ebx)
 f01017fe:	74 19                	je     f0101819 <mem_init+0x78c>
 f0101800:	68 50 3d 10 f0       	push   $0xf0103d50
 f0101805:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f010180a:	68 32 03 00 00       	push   $0x332
+=======
+f010180a:	68 13 03 00 00       	push   $0x313
+>>>>>>> lab2
 f010180f:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101814:	e8 72 e8 ff ff       	call   f010008b <_panic>
 	assert(pp0->pp_ref == 1);
@@ -3350,7 +3841,11 @@ f010181c:	66 83 78 04 01       	cmpw   $0x1,0x4(%eax)
 f0101821:	74 19                	je     f010183c <mem_init+0x7af>
 f0101823:	68 61 3d 10 f0       	push   $0xf0103d61
 f0101828:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f010182d:	68 33 03 00 00       	push   $0x333
+=======
+f010182d:	68 14 03 00 00       	push   $0x314
+>>>>>>> lab2
 f0101832:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101837:	e8 4f e8 ff ff       	call   f010008b <_panic>
 
@@ -3366,7 +3861,11 @@ f010184d:	85 c0                	test   %eax,%eax
 f010184f:	74 19                	je     f010186a <mem_init+0x7dd>
 f0101851:	68 00 41 10 f0       	push   $0xf0104100
 f0101856:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f010185b:	68 36 03 00 00       	push   $0x336
+=======
+f010185b:	68 17 03 00 00       	push   $0x317
+>>>>>>> lab2
 f0101860:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101865:	e8 21 e8 ff ff       	call   f010008b <_panic>
 	assert(check_va2pa(kern_pgdir, PGSIZE) == page2pa(pp2));
@@ -3381,7 +3880,11 @@ f0101887:	39 d0                	cmp    %edx,%eax
 f0101889:	74 19                	je     f01018a4 <mem_init+0x817>
 f010188b:	68 3c 41 10 f0       	push   $0xf010413c
 f0101890:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101895:	68 37 03 00 00       	push   $0x337
+=======
+f0101895:	68 18 03 00 00       	push   $0x318
+>>>>>>> lab2
 f010189a:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010189f:	e8 e7 e7 ff ff       	call   f010008b <_panic>
 	assert(pp2->pp_ref == 1);
@@ -3389,7 +3892,11 @@ f01018a4:	66 83 7e 04 01       	cmpw   $0x1,0x4(%esi)
 f01018a9:	74 19                	je     f01018c4 <mem_init+0x837>
 f01018ab:	68 72 3d 10 f0       	push   $0xf0103d72
 f01018b0:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f01018b5:	68 38 03 00 00       	push   $0x338
+=======
+f01018b5:	68 19 03 00 00       	push   $0x319
+>>>>>>> lab2
 f01018ba:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01018bf:	e8 c7 e7 ff ff       	call   f010008b <_panic>
 
@@ -3403,7 +3910,11 @@ f01018d1:	85 c0                	test   %eax,%eax
 f01018d3:	74 19                	je     f01018ee <mem_init+0x861>
 f01018d5:	68 fe 3c 10 f0       	push   $0xf0103cfe
 f01018da:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f01018df:	68 3b 03 00 00       	push   $0x33b
+=======
+f01018df:	68 1c 03 00 00       	push   $0x31c
+>>>>>>> lab2
 f01018e4:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01018e9:	e8 9d e7 ff ff       	call   f010008b <_panic>
 
@@ -3419,7 +3930,11 @@ f0101904:	85 c0                	test   %eax,%eax
 f0101906:	74 19                	je     f0101921 <mem_init+0x894>
 f0101908:	68 00 41 10 f0       	push   $0xf0104100
 f010190d:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101912:	68 3e 03 00 00       	push   $0x33e
+=======
+f0101912:	68 1f 03 00 00       	push   $0x31f
+>>>>>>> lab2
 f0101917:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010191c:	e8 6a e7 ff ff       	call   f010008b <_panic>
 	assert(check_va2pa(kern_pgdir, PGSIZE) == page2pa(pp2));
@@ -3434,7 +3949,11 @@ f010193e:	39 d0                	cmp    %edx,%eax
 f0101940:	74 19                	je     f010195b <mem_init+0x8ce>
 f0101942:	68 3c 41 10 f0       	push   $0xf010413c
 f0101947:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f010194c:	68 3f 03 00 00       	push   $0x33f
+=======
+f010194c:	68 20 03 00 00       	push   $0x320
+>>>>>>> lab2
 f0101951:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101956:	e8 30 e7 ff ff       	call   f010008b <_panic>
 	assert(pp2->pp_ref == 1);
@@ -3442,7 +3961,11 @@ f010195b:	66 83 7e 04 01       	cmpw   $0x1,0x4(%esi)
 f0101960:	74 19                	je     f010197b <mem_init+0x8ee>
 f0101962:	68 72 3d 10 f0       	push   $0xf0103d72
 f0101967:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f010196c:	68 40 03 00 00       	push   $0x340
+=======
+f010196c:	68 21 03 00 00       	push   $0x321
+>>>>>>> lab2
 f0101971:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101976:	e8 10 e7 ff ff       	call   f010008b <_panic>
 
@@ -3457,7 +3980,11 @@ f0101988:	85 c0                	test   %eax,%eax
 f010198a:	74 19                	je     f01019a5 <mem_init+0x918>
 f010198c:	68 fe 3c 10 f0       	push   $0xf0103cfe
 f0101991:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101996:	68 44 03 00 00       	push   $0x344
+=======
+f0101996:	68 25 03 00 00       	push   $0x325
+>>>>>>> lab2
 f010199b:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01019a0:	e8 e6 e6 ff ff       	call   f010008b <_panic>
 
@@ -3479,7 +4006,11 @@ f01019bd:	72 15                	jb     f01019d4 <mem_init+0x947>
 		_panic(file, line, "KADDR called with invalid pa %08lx", pa);
 f01019bf:	50                   	push   %eax
 f01019c0:	68 68 3e 10 f0       	push   $0xf0103e68
+<<<<<<< HEAD
 f01019c5:	68 47 03 00 00       	push   $0x347
+=======
+f01019c5:	68 28 03 00 00       	push   $0x328
+>>>>>>> lab2
 f01019ca:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01019cf:	e8 b7 e6 ff ff       	call   f010008b <_panic>
 f01019d4:	2d 00 00 00 10       	sub    $0x10000000,%eax
@@ -3497,7 +4028,11 @@ f01019f5:	39 d0                	cmp    %edx,%eax
 f01019f7:	74 19                	je     f0101a12 <mem_init+0x985>
 f01019f9:	68 6c 41 10 f0       	push   $0xf010416c
 f01019fe:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101a03:	68 48 03 00 00       	push   $0x348
+=======
+f0101a03:	68 29 03 00 00       	push   $0x329
+>>>>>>> lab2
 f0101a08:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101a0d:	e8 79 e6 ff ff       	call   f010008b <_panic>
 
@@ -3513,7 +4048,11 @@ f0101a28:	85 c0                	test   %eax,%eax
 f0101a2a:	74 19                	je     f0101a45 <mem_init+0x9b8>
 f0101a2c:	68 ac 41 10 f0       	push   $0xf01041ac
 f0101a31:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101a36:	68 4b 03 00 00       	push   $0x34b
+=======
+f0101a36:	68 2c 03 00 00       	push   $0x32c
+>>>>>>> lab2
 f0101a3b:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101a40:	e8 46 e6 ff ff       	call   f010008b <_panic>
 	assert(check_va2pa(kern_pgdir, PGSIZE) == page2pa(pp2));
@@ -3529,7 +4068,11 @@ f0101a65:	39 d0                	cmp    %edx,%eax
 f0101a67:	74 19                	je     f0101a82 <mem_init+0x9f5>
 f0101a69:	68 3c 41 10 f0       	push   $0xf010413c
 f0101a6e:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101a73:	68 4c 03 00 00       	push   $0x34c
+=======
+f0101a73:	68 2d 03 00 00       	push   $0x32d
+>>>>>>> lab2
 f0101a78:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101a7d:	e8 09 e6 ff ff       	call   f010008b <_panic>
 	assert(pp2->pp_ref == 1);
@@ -3537,7 +4080,11 @@ f0101a82:	66 83 7e 04 01       	cmpw   $0x1,0x4(%esi)
 f0101a87:	74 19                	je     f0101aa2 <mem_init+0xa15>
 f0101a89:	68 72 3d 10 f0       	push   $0xf0103d72
 f0101a8e:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101a93:	68 4d 03 00 00       	push   $0x34d
+=======
+f0101a93:	68 2e 03 00 00       	push   $0x32e
+>>>>>>> lab2
 f0101a98:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101a9d:	e8 e9 e5 ff ff       	call   f010008b <_panic>
 	assert(*pgdir_walk(kern_pgdir, (void*) PGSIZE, 0) & PTE_U);
@@ -3551,7 +4098,11 @@ f0101ab5:	f6 00 04             	testb  $0x4,(%eax)
 f0101ab8:	75 19                	jne    f0101ad3 <mem_init+0xa46>
 f0101aba:	68 ec 41 10 f0       	push   $0xf01041ec
 f0101abf:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101ac4:	68 4e 03 00 00       	push   $0x34e
+=======
+f0101ac4:	68 2f 03 00 00       	push   $0x32f
+>>>>>>> lab2
 f0101ac9:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101ace:	e8 b8 e5 ff ff       	call   f010008b <_panic>
 	assert(kern_pgdir[0] & PTE_U);
@@ -3560,7 +4111,11 @@ f0101ad8:	f6 00 04             	testb  $0x4,(%eax)
 f0101adb:	75 19                	jne    f0101af6 <mem_init+0xa69>
 f0101add:	68 83 3d 10 f0       	push   $0xf0103d83
 f0101ae2:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101ae7:	68 4f 03 00 00       	push   $0x34f
+=======
+f0101ae7:	68 30 03 00 00       	push   $0x330
+>>>>>>> lab2
 f0101aec:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101af1:	e8 95 e5 ff ff       	call   f010008b <_panic>
 
@@ -3576,7 +4131,11 @@ f0101b07:	85 c0                	test   %eax,%eax
 f0101b09:	74 19                	je     f0101b24 <mem_init+0xa97>
 f0101b0b:	68 00 41 10 f0       	push   $0xf0104100
 f0101b10:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101b15:	68 52 03 00 00       	push   $0x352
+=======
+f0101b15:	68 33 03 00 00       	push   $0x333
+>>>>>>> lab2
 f0101b1a:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101b1f:	e8 67 e5 ff ff       	call   f010008b <_panic>
 	assert(*pgdir_walk(kern_pgdir, (void*) PGSIZE, 0) & PTE_W);
@@ -3590,7 +4149,11 @@ f0101b3c:	f6 00 02             	testb  $0x2,(%eax)
 f0101b3f:	75 19                	jne    f0101b5a <mem_init+0xacd>
 f0101b41:	68 20 42 10 f0       	push   $0xf0104220
 f0101b46:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101b4b:	68 53 03 00 00       	push   $0x353
+=======
+f0101b4b:	68 34 03 00 00       	push   $0x334
+>>>>>>> lab2
 f0101b50:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101b55:	e8 31 e5 ff ff       	call   f010008b <_panic>
 	assert(!(*pgdir_walk(kern_pgdir, (void*) PGSIZE, 0) & PTE_U));
@@ -3604,7 +4167,11 @@ f0101b72:	f6 00 04             	testb  $0x4,(%eax)
 f0101b75:	74 19                	je     f0101b90 <mem_init+0xb03>
 f0101b77:	68 54 42 10 f0       	push   $0xf0104254
 f0101b7c:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101b81:	68 54 03 00 00       	push   $0x354
+=======
+f0101b81:	68 35 03 00 00       	push   $0x335
+>>>>>>> lab2
 f0101b86:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101b8b:	e8 fb e4 ff ff       	call   f010008b <_panic>
 
@@ -3620,7 +4187,11 @@ f0101ba8:	85 c0                	test   %eax,%eax
 f0101baa:	78 19                	js     f0101bc5 <mem_init+0xb38>
 f0101bac:	68 8c 42 10 f0       	push   $0xf010428c
 f0101bb1:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101bb6:	68 57 03 00 00       	push   $0x357
+=======
+f0101bb6:	68 38 03 00 00       	push   $0x338
+>>>>>>> lab2
 f0101bbb:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101bc0:	e8 c6 e4 ff ff       	call   f010008b <_panic>
 
@@ -3636,7 +4207,11 @@ f0101bdb:	85 c0                	test   %eax,%eax
 f0101bdd:	74 19                	je     f0101bf8 <mem_init+0xb6b>
 f0101bdf:	68 c4 42 10 f0       	push   $0xf01042c4
 f0101be4:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101be9:	68 5a 03 00 00       	push   $0x35a
+=======
+f0101be9:	68 3b 03 00 00       	push   $0x33b
+>>>>>>> lab2
 f0101bee:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101bf3:	e8 93 e4 ff ff       	call   f010008b <_panic>
 	assert(!(*pgdir_walk(kern_pgdir, (void*) PGSIZE, 0) & PTE_U));
@@ -3650,7 +4225,11 @@ f0101c10:	f6 00 04             	testb  $0x4,(%eax)
 f0101c13:	74 19                	je     f0101c2e <mem_init+0xba1>
 f0101c15:	68 54 42 10 f0       	push   $0xf0104254
 f0101c1a:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101c1f:	68 5b 03 00 00       	push   $0x35b
+=======
+f0101c1f:	68 3c 03 00 00       	push   $0x33c
+>>>>>>> lab2
 f0101c24:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101c29:	e8 5d e4 ff ff       	call   f010008b <_panic>
 
@@ -3670,7 +4249,11 @@ f0101c53:	39 c1                	cmp    %eax,%ecx
 f0101c55:	74 19                	je     f0101c70 <mem_init+0xbe3>
 f0101c57:	68 00 43 10 f0       	push   $0xf0104300
 f0101c5c:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101c61:	68 5e 03 00 00       	push   $0x35e
+=======
+f0101c61:	68 3f 03 00 00       	push   $0x33f
+>>>>>>> lab2
 f0101c66:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101c6b:	e8 1b e4 ff ff       	call   f010008b <_panic>
 	assert(check_va2pa(kern_pgdir, PGSIZE) == page2pa(pp1));
@@ -3681,7 +4264,11 @@ f0101c7c:	39 45 c8             	cmp    %eax,-0x38(%ebp)
 f0101c7f:	74 19                	je     f0101c9a <mem_init+0xc0d>
 f0101c81:	68 2c 43 10 f0       	push   $0xf010432c
 f0101c86:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101c8b:	68 5f 03 00 00       	push   $0x35f
+=======
+f0101c8b:	68 40 03 00 00       	push   $0x340
+>>>>>>> lab2
 f0101c90:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101c95:	e8 f1 e3 ff ff       	call   f010008b <_panic>
 	// ... and ref counts should reflect this
@@ -3690,7 +4277,11 @@ f0101c9a:	66 83 7b 04 02       	cmpw   $0x2,0x4(%ebx)
 f0101c9f:	74 19                	je     f0101cba <mem_init+0xc2d>
 f0101ca1:	68 99 3d 10 f0       	push   $0xf0103d99
 f0101ca6:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101cab:	68 61 03 00 00       	push   $0x361
+=======
+f0101cab:	68 42 03 00 00       	push   $0x342
+>>>>>>> lab2
 f0101cb0:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101cb5:	e8 d1 e3 ff ff       	call   f010008b <_panic>
 	assert(pp2->pp_ref == 0);
@@ -3698,7 +4289,11 @@ f0101cba:	66 83 7e 04 00       	cmpw   $0x0,0x4(%esi)
 f0101cbf:	74 19                	je     f0101cda <mem_init+0xc4d>
 f0101cc1:	68 aa 3d 10 f0       	push   $0xf0103daa
 f0101cc6:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101ccb:	68 62 03 00 00       	push   $0x362
+=======
+f0101ccb:	68 43 03 00 00       	push   $0x343
+>>>>>>> lab2
 f0101cd0:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101cd5:	e8 b1 e3 ff ff       	call   f010008b <_panic>
 
@@ -3714,7 +4309,11 @@ f0101ceb:	39 c6                	cmp    %eax,%esi
 f0101ced:	74 19                	je     f0101d08 <mem_init+0xc7b>
 f0101cef:	68 5c 43 10 f0       	push   $0xf010435c
 f0101cf4:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101cf9:	68 65 03 00 00       	push   $0x365
+=======
+f0101cf9:	68 46 03 00 00       	push   $0x346
+>>>>>>> lab2
 f0101cfe:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101d03:	e8 83 e3 ff ff       	call   f010008b <_panic>
 
@@ -3734,7 +4333,11 @@ f0101d2d:	83 f8 ff             	cmp    $0xffffffff,%eax
 f0101d30:	74 19                	je     f0101d4b <mem_init+0xcbe>
 f0101d32:	68 80 43 10 f0       	push   $0xf0104380
 f0101d37:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101d3c:	68 69 03 00 00       	push   $0x369
+=======
+f0101d3c:	68 4a 03 00 00       	push   $0x34a
+>>>>>>> lab2
 f0101d41:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101d46:	e8 40 e3 ff ff       	call   f010008b <_panic>
 	assert(check_va2pa(kern_pgdir, PGSIZE) == page2pa(pp1));
@@ -3749,7 +4352,11 @@ f0101d65:	39 d0                	cmp    %edx,%eax
 f0101d67:	74 19                	je     f0101d82 <mem_init+0xcf5>
 f0101d69:	68 2c 43 10 f0       	push   $0xf010432c
 f0101d6e:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101d73:	68 6a 03 00 00       	push   $0x36a
+=======
+f0101d73:	68 4b 03 00 00       	push   $0x34b
+>>>>>>> lab2
 f0101d78:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101d7d:	e8 09 e3 ff ff       	call   f010008b <_panic>
 	assert(pp1->pp_ref == 1);
@@ -3757,7 +4364,11 @@ f0101d82:	66 83 7b 04 01       	cmpw   $0x1,0x4(%ebx)
 f0101d87:	74 19                	je     f0101da2 <mem_init+0xd15>
 f0101d89:	68 50 3d 10 f0       	push   $0xf0103d50
 f0101d8e:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101d93:	68 6b 03 00 00       	push   $0x36b
+=======
+f0101d93:	68 4c 03 00 00       	push   $0x34c
+>>>>>>> lab2
 f0101d98:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101d9d:	e8 e9 e2 ff ff       	call   f010008b <_panic>
 	assert(pp2->pp_ref == 0);
@@ -3765,7 +4376,11 @@ f0101da2:	66 83 7e 04 00       	cmpw   $0x0,0x4(%esi)
 f0101da7:	74 19                	je     f0101dc2 <mem_init+0xd35>
 f0101da9:	68 aa 3d 10 f0       	push   $0xf0103daa
 f0101dae:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101db3:	68 6c 03 00 00       	push   $0x36c
+=======
+f0101db3:	68 4d 03 00 00       	push   $0x34d
+>>>>>>> lab2
 f0101db8:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101dbd:	e8 c9 e2 ff ff       	call   f010008b <_panic>
 
@@ -3781,7 +4396,11 @@ f0101dd3:	85 c0                	test   %eax,%eax
 f0101dd5:	74 19                	je     f0101df0 <mem_init+0xd63>
 f0101dd7:	68 a4 43 10 f0       	push   $0xf01043a4
 f0101ddc:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101de1:	68 6f 03 00 00       	push   $0x36f
+=======
+f0101de1:	68 50 03 00 00       	push   $0x350
+>>>>>>> lab2
 f0101de6:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101deb:	e8 9b e2 ff ff       	call   f010008b <_panic>
 	assert(pp1->pp_ref);
@@ -3789,7 +4408,11 @@ f0101df0:	66 83 7b 04 00       	cmpw   $0x0,0x4(%ebx)
 f0101df5:	75 19                	jne    f0101e10 <mem_init+0xd83>
 f0101df7:	68 bb 3d 10 f0       	push   $0xf0103dbb
 f0101dfc:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101e01:	68 70 03 00 00       	push   $0x370
+=======
+f0101e01:	68 51 03 00 00       	push   $0x351
+>>>>>>> lab2
 f0101e06:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101e0b:	e8 7b e2 ff ff       	call   f010008b <_panic>
 	assert(pp1->pp_link == NULL);
@@ -3797,7 +4420,11 @@ f0101e10:	83 3b 00             	cmpl   $0x0,(%ebx)
 f0101e13:	74 19                	je     f0101e2e <mem_init+0xda1>
 f0101e15:	68 c7 3d 10 f0       	push   $0xf0103dc7
 f0101e1a:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101e1f:	68 71 03 00 00       	push   $0x371
+=======
+f0101e1f:	68 52 03 00 00       	push   $0x352
+>>>>>>> lab2
 f0101e24:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101e29:	e8 5d e2 ff ff       	call   f010008b <_panic>
 
@@ -3817,7 +4444,11 @@ f0101e56:	83 f8 ff             	cmp    $0xffffffff,%eax
 f0101e59:	74 19                	je     f0101e74 <mem_init+0xde7>
 f0101e5b:	68 80 43 10 f0       	push   $0xf0104380
 f0101e60:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101e65:	68 75 03 00 00       	push   $0x375
+=======
+f0101e65:	68 56 03 00 00       	push   $0x356
+>>>>>>> lab2
 f0101e6a:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101e6f:	e8 17 e2 ff ff       	call   f010008b <_panic>
 	assert(check_va2pa(kern_pgdir, PGSIZE) == ~0);
@@ -3828,7 +4459,11 @@ f0101e80:	83 f8 ff             	cmp    $0xffffffff,%eax
 f0101e83:	74 19                	je     f0101e9e <mem_init+0xe11>
 f0101e85:	68 dc 43 10 f0       	push   $0xf01043dc
 f0101e8a:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101e8f:	68 76 03 00 00       	push   $0x376
+=======
+f0101e8f:	68 57 03 00 00       	push   $0x357
+>>>>>>> lab2
 f0101e94:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101e99:	e8 ed e1 ff ff       	call   f010008b <_panic>
 	assert(pp1->pp_ref == 0);
@@ -3836,7 +4471,11 @@ f0101e9e:	66 83 7b 04 00       	cmpw   $0x0,0x4(%ebx)
 f0101ea3:	74 19                	je     f0101ebe <mem_init+0xe31>
 f0101ea5:	68 dc 3d 10 f0       	push   $0xf0103ddc
 f0101eaa:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101eaf:	68 77 03 00 00       	push   $0x377
+=======
+f0101eaf:	68 58 03 00 00       	push   $0x358
+>>>>>>> lab2
 f0101eb4:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101eb9:	e8 cd e1 ff ff       	call   f010008b <_panic>
 	assert(pp2->pp_ref == 0);
@@ -3844,7 +4483,11 @@ f0101ebe:	66 83 7e 04 00       	cmpw   $0x0,0x4(%esi)
 f0101ec3:	74 19                	je     f0101ede <mem_init+0xe51>
 f0101ec5:	68 aa 3d 10 f0       	push   $0xf0103daa
 f0101eca:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101ecf:	68 78 03 00 00       	push   $0x378
+=======
+f0101ecf:	68 59 03 00 00       	push   $0x359
+>>>>>>> lab2
 f0101ed4:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101ed9:	e8 ad e1 ff ff       	call   f010008b <_panic>
 
@@ -3860,7 +4503,11 @@ f0101eef:	85 c0                	test   %eax,%eax
 f0101ef1:	75 19                	jne    f0101f0c <mem_init+0xe7f>
 f0101ef3:	68 04 44 10 f0       	push   $0xf0104404
 f0101ef8:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101efd:	68 7b 03 00 00       	push   $0x37b
+=======
+f0101efd:	68 5c 03 00 00       	push   $0x35c
+>>>>>>> lab2
 f0101f02:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101f07:	e8 7f e1 ff ff       	call   f010008b <_panic>
 
@@ -3874,7 +4521,11 @@ f0101f19:	85 c0                	test   %eax,%eax
 f0101f1b:	74 19                	je     f0101f36 <mem_init+0xea9>
 f0101f1d:	68 fe 3c 10 f0       	push   $0xf0103cfe
 f0101f22:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101f27:	68 7e 03 00 00       	push   $0x37e
+=======
+f0101f27:	68 5f 03 00 00       	push   $0x35f
+>>>>>>> lab2
 f0101f2c:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101f31:	e8 55 e1 ff ff       	call   f010008b <_panic>
 
@@ -3891,7 +4542,11 @@ f0101f53:	39 c2                	cmp    %eax,%edx
 f0101f55:	74 19                	je     f0101f70 <mem_init+0xee3>
 f0101f57:	68 a8 40 10 f0       	push   $0xf01040a8
 f0101f5c:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101f61:	68 81 03 00 00       	push   $0x381
+=======
+f0101f61:	68 62 03 00 00       	push   $0x362
+>>>>>>> lab2
 f0101f66:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101f6b:	e8 1b e1 ff ff       	call   f010008b <_panic>
 	kern_pgdir[0] = 0;
@@ -3902,7 +4557,11 @@ f0101f79:	66 83 78 04 01       	cmpw   $0x1,0x4(%eax)
 f0101f7e:	74 19                	je     f0101f99 <mem_init+0xf0c>
 f0101f80:	68 61 3d 10 f0       	push   $0xf0103d61
 f0101f85:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0101f8a:	68 83 03 00 00       	push   $0x383
+=======
+f0101f8a:	68 64 03 00 00       	push   $0x364
+>>>>>>> lab2
 f0101f8f:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101f94:	e8 f2 e0 ff ff       	call   f010008b <_panic>
 	pp0->pp_ref = 0;
@@ -3942,7 +4601,11 @@ f0101fe5:	72 15                	jb     f0101ffc <mem_init+0xf6f>
 		_panic(file, line, "KADDR called with invalid pa %08lx", pa);
 f0101fe7:	52                   	push   %edx
 f0101fe8:	68 68 3e 10 f0       	push   $0xf0103e68
+<<<<<<< HEAD
 f0101fed:	68 8a 03 00 00       	push   $0x38a
+=======
+f0101fed:	68 6b 03 00 00       	push   $0x36b
+>>>>>>> lab2
 f0101ff2:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101ff7:	e8 8f e0 ff ff       	call   f010008b <_panic>
 	assert(ptep == ptep1 + PTX(va));
@@ -3951,7 +4614,11 @@ f0102002:	39 55 c8             	cmp    %edx,-0x38(%ebp)
 f0102005:	74 19                	je     f0102020 <mem_init+0xf93>
 f0102007:	68 ed 3d 10 f0       	push   $0xf0103ded
 f010200c:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0102011:	68 8b 03 00 00       	push   $0x38b
+=======
+f0102011:	68 6c 03 00 00       	push   $0x36c
+>>>>>>> lab2
 f0102016:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010201b:	e8 6b e0 ff ff       	call   f010008b <_panic>
 	kern_pgdir[PDX(va)] = 0;
@@ -4041,7 +4708,11 @@ f01020cb:	f6 00 01             	testb  $0x1,(%eax)
 f01020ce:	74 19                	je     f01020e9 <mem_init+0x105c>
 f01020d0:	68 05 3e 10 f0       	push   $0xf0103e05
 f01020d5:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f01020da:	68 95 03 00 00       	push   $0x395
+=======
+f01020da:	68 76 03 00 00       	push   $0x376
+>>>>>>> lab2
 f01020df:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01020e4:	e8 a2 df ff ff       	call   f010008b <_panic>
 f01020e9:	83 c0 04             	add    $0x4,%eax
@@ -4085,7 +4756,11 @@ f010212d:	e8 49 06 00 00       	call   f010277b <cprintf>
 	//      (ie. perm = PTE_U | PTE_P)
 	//    - pages itself -- kernel RW, user NONE
 	// Your code goes here:
+<<<<<<< HEAD
 	//这里将内核页表映射到用户只读的线性地址UPAGES处，大小为页表总大小
+=======
+	//              内核字典  虚拟地址 映射大小  页表物理地址 权限为PTE_U|PTE_P
+>>>>>>> lab2
 	boot_map_region(kern_pgdir, UPAGES, PageInfo_Size, PADDR(pages), (PTE_U|PTE_P));
 f0102132:	a1 6c 69 11 f0       	mov    0xf011696c,%eax
 #define PADDR(kva) _paddr(__FILE__, __LINE__, kva)
@@ -4100,7 +4775,11 @@ f010213f:	77 15                	ja     f0102156 <mem_init+0x10c9>
 		_panic(file, line, "PADDR called with invalid kva %08lx", kva);
 f0102141:	50                   	push   %eax
 f0102142:	68 ac 3f 10 f0       	push   $0xf0103fac
+<<<<<<< HEAD
 f0102147:	68 bd 00 00 00       	push   $0xbd
+=======
+f0102147:	68 b8 00 00 00       	push   $0xb8
+>>>>>>> lab2
 f010214c:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0102151:	e8 35 df ff ff       	call   f010008b <_panic>
 f0102156:	83 ec 08             	sub    $0x8,%esp
@@ -4124,6 +4803,7 @@ f0102180:	77 15                	ja     f0102197 <mem_init+0x110a>
 		_panic(file, line, "PADDR called with invalid kva %08lx", kva);
 f0102182:	50                   	push   %eax
 f0102183:	68 ac 3f 10 f0       	push   $0xf0103fac
+<<<<<<< HEAD
 f0102188:	68 cb 00 00 00       	push   $0xcb
 f010218d:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0102192:	e8 f4 de ff ff       	call   f010008b <_panic>
@@ -4132,6 +4812,16 @@ f0102192:	e8 f4 de ff ff       	call   f010008b <_panic>
 	// Your code goes here:
 	//映射的范围：* [KSTACKTOP-KSTKSIZE, KSTACKTOP)
 	//内核页表映射到栈地址，内核栈从虚拟地址KSTACKTOP开始向下增长
+=======
+f0102188:	68 c5 00 00 00       	push   $0xc5
+f010218d:	68 5e 3b 10 f0       	push   $0xf0103b5e
+f0102192:	e8 f4 de ff ff       	call   f010008b <_panic>
+	//       the kernel overflows its stack, it will fault rather than
+	//       overwrite memory.  Known as a "guard page".
+	//     Permissions: kernel RW, user NONE
+	// Your code goes here:
+	//内核地址映射到栈地址，内核栈从虚拟地址KSTACKTOP开始向下增长
+>>>>>>> lab2
 	boot_map_region(kern_pgdir, KSTACKTOP-KSTKSIZE, KSTKSIZE, PADDR(bootstack), (PTE_W|PTE_P));
 f0102197:	83 ec 08             	sub    $0x8,%esp
 f010219a:	6a 03                	push   $0x3
@@ -4196,7 +4886,11 @@ f0102214:	77 15                	ja     f010222b <mem_init+0x119e>
 		_panic(file, line, "PADDR called with invalid kva %08lx", kva);
 f0102216:	57                   	push   %edi
 f0102217:	68 ac 3f 10 f0       	push   $0xf0103fac
+<<<<<<< HEAD
 f010221c:	68 d7 02 00 00       	push   $0x2d7
+=======
+f010221c:	68 b8 02 00 00       	push   $0x2b8
+>>>>>>> lab2
 f0102221:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0102226:	e8 60 de ff ff       	call   f010008b <_panic>
 f010222b:	8d 94 1f 00 00 00 10 	lea    0x10000000(%edi,%ebx,1),%edx
@@ -4204,7 +4898,11 @@ f0102232:	39 c2                	cmp    %eax,%edx
 f0102234:	74 19                	je     f010224f <mem_init+0x11c2>
 f0102236:	68 28 44 10 f0       	push   $0xf0104428
 f010223b:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0102240:	68 d7 02 00 00       	push   $0x2d7
+=======
+f0102240:	68 b8 02 00 00       	push   $0x2b8
+>>>>>>> lab2
 f0102245:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010224a:	e8 3c de ff ff       	call   f010008b <_panic>
 
@@ -4233,7 +4931,11 @@ f0102274:	39 c3                	cmp    %eax,%ebx
 f0102276:	74 19                	je     f0102291 <mem_init+0x1204>
 f0102278:	68 5c 44 10 f0       	push   $0xf010445c
 f010227d:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0102282:	68 dc 02 00 00       	push   $0x2dc
+=======
+f0102282:	68 bd 02 00 00       	push   $0x2bd
+>>>>>>> lab2
 f0102287:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010228c:	e8 fa dd ff ff       	call   f010008b <_panic>
 	for (i = 0; i < n; i += PGSIZE)
@@ -4259,7 +4961,11 @@ f01022af:	39 c2                	cmp    %eax,%edx
 f01022b1:	74 19                	je     f01022cc <mem_init+0x123f>
 f01022b3:	68 84 44 10 f0       	push   $0xf0104484
 f01022b8:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f01022bd:	68 e0 02 00 00       	push   $0x2e0
+=======
+f01022bd:	68 c1 02 00 00       	push   $0x2c1
+>>>>>>> lab2
 f01022c2:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01022c7:	e8 bf dd ff ff       	call   f010008b <_panic>
 f01022cc:	81 c3 00 10 00 00    	add    $0x1000,%ebx
@@ -4280,7 +4986,11 @@ f01022e6:	83 f8 ff             	cmp    $0xffffffff,%eax
 f01022e9:	74 51                	je     f010233c <mem_init+0x12af>
 f01022eb:	68 cc 44 10 f0       	push   $0xf01044cc
 f01022f0:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f01022f5:	68 e1 02 00 00       	push   $0x2e1
+=======
+f01022f5:	68 c2 02 00 00       	push   $0x2c2
+>>>>>>> lab2
 f01022fa:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01022ff:	e8 87 dd ff ff       	call   f010008b <_panic>
 
@@ -4301,7 +5011,11 @@ f0102319:	f6 04 86 01          	testb  $0x1,(%esi,%eax,4)
 f010231d:	0f 85 83 00 00 00    	jne    f01023a6 <mem_init+0x1319>
 f0102323:	68 35 3e 10 f0       	push   $0xf0103e35
 f0102328:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f010232d:	68 e9 02 00 00       	push   $0x2e9
+=======
+f010232d:	68 ca 02 00 00       	push   $0x2ca
+>>>>>>> lab2
 f0102332:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0102337:	e8 4f dd ff ff       	call   f010008b <_panic>
 		assert(check_va2pa(pgdir, KERNBASE + i) == i);
@@ -4325,7 +5039,11 @@ f010234b:	f6 c2 01             	test   $0x1,%dl
 f010234e:	75 19                	jne    f0102369 <mem_init+0x12dc>
 f0102350:	68 35 3e 10 f0       	push   $0xf0103e35
 f0102355:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f010235a:	68 ed 02 00 00       	push   $0x2ed
+=======
+f010235a:	68 ce 02 00 00       	push   $0x2ce
+>>>>>>> lab2
 f010235f:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0102364:	e8 22 dd ff ff       	call   f010008b <_panic>
 				assert(pgdir[i] & PTE_W);
@@ -4333,7 +5051,11 @@ f0102369:	f6 c2 02             	test   $0x2,%dl
 f010236c:	75 38                	jne    f01023a6 <mem_init+0x1319>
 f010236e:	68 46 3e 10 f0       	push   $0xf0103e46
 f0102373:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0102378:	68 ee 02 00 00       	push   $0x2ee
+=======
+f0102378:	68 cf 02 00 00       	push   $0x2cf
+>>>>>>> lab2
 f010237d:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0102382:	e8 04 dd ff ff       	call   f010008b <_panic>
 			} else
@@ -4342,7 +5064,11 @@ f0102387:	83 3c 86 00          	cmpl   $0x0,(%esi,%eax,4)
 f010238b:	74 19                	je     f01023a6 <mem_init+0x1319>
 f010238d:	68 57 3e 10 f0       	push   $0xf0103e57
 f0102392:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0102397:	68 f0 02 00 00       	push   $0x2f0
+=======
+f0102397:	68 d1 02 00 00       	push   $0x2d1
+>>>>>>> lab2
 f010239c:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01023a1:	e8 e5 dc ff ff       	call   f010008b <_panic>
 	for (i = 0; i < KSTKSIZE; i += PGSIZE)
@@ -4382,7 +5108,11 @@ f01023ce:	77 15                	ja     f01023e5 <mem_init+0x1358>
 		_panic(file, line, "PADDR called with invalid kva %08lx", kva);
 f01023d0:	50                   	push   %eax
 f01023d1:	68 ac 3f 10 f0       	push   $0xf0103fac
+<<<<<<< HEAD
 f01023d6:	68 e0 00 00 00       	push   $0xe0
+=======
+f01023d6:	68 da 00 00 00       	push   $0xda
+>>>>>>> lab2
 f01023db:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01023e0:	e8 a6 dc ff ff       	call   f010008b <_panic>
 }
@@ -4428,7 +5158,11 @@ f0102414:	85 c0                	test   %eax,%eax
 f0102416:	75 19                	jne    f0102431 <mem_init+0x13a4>
 f0102418:	68 53 3c 10 f0       	push   $0xf0103c53
 f010241d:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0102422:	68 b0 03 00 00       	push   $0x3b0
+=======
+f0102422:	68 91 03 00 00       	push   $0x391
+>>>>>>> lab2
 f0102427:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010242c:	e8 5a dc ff ff       	call   f010008b <_panic>
 	assert((pp1 = page_alloc(0)));
@@ -4441,7 +5175,11 @@ f0102440:	85 c0                	test   %eax,%eax
 f0102442:	75 19                	jne    f010245d <mem_init+0x13d0>
 f0102444:	68 69 3c 10 f0       	push   $0xf0103c69
 f0102449:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f010244e:	68 b1 03 00 00       	push   $0x3b1
+=======
+f010244e:	68 92 03 00 00       	push   $0x392
+>>>>>>> lab2
 f0102453:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0102458:	e8 2e dc ff ff       	call   f010008b <_panic>
 	assert((pp2 = page_alloc(0)));
@@ -4454,7 +5192,11 @@ f010246c:	85 c0                	test   %eax,%eax
 f010246e:	75 19                	jne    f0102489 <mem_init+0x13fc>
 f0102470:	68 7f 3c 10 f0       	push   $0xf0103c7f
 f0102475:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f010247a:	68 b2 03 00 00       	push   $0x3b2
+=======
+f010247a:	68 93 03 00 00       	push   $0x393
+>>>>>>> lab2
 f010247f:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0102484:	e8 02 dc ff ff       	call   f010008b <_panic>
 	page_free(pp0);
@@ -4541,7 +5283,11 @@ f0102532:	66 83 7f 04 01       	cmpw   $0x1,0x4(%edi)
 f0102537:	74 19                	je     f0102552 <mem_init+0x14c5>
 f0102539:	68 50 3d 10 f0       	push   $0xf0103d50
 f010253e:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0102543:	68 b7 03 00 00       	push   $0x3b7
+=======
+f0102543:	68 98 03 00 00       	push   $0x398
+>>>>>>> lab2
 f0102548:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010254d:	e8 39 db ff ff       	call   f010008b <_panic>
 	assert(*(uint32_t *)PGSIZE == 0x01010101U);
@@ -4550,7 +5296,11 @@ f0102559:	01 01 01
 f010255c:	74 19                	je     f0102577 <mem_init+0x14ea>
 f010255e:	68 1c 45 10 f0       	push   $0xf010451c
 f0102563:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0102568:	68 b8 03 00 00       	push   $0x3b8
+=======
+f0102568:	68 99 03 00 00       	push   $0x399
+>>>>>>> lab2
 f010256d:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0102572:	e8 14 db ff ff       	call   f010008b <_panic>
 	page_insert(kern_pgdir, pp2, (void*) PGSIZE, PTE_W);
@@ -4566,7 +5316,11 @@ f0102594:	02 02 02
 f0102597:	74 19                	je     f01025b2 <mem_init+0x1525>
 f0102599:	68 40 45 10 f0       	push   $0xf0104540
 f010259e:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f01025a3:	68 ba 03 00 00       	push   $0x3ba
+=======
+f01025a3:	68 9b 03 00 00       	push   $0x39b
+>>>>>>> lab2
 f01025a8:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01025ad:	e8 d9 da ff ff       	call   f010008b <_panic>
 	assert(pp2->pp_ref == 1);
@@ -4574,7 +5328,11 @@ f01025b2:	66 83 7e 04 01       	cmpw   $0x1,0x4(%esi)
 f01025b7:	74 19                	je     f01025d2 <mem_init+0x1545>
 f01025b9:	68 72 3d 10 f0       	push   $0xf0103d72
 f01025be:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f01025c3:	68 bb 03 00 00       	push   $0x3bb
+=======
+f01025c3:	68 9c 03 00 00       	push   $0x39c
+>>>>>>> lab2
 f01025c8:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01025cd:	e8 b9 da ff ff       	call   f010008b <_panic>
 	assert(pp1->pp_ref == 0);
@@ -4582,7 +5340,11 @@ f01025d2:	66 83 7f 04 00       	cmpw   $0x0,0x4(%edi)
 f01025d7:	74 19                	je     f01025f2 <mem_init+0x1565>
 f01025d9:	68 dc 3d 10 f0       	push   $0xf0103ddc
 f01025de:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f01025e3:	68 bc 03 00 00       	push   $0x3bc
+=======
+f01025e3:	68 9d 03 00 00       	push   $0x39d
+>>>>>>> lab2
 f01025e8:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01025ed:	e8 99 da ff ff       	call   f010008b <_panic>
 	*(uint32_t *)PGSIZE = 0x03030303U;
@@ -4620,7 +5382,11 @@ f0102630:	03 03 03
 f0102633:	74 19                	je     f010264e <mem_init+0x15c1>
 f0102635:	68 64 45 10 f0       	push   $0xf0104564
 f010263a:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f010263f:	68 be 03 00 00       	push   $0x3be
+=======
+f010263f:	68 9f 03 00 00       	push   $0x39f
+>>>>>>> lab2
 f0102644:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0102649:	e8 3d da ff ff       	call   f010008b <_panic>
 	page_remove(kern_pgdir, (void*) PGSIZE);
@@ -4634,7 +5400,11 @@ f0102664:	66 83 7e 04 00       	cmpw   $0x0,0x4(%esi)
 f0102669:	74 19                	je     f0102684 <mem_init+0x15f7>
 f010266b:	68 aa 3d 10 f0       	push   $0xf0103daa
 f0102670:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f0102675:	68 c0 03 00 00       	push   $0x3c0
+=======
+f0102675:	68 a1 03 00 00       	push   $0x3a1
+>>>>>>> lab2
 f010267a:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010267f:	e8 07 da ff ff       	call   f010008b <_panic>
 
@@ -4651,7 +5421,11 @@ f01026a0:	39 c2                	cmp    %eax,%edx
 f01026a2:	74 19                	je     f01026bd <mem_init+0x1630>
 f01026a4:	68 a8 40 10 f0       	push   $0xf01040a8
 f01026a9:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f01026ae:	68 c3 03 00 00       	push   $0x3c3
+=======
+f01026ae:	68 a4 03 00 00       	push   $0x3a4
+>>>>>>> lab2
 f01026b3:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01026b8:	e8 ce d9 ff ff       	call   f010008b <_panic>
 	kern_pgdir[0] = 0;
@@ -4661,7 +5435,11 @@ f01026c3:	66 83 7b 04 01       	cmpw   $0x1,0x4(%ebx)
 f01026c8:	74 19                	je     f01026e3 <mem_init+0x1656>
 f01026ca:	68 61 3d 10 f0       	push   $0xf0103d61
 f01026cf:	68 84 3b 10 f0       	push   $0xf0103b84
+<<<<<<< HEAD
 f01026d4:	68 c5 03 00 00       	push   $0x3c5
+=======
+f01026d4:	68 a6 03 00 00       	push   $0x3a6
+>>>>>>> lab2
 f01026d9:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01026de:	e8 a8 d9 ff ff       	call   f010008b <_panic>
 	pp0->pp_ref = 0;
