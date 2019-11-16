@@ -396,6 +396,7 @@ pgdir_walk(pde_t *pgdir, const void *va, int create)
 	*对应的物理地址，最后物理地址加上偏移量便找到了虚拟地址对应的物理地址
 	*pgdir_walk根据pgdir和虚拟地址va获得虚拟地址va所在的页表项的物理地址
 	*/
+// Fill this function in
 	int pd_index = PDX(va); //PDX根据虚拟地址头10位找到页目录索引
     int pte_index = PTX(va);//PTX根据虚拟地址11-20位找到页表索引
     if (pgdir[pd_index] & PTE_P) {  //如果页目录存在且具有操作权限
