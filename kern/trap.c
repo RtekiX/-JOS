@@ -58,14 +58,54 @@ static const char *trapname(int trapno)
 	return "(unknown trap)";
 }
 
-
+//初始化IDT，使其指向每一个定义在trapentry.S中的入口点
 void
 trap_init(void)
 {
 	extern struct Segdesc gdt[];
 
 	// LAB 3: Your code here.
-
+	void t_divide();
+    void t_debug();
+    void t_nmi();
+    void t_brkpt();
+    void t_oflow();
+    void t_bound();
+    void t_illop();
+    void t_device();
+    void t_dblflt();
+    void t_tss();
+    void t_segnp();
+    void t_stack();
+    void t_gpflt();
+    void t_pgflt();
+    void t_fperr();
+    void t_align();
+    void t_mchk();
+    void t_simderr();
+    void t_syscall();
+	//SETGATE(gate, istrap, sel, off, dpl)
+	//gate为入口，istrap 0表示是中断入口，
+	//sel是中断处理函数的段选择子，off是中断处理函数的偏移量，dpl是权限等级
+    SETGATE(idt[T_DIVIDE], 0, GD_KT, t_divide, 0);
+    SETGATE(idt[T_DEBUG], 0, GD_KT, t_debug, 0);
+    SETGATE(idt[T_NMI], 0, GD_KT, t_nmi, 0);
+    SETGATE(idt[T_BRKPT], 1, GD_KT, t_brkpt, 3);
+    SETGATE(idt[T_OFLOW], 0, GD_KT, t_oflow, 0);
+    SETGATE(idt[T_BOUND], 0, GD_KT, t_bound, 0);
+    SETGATE(idt[T_ILLOP], 0, GD_KT, t_illop, 0);
+    SETGATE(idt[T_DEVICE], 0, GD_KT, t_device, 0);
+    SETGATE(idt[T_DBLFLT], 0, GD_KT, t_dblflt, 0);
+    SETGATE(idt[T_TSS], 0, GD_KT, t_tss, 0);
+    SETGATE(idt[T_SEGNP], 0, GD_KT, t_segnp, 0);
+    SETGATE(idt[T_STACK], 0, GD_KT, t_stack, 0);
+    SETGATE(idt[T_GPFLT], 0, GD_KT, t_gpflt, 0);
+    SETGATE(idt[T_PGFLT], 0, GD_KT, t_pgflt, 0);
+    SETGATE(idt[T_FPERR], 0, GD_KT, t_fperr, 0);
+    SETGATE(idt[T_ALIGN], 0, GD_KT, t_align, 0);
+    SETGATE(idt[T_MCHK], 0, GD_KT, t_mchk, 0);
+    SETGATE(idt[T_SIMDERR], 0, GD_KT, t_simderr, 0);
+    SETGATE(idt[T_SYSCALL], 0, GD_KT, t_syscall, 3);
 	// Per-CPU setup 
 	trap_init_percpu();
 }
@@ -137,13 +177,34 @@ print_regs(struct PushRegs *regs)
 	cprintf("  ecx  0x%08x\n", regs->reg_ecx);
 	cprintf("  eax  0x%08x\n", regs->reg_eax);
 }
-
+//trap_dispatch根据中断向量号分配处理函数
 static void
 trap_dispatch(struct Trapframe *tf)
 {
 	// Handle processor exceptions.
 	// LAB 3: Your code here.
-
+	if (tf->tf_trapno == T_PGFLT) 
+	{ //处理缺页异常
+        page_fault_handler(tf);
+        return;
+    }
+	if (tf->tf_trapno == T_BRKPT) 
+	{ //处理断点异常
+        monitor(tf);
+        return;
+    }
+	if(tf->tf_trapno == T_SYSCALL)
+	{   //处理系统调用
+		//调用syscall函数，将返回值保存在eax寄存器中
+		tf->tf_regs.reg_eax = syscall(
+		tf->tf_regs.reg_eax, 
+        tf->tf_regs.reg_edx,
+        tf->tf_regs.reg_ecx,
+        tf->tf_regs.reg_ebx,
+        tf->tf_regs.reg_edi,
+        tf->tf_regs.reg_esi);
+		return;
+	}
 	// Unexpected trap: The user process or the kernel has a bug.
 	print_trapframe(tf);
 	if (tf->tf_cs == GD_KT)
@@ -204,7 +265,10 @@ page_fault_handler(struct Trapframe *tf)
 	// Handle kernel-mode page faults.
 
 	// LAB 3: Your code here.
-
+	if((tf->tf_cs & 3) == 0)//如果缺页发生在内核，panic
+	{
+		panic("page fault happened in kernel");
+	}
 	// We've already handled kernel-mode exceptions, so if we get here,
 	// the page fault happened in user mode.
 

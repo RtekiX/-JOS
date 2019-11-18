@@ -46,10 +46,45 @@
 /*
  * Lab 3: Your code here for generating entry points for the different traps.
  */
-
+TRAPHANDLER_NOEC(t_divide, T_DIVIDE)   // 0
+TRAPHANDLER_NOEC(t_debug, T_DEBUG)     // 1
+TRAPHANDLER_NOEC(t_nmi, T_NMI)         // 2
+TRAPHANDLER_NOEC(t_brkpt, T_BRKPT)     // 3
+TRAPHANDLER_NOEC(t_oflow, T_OFLOW)     // 4
+TRAPHANDLER_NOEC(t_bound, T_BOUND)     // 5
+TRAPHANDLER_NOEC(t_illop, T_ILLOP)     // 6
+TRAPHANDLER_NOEC(t_device, T_DEVICE)   // 7
+TRAPHANDLER(t_dblflt, T_DBLFLT)        // 8
+                                       // 9
+TRAPHANDLER(t_tss, T_TSS)              // 10
+TRAPHANDLER(t_segnp, T_SEGNP)          // 11
+TRAPHANDLER(t_stack, T_STACK)          // 12
+TRAPHANDLER(t_gpflt, T_GPFLT)          // 13
+TRAPHANDLER(t_pgflt, T_PGFLT)          // 14
+                                       // 15
+TRAPHANDLER_NOEC(t_fperr, T_FPERR)     // 16
+TRAPHANDLER(t_align, T_ALIGN)          // 17
+TRAPHANDLER_NOEC(t_mchk, T_MCHK)       // 18
+TRAPHANDLER_NOEC(t_simderr, T_SIMDERR) // 19
+//...
+TRAPHANDLER_NOEC(t_syscall, T_SYSCALL) // 48
 
 
 /*
  * Lab 3: Your code here for _alltraps
  */
-
+/*参考inc/trap.h，将寄存器压栈形成一个Trapframe的结构
+ *寄存器tf_ss，tf_esp，tf_eflags，tf_cs，tf_eip，tf_err
+ *在中断发生时由CPU压入。只需压栈剩下的寄存器
+ */
+_alltraps:
+    pushl %ds
+    pushl %es
+    pushal //把AX,CX,DX,BX,SP,BP,SI,DI压栈
+	//加载GD_KD到ds和es
+    pushl $GD_KD
+    popl %ds
+    pushl $GD_KD
+    popl %es
+    pushl %esp //压入trap()的参数tf，%esp指向Trapframe结构的起始地址
+    call trap  //调用trap

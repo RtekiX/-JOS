@@ -167,8 +167,13 @@ mem_init(void)
 	memset(pages, 0, PageInfo_Size); //将物理页表初始化为0
 	//////////////////////////////////////////////////////////////////////
 	// Make 'envs' point to an array of size 'NENV' of 'struct Env'.
+	//为Env结构体的数组envs分配空间，这一步与给页表分配空间类似
 	// LAB 3: Your code here.
-
+	uint32_t Env_size = sizeof(struct Env) * NENV; //进程数组大小为进程结构体*进程数量NENV
+	envs = (struct Env*)boot_alloc(Env_size); //为进程数组分配等大的空间
+    memset(envs, 0, Env_size); //将进程数组初始化为0
+	//并将页表中的线性地址UENVS映射到进程数组envs的起始地址
+	boot_map_region(kern_pgdir, UENVS, PTSIZE, PADDR(envs), PTE_U);
 	//////////////////////////////////////////////////////////////////////
 	// Now that we've allocated the initial kernel data structures, we set
 	// up the list of free physical pages. Once we've done so, all further
@@ -598,11 +603,30 @@ static uintptr_t user_mem_check_addr;
 // Returns 0 if the user program can access this range of addresses,
 // and -E_FAULT otherwise.
 //
+//内核检查一个指针指向的是否是用户空间
 int
 user_mem_check(struct Env *env, const void *va, size_t len, int perm)
 {
 	// LAB 3: Your code here.
-
+	uintptr_t begin = (uintptr_t)ROUNDDOWN(va, PGSIZE);
+	uintptr_t end = (uintptr_t)ROUNDUP(va + len, PGSIZE);
+	for(uintptr_t i = begin;i < end;i += PGSIZE)
+	{
+		pte_t *pte = pgdir_walk(env->env_pgdir, (void*)i, 0);//找到虚拟地址对应的物理页
+		if(pte == NULL||i >= ULIM||(*pte & (perm|PTE_P))!=(perm|PTE_P))
+		{ //如果不存在该页，或者虚拟地址不在用户空间，或者没有权限操作
+			//将该虚拟地址设为无效
+			if(i < (uintptr_t)va)
+			{
+				user_mem_check_addr = (uintptr_t)va;
+			}
+			else
+			{
+				user_mem_check_addr = (uintptr_t)i;
+			}
+			return -E_FAULT;
+		}
+	}
 	return 0;
 }
 

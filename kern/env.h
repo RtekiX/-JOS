@@ -1,13 +1,13 @@
 /* See COPYRIGHT for copyright information. */
-
+//用户模式进程的内核私有定义
 #ifndef JOS_KERN_ENV_H
 #define JOS_KERN_ENV_H
 
 #include <inc/env.h>
 
-extern struct Env *envs;		// All environments
-extern struct Env *curenv;		// Current environment
-extern struct Segdesc gdt[];
+extern struct Env *envs;		// All environments 保存所有进程的链表
+extern struct Env *curenv;		// Current environment 指向当前执行的进程
+extern struct Segdesc gdt[]; //段描述符
 
 void	env_init(void);
 void	env_init_percpu(void);
