@@ -172,8 +172,6 @@ mem_init(void)
 	uint32_t Env_size = sizeof(struct Env) * NENV; //进程数组大小为进程结构体*进程数量NENV
 	envs = (struct Env*)boot_alloc(Env_size); //为进程数组分配等大的空间
     memset(envs, 0, Env_size); //将进程数组初始化为0
-	//并将页表中的线性地址UENVS映射到进程数组envs的起始地址
-	boot_map_region(kern_pgdir, UENVS, PTSIZE, PADDR(envs), PTE_U);
 	//////////////////////////////////////////////////////////////////////
 	// Now that we've allocated the initial kernel data structures, we set
 	// up the list of free physical pages. Once we've done so, all further
@@ -205,7 +203,8 @@ mem_init(void)
 	//    - the new image at UENVS  -- kernel R, user R
 	//    - envs itself -- kernel RW, user NONE
 	// LAB 3: Your code here.
-
+	//并将页表中的线性地址UENVS映射到进程数组envs的起始地址
+	boot_map_region(kern_pgdir, UENVS, PTSIZE, PADDR(envs), PTE_U);
 	//////////////////////////////////////////////////////////////////////
 	// Use the physical memory that 'bootstack' refers to as the kernel
 	// stack.  The kernel stack grows down from virtual address KSTACKTOP.
