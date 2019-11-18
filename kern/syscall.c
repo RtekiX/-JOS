@@ -21,7 +21,7 @@ sys_cputs(const char *s, size_t len)
 	// Destroy the environment if not.
 
 	// LAB 3: Your code here.
-	user_mem_assert(curenv, s, len, PTE_U); //对指针进行检查
+	user_mem_assert(curenv, s, len, PTE_U);
 	// Print the string supplied by the user.
 	cprintf("%.*s", len, s);
 }
@@ -69,11 +69,8 @@ syscall(uint32_t syscallno, uint32_t a1, uint32_t a2, uint32_t a3, uint32_t a4, 
 	// Call the function corresponding to the 'syscallno' parameter.
 	// Return any appropriate return value.
 	// LAB 3: Your code here.
-	//panic("syscall not implemented");
 	int32_t ret = 0;
 	switch (syscallno) { 
-	//根据系统调用号调用相应处理函数
-	//返回任何合理的值，如果没有相应调用号，返回-E_NO_SYS
 		case SYS_cputs:
 			sys_cputs((const char*)a1, a2);
 			break;
@@ -90,5 +87,6 @@ syscall(uint32_t syscallno, uint32_t a1, uint32_t a2, uint32_t a3, uint32_t a4, 
 			return -E_NO_SYS;
 	}
 	return ret;
+	//panic("syscall not implemented");
 }
 

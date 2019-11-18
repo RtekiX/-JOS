@@ -58,7 +58,7 @@ static const char *trapname(int trapno)
 	return "(unknown trap)";
 }
 
-//初始化IDT，使其指向每一个定义在trapentry.S中的入口点
+
 void
 trap_init(void)
 {
@@ -84,9 +84,6 @@ trap_init(void)
     void t_mchk();
     void t_simderr();
     void t_syscall();
-	//SETGATE(gate, istrap, sel, off, dpl)
-	//gate为入口，istrap 0表示是中断入口，
-	//sel是中断处理函数的段选择子，off是中断处理函数的偏移量，dpl是权限等级
     SETGATE(idt[T_DIVIDE], 0, GD_KT, t_divide, 0);
     SETGATE(idt[T_DEBUG], 0, GD_KT, t_debug, 0);
     SETGATE(idt[T_NMI], 0, GD_KT, t_nmi, 0);
@@ -177,27 +174,26 @@ print_regs(struct PushRegs *regs)
 	cprintf("  ecx  0x%08x\n", regs->reg_ecx);
 	cprintf("  eax  0x%08x\n", regs->reg_eax);
 }
-//trap_dispatch根据中断向量号分配处理函数
+
 static void
 trap_dispatch(struct Trapframe *tf)
 {
 	// Handle processor exceptions.
 	// LAB 3: Your code here.
 	if (tf->tf_trapno == T_PGFLT) 
-	{ //处理缺页异常
+	{ 
         page_fault_handler(tf);
         return;
-    }
+   	 }
 	if (tf->tf_trapno == T_BRKPT) 
-	{ //处理断点异常
-        monitor(tf);
-        return;
-    }
+	{ 	
+        	monitor(tf);
+        	return;
+    	}
 	if(tf->tf_trapno == T_SYSCALL)
-	{   //处理系统调用
-		//调用syscall函数，将返回值保存在eax寄存器中
-		tf->tf_regs.reg_eax = syscall(
-		tf->tf_regs.reg_eax, 
+	{   
+	tf->tf_regs.reg_eax = syscall(
+	tf->tf_regs.reg_eax, 
         tf->tf_regs.reg_edx,
         tf->tf_regs.reg_ecx,
         tf->tf_regs.reg_ebx,
@@ -265,7 +261,7 @@ page_fault_handler(struct Trapframe *tf)
 	// Handle kernel-mode page faults.
 
 	// LAB 3: Your code here.
-	if((tf->tf_cs & 3) == 0)//如果缺页发生在内核，panic
+	if((tf->tf_cs & 3) == 0)
 	{
 		panic("page fault happened in kernel");
 	}

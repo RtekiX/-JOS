@@ -1,5 +1,5 @@
 /* See COPYRIGHT for copyright information. */
-//用户模式进程的内核代码实现
+
 #include <inc/x86.h>
 #include <inc/mmu.h>
 #include <inc/error.h>
@@ -12,15 +12,15 @@
 #include <kern/trap.h>
 #include <kern/monitor.h>
 
-struct Env *envs = NULL;		// All environments所有进程
-struct Env *curenv = NULL;		// The current env当前执行的进程
-static struct Env *env_free_list;	// Free environment list空闲进程链表
-					// (linked by Env->env_link)由进程结构体中的env_link连接
+struct Env *envs = NULL;		// All environments
+struct Env *curenv = NULL;		// The current env
+static struct Env *env_free_list;	// Free environment list
+					// (linked by Env->env_link)
 
 #define ENVGENSHIFT	12		// >= LOGNENV
 
 // Global descriptor table.
-// 内核和用户模式使用分别单独的段设置全局段描述表GDT，在这里用于切换特权级别
+//
 // Set up global descriptor table (GDT) with separate segments for
 // kernel mode and user mode.  Segments serve many purposes on the x86.
 // We don't use any of their memory-mapping capabilities, but we need
@@ -111,26 +111,20 @@ envid2env(envid_t envid, struct Env **env_store, bool checkperm)
 // they are in the envs array (i.e., so that the first call to
 // env_alloc() returns envs[0]).
 //
-//将所有envs数组中的进程设置为空闲，id设为0
-//然后插入到env_free_list中
 void
 env_init(void)
 {
 	// Set up envs array
 	// LAB 3: Your code here.
-	env_free_list = NULL; //最开始env_free_list为空
+	env_free_list = NULL; 
 	for(int i = NENV - 1;i >= 0;i--)
 	{
-		//为了保证调用env_alloc()是按照0-NENV的顺序
-		//将ENV从最后一个Env开始依次插入到env_free_list中
-		envs[i].env_id = 0;  //id设为0
-		envs[i].env_link = env_free_list; //下一个空闲Env在env_free_list中寻找
-		envs[i].env_status = ENV_FREE; //进程状态为空闲
-		env_free_list = &envs[i]; //将当前Env插入env_free_list
+		envs[i].env_id = 0;  
+		envs[i].env_link = env_free_list; 
+		envs[i].env_status = ENV_FREE; 
+		env_free_list = &envs[i]; 
 	}
 	// Per-CPU part of the initialization
-	//这个函数通过配置段硬件，将其分隔为
-	//特权等级0(内核)和特权等级(用户)两个不同的段
 	env_init_percpu();
 }
 
@@ -165,7 +159,6 @@ env_init_percpu(void)
 // Returns 0 on success, < 0 on error.  Errors include:
 //	-E_NO_MEM if page directory or table could not be allocated.
 //
-//为一个进程创建并初始化一张页目录
 static int
 env_setup_vm(struct Env *e)
 {
@@ -173,7 +166,6 @@ env_setup_vm(struct Env *e)
 	struct PageInfo *p = NULL;
 
 	// Allocate a page for the page directory
-	//为页目录分配一个物理页
 	if (!(p = page_alloc(ALLOC_ZERO)))
 		return -E_NO_MEM;
 
@@ -192,11 +184,11 @@ env_setup_vm(struct Env *e)
 	//	is an exception -- you need to increment env_pgdir's
 	//	pp_ref for env_free to work correctly.
 	//    - The functions in kern/pmap.h are handy.
-	//            page2kva
+
 	// LAB 3: Your code here.
-	p->pp_ref++; //需要自增env_pgdir的pp_ref使其能正常工作
-	e->env_pgdir = page2kva(p); //env_pgdir指向进程页目录的虚拟地址
-	memcpy(e->env_pgdir, kern_pgdir, PGSIZE); //使用内核页目录作为模板创建进程页目录
+	p->pp_ref++; 
+	e->env_pgdir = page2kva(p); 
+	memcpy(e->env_pgdir, kern_pgdir, PGSIZE);
 	// UVPT maps the env's own page table read-only.
 	// Permissions: kernel R, user R
 	e->env_pgdir[PDX(UVPT)] = PADDR(e->env_pgdir) | PTE_P | PTE_U;
@@ -273,7 +265,7 @@ env_alloc(struct Env **newenv_store, envid_t parent_id)
 // Does not zero or otherwise initialize the mapped pages in any way.
 // Pages should be writable by user and kernel.
 // Panic if any allocation attempt fails.
-// 为进程分配len字节的物理内存，将其映射到进程空间的虚拟地址va
+//
 static void
 region_alloc(struct Env *e, void *va, size_t len)
 {
@@ -287,18 +279,16 @@ region_alloc(struct Env *e, void *va, size_t len)
 	int flag;
 	void *begin = ROUNDDOWN(va, PGSIZE);
 	void *end = ROUNDUP(va + len, PGSIZE);
-	//分配从线性地址begin到end之间的物理页
 	for(begin; begin < end; begin += PGSIZE)
 	{
 		struct PageInfo *NewPage = page_alloc(0);
 		if(NewPage == NULL)
-		{ //如果无法分配物理页，panic
+		{ 
 			panic("can't allocate a new page");
 		}
-		//建立线性地址bengin到物理页NewPage之间的映射，插入到进程页目录中
 		flag = page_insert(e->env_pgdir, NewPage, begin, PTE_W|PTE_U);
 		if(flag != 0)
-		{ //如果无法建立映射，panic
+		{ 
 			panic("map creation failed");
 		}
 	}
@@ -326,7 +316,6 @@ region_alloc(struct Env *e, void *va, size_t len)
 // load_icode panics if it encounters problems.
 //  - How might load_icode fail?  What might be wrong with the given input?
 //
-//load_icode将一个二进制映像加载到用户进程的内存空间中
 static void
 load_icode(struct Env *e, uint8_t *binary)
 {
@@ -359,35 +348,31 @@ load_icode(struct Env *e, uint8_t *binary)
 	//  What?  (See env_run() and env_pop_tf() below.)
 
 	// LAB 3: Your code here.
-	struct Elf *elf_header = (struct Elf*)binary; //获取binary的elf文件头
-	struct Proghdr *ph, *eph; //程序头，参照/boot/main.c
+	struct Elf *elf_header = (struct Elf*)binary; 
+	struct Proghdr *ph, *eph;
 	if (elf_header->e_magic != ELF_MAGIC)
 	{
-		panic("binary is not a elf file"); //如果读入的不是elf头文件格式，panic
+		panic("binary is not a elf file"); 
 	}
-	// 加载程序段
 	ph = (struct Proghdr*) ((uint8_t*)elf_header + elf_header->e_phoff);
 	eph = ph + elf_header->e_phnum;
-	lcr3(PADDR(e->env_pgdir)); //把进程页目录的起始地址存入CR3寄存器
+	lcr3(PADDR(e->env_pgdir)); 
 	for (; ph < eph; ph++)
 	{
-		if(ph->p_type == ELF_PROG_LOAD) //只加载允许加载的部分
+		if(ph->p_type == ELF_PROG_LOAD) 
 		{
-			//根据程序头的va和memsiz为进程e分配物理内存
 			region_alloc(e, (void*)ph->p_va, ph->p_memsz); 
-			//binary + ph->p_offset被复制到虚拟地址ph->p_va处
 			memmove((void*)ph->p_va, binary + ph->p_offset, ph->p_filesz);
-			//剩下的内存被清为0
-            memset((void*)(ph->p_va + ph->p_filesz), 0, ph->p_memsz - ph->p_filesz);
+            		memset((void*)(ph->p_va + ph->p_filesz), 0, ph->p_memsz - ph->p_filesz);
 		}
 	}
-	e->env_tf.tf_eip = elf_header->e_entry; //在eip寄存器中储存程序的入口
-	lcr3(PADDR(kern_pgdir)); //把内核页目录的起始地址存回CR3寄存器
+	e->env_tf.tf_eip = elf_header->e_entry; 
+	lcr3(PADDR(kern_pgdir)); 
 	// Now map one page for the program's initial stack
 	// at virtual address USTACKTOP - PGSIZE.
 
 	// LAB 3: Your code here.
-	region_alloc(e, (void*)(USTACKTOP - PGSIZE), PGSIZE);//为用户进程分配栈空间
+	region_alloc(e, (void*)(USTACKTOP - PGSIZE), PGSIZE);
 }
 
 //
@@ -397,20 +382,18 @@ load_icode(struct Env *e, uint8_t *binary)
 // before running the first user-mode environment.
 // The new env's parent ID is set to 0.
 //
-//env_create调用env_alloc分配一个新进程
-//并用load_icode读入elf二进制映像
 void
 env_create(uint8_t *binary, enum EnvType type)
 {
 	// LAB 3: Your code here.
 	struct Env *e;
-	int flag = env_alloc(&e, 0);//为e分配一个空闲进程空间，无父进程
-	if(flag != 0) //如果返回值不是0，说明分配失败
+	int flag = env_alloc(&e, 0);
+	if(flag != 0) 
 	{
 		panic("create new env failed!");
 	}
-	load_icode(e, binary); //加载binary
-	e->env_type = type; //标志为用户进程
+	load_icode(e, binary);
+	e->env_type = type; 
 }
 
 //
@@ -505,7 +488,6 @@ env_pop_tf(struct Trapframe *tf)
 //
 // This function does not return.
 //
-//启动一个进程，curenv变成当前启动的进程e
 void
 env_run(struct Env *e)
 {
@@ -527,15 +509,15 @@ env_run(struct Env *e)
 	//	e->env_tf to sensible values.
 
 	// LAB 3: Your code here.
-	if(curenv != NULL && curenv->env_status == ENV_RUNNING)
-	{ //如果当前有进程正在执行，先将它挂起
+	if(curenv != NULL)
+	{
 		curenv->env_status = ENV_RUNNABLE;
 	}
-	curenv = e; //将正在执行的进程变为e
-	e->env_status = ENV_RUNNING; //改变e的状态
-	e->env_runs++; //e的执行次数+1
-	lcr3(PADDR(e->env_pgdir)); //加载进程的线性地址空间
-	env_pop_tf(&e->env_tf); //弹出进程的寄存器结构，开始从进程的eip地址读取指令
+	curenv = e; 
+	e->env_status = ENV_RUNNING; 
+	e->env_runs++; 
+	lcr3(PADDR(e->env_pgdir)); 
+	env_pop_tf(&(e->env_tf));
 	//panic("env_run not yet implemented");
 }
 

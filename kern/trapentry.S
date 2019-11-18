@@ -73,18 +73,14 @@ TRAPHANDLER_NOEC(t_syscall, T_SYSCALL) // 48
 /*
  * Lab 3: Your code here for _alltraps
  */
-/*参考inc/trap.h，将寄存器压栈形成一个Trapframe的结构
- *寄存器tf_ss，tf_esp，tf_eflags，tf_cs，tf_eip，tf_err
- *在中断发生时由CPU压入。只需压栈剩下的寄存器
- */
 _alltraps:
     pushl %ds
     pushl %es
-    pushal //把AX,CX,DX,BX,SP,BP,SI,DI压栈
-	//加载GD_KD到ds和es
+    pushal
     pushl $GD_KD
     popl %ds
     pushl $GD_KD
     popl %es
-    pushl %esp //压入trap()的参数tf，%esp指向Trapframe结构的起始地址
-    call trap  //调用trap
+    pushl %esp 
+    call trap 
+
