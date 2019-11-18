@@ -1536,7 +1536,7 @@ f010095d:	83 ec 08             	sub    $0x8,%esp
 		_panic(file, line, "KADDR called with invalid pa %08lx", pa);
 f0100960:	50                   	push   %eax
 f0100961:	68 68 3e 10 f0       	push   $0xf0103e68
-f0100966:	68 04 03 00 00       	push   $0x304
+f0100966:	68 05 03 00 00       	push   $0x305
 f010096b:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0100970:	e8 16 f7 ff ff       	call   f010008b <_panic>
 
@@ -1596,7 +1596,7 @@ f01009b1:	e9 7f 02 00 00       	jmp    f0100c35 <check_page_free_list+0x295>
 		panic("'page_free_list' is a null pointer!");
 f01009b6:	83 ec 04             	sub    $0x4,%esp
 f01009b9:	68 8c 3e 10 f0       	push   $0xf0103e8c
-f01009be:	68 47 02 00 00       	push   $0x247
+f01009be:	68 48 02 00 00       	push   $0x248
 f01009c3:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01009c8:	e8 be f6 ff ff       	call   f010008b <_panic>
 
@@ -1746,7 +1746,7 @@ f0100aae:	39 ca                	cmp    %ecx,%edx
 f0100ab0:	73 19                	jae    f0100acb <check_page_free_list+0x12b>
 f0100ab2:	68 78 3b 10 f0       	push   $0xf0103b78
 f0100ab7:	68 84 3b 10 f0       	push   $0xf0103b84
-f0100abc:	68 61 02 00 00       	push   $0x261
+f0100abc:	68 62 02 00 00       	push   $0x262
 f0100ac1:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0100ac6:	e8 c0 f5 ff ff       	call   f010008b <_panic>
 		assert(pp < pages + npages);
@@ -1754,7 +1754,7 @@ f0100acb:	39 fa                	cmp    %edi,%edx
 f0100acd:	72 19                	jb     f0100ae8 <check_page_free_list+0x148>
 f0100acf:	68 99 3b 10 f0       	push   $0xf0103b99
 f0100ad4:	68 84 3b 10 f0       	push   $0xf0103b84
-f0100ad9:	68 62 02 00 00       	push   $0x262
+f0100ad9:	68 63 02 00 00       	push   $0x263
 f0100ade:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0100ae3:	e8 a3 f5 ff ff       	call   f010008b <_panic>
 		assert(((char *) pp - (char *) pages) % sizeof(*pp) == 0);
@@ -1764,7 +1764,7 @@ f0100aed:	a8 07                	test   $0x7,%al
 f0100aef:	74 19                	je     f0100b0a <check_page_free_list+0x16a>
 f0100af1:	68 b0 3e 10 f0       	push   $0xf0103eb0
 f0100af6:	68 84 3b 10 f0       	push   $0xf0103b84
-f0100afb:	68 63 02 00 00       	push   $0x263
+f0100afb:	68 64 02 00 00       	push   $0x264
 f0100b00:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0100b05:	e8 81 f5 ff ff       	call   f010008b <_panic>
 void	tlb_invalidate(pde_t *pgdir, void *va);
@@ -1782,7 +1782,7 @@ f0100b10:	85 c0                	test   %eax,%eax
 f0100b12:	75 19                	jne    f0100b2d <check_page_free_list+0x18d>
 f0100b14:	68 ad 3b 10 f0       	push   $0xf0103bad
 f0100b19:	68 84 3b 10 f0       	push   $0xf0103b84
-f0100b1e:	68 66 02 00 00       	push   $0x266
+f0100b1e:	68 67 02 00 00       	push   $0x267
 f0100b23:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0100b28:	e8 5e f5 ff ff       	call   f010008b <_panic>
 		assert(page2pa(pp) != IOPHYSMEM);
@@ -1790,7 +1790,7 @@ f0100b2d:	3d 00 00 0a 00       	cmp    $0xa0000,%eax
 f0100b32:	75 19                	jne    f0100b4d <check_page_free_list+0x1ad>
 f0100b34:	68 be 3b 10 f0       	push   $0xf0103bbe
 f0100b39:	68 84 3b 10 f0       	push   $0xf0103b84
-f0100b3e:	68 67 02 00 00       	push   $0x267
+f0100b3e:	68 68 02 00 00       	push   $0x268
 f0100b43:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0100b48:	e8 3e f5 ff ff       	call   f010008b <_panic>
 		assert(page2pa(pp) != EXTPHYSMEM - PGSIZE);
@@ -1798,7 +1798,7 @@ f0100b4d:	3d 00 f0 0f 00       	cmp    $0xff000,%eax
 f0100b52:	75 19                	jne    f0100b6d <check_page_free_list+0x1cd>
 f0100b54:	68 e4 3e 10 f0       	push   $0xf0103ee4
 f0100b59:	68 84 3b 10 f0       	push   $0xf0103b84
-f0100b5e:	68 68 02 00 00       	push   $0x268
+f0100b5e:	68 69 02 00 00       	push   $0x269
 f0100b63:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0100b68:	e8 1e f5 ff ff       	call   f010008b <_panic>
 		assert(page2pa(pp) != EXTPHYSMEM);
@@ -1806,7 +1806,7 @@ f0100b6d:	3d 00 00 10 00       	cmp    $0x100000,%eax
 f0100b72:	75 19                	jne    f0100b8d <check_page_free_list+0x1ed>
 f0100b74:	68 d7 3b 10 f0       	push   $0xf0103bd7
 f0100b79:	68 84 3b 10 f0       	push   $0xf0103b84
-f0100b7e:	68 69 02 00 00       	push   $0x269
+f0100b7e:	68 6a 02 00 00       	push   $0x26a
 f0100b83:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0100b88:	e8 fe f4 ff ff       	call   f010008b <_panic>
 		assert(page2pa(pp) < EXTPHYSMEM || (char *) page2kva(pp) >= first_free_page);
@@ -1833,7 +1833,7 @@ f0100bb5:	39 45 cc             	cmp    %eax,-0x34(%ebp)
 f0100bb8:	76 1e                	jbe    f0100bd8 <check_page_free_list+0x238>
 f0100bba:	68 08 3f 10 f0       	push   $0xf0103f08
 f0100bbf:	68 84 3b 10 f0       	push   $0xf0103b84
-f0100bc4:	68 6a 02 00 00       	push   $0x26a
+f0100bc4:	68 6b 02 00 00       	push   $0x26b
 f0100bc9:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0100bce:	e8 b8 f4 ff ff       	call   f010008b <_panic>
 
@@ -1864,7 +1864,7 @@ f0100be9:	85 f6                	test   %esi,%esi
 f0100beb:	7f 19                	jg     f0100c06 <check_page_free_list+0x266>
 f0100bed:	68 f1 3b 10 f0       	push   $0xf0103bf1
 f0100bf2:	68 84 3b 10 f0       	push   $0xf0103b84
-f0100bf7:	68 72 02 00 00       	push   $0x272
+f0100bf7:	68 73 02 00 00       	push   $0x273
 f0100bfc:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0100c01:	e8 85 f4 ff ff       	call   f010008b <_panic>
 	assert(nfree_extmem > 0);
@@ -1872,7 +1872,7 @@ f0100c06:	85 db                	test   %ebx,%ebx
 f0100c08:	7f 42                	jg     f0100c4c <check_page_free_list+0x2ac>
 f0100c0a:	68 03 3c 10 f0       	push   $0xf0103c03
 f0100c0f:	68 84 3b 10 f0       	push   $0xf0103b84
-f0100c14:	68 73 02 00 00       	push   $0x273
+f0100c14:	68 74 02 00 00       	push   $0x274
 f0100c19:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0100c1e:	e8 68 f4 ff ff       	call   f010008b <_panic>
 	struct PageInfo *pp;
@@ -2198,10 +2198,10 @@ f0100e3a:	89 e5                	mov    %esp,%ebp
 f0100e3c:	56                   	push   %esi
 f0100e3d:	53                   	push   %ebx
 f0100e3e:	8b 45 0c             	mov    0xc(%ebp),%eax
-	*确定页目录，然后根据中间10位的页表索引在对应的页目录里找到页表
 	*对应的物理地址，最后物理地址加上偏移量便找到了虚拟地址对应的物理地址
 	*pgdir_walk根据pgdir和虚拟地址va获得虚拟地址va所在的页表项的物理地址
 	*/
+// Fill this function in
 	int pd_index = PDX(va); //PDX根据虚拟地址头10位找到页目录索引
     int pte_index = PTX(va);//PTX根据虚拟地址11-20位找到页表索引
 f0100e41:	89 c6                	mov    %eax,%esi
@@ -2231,7 +2231,7 @@ f0100e6f:	77 15                	ja     f0100e86 <pgdir_walk+0x4d>
 		_panic(file, line, "KADDR called with invalid pa %08lx", pa);
 f0100e71:	50                   	push   %eax
 f0100e72:	68 68 3e 10 f0       	push   $0xf0103e68
-f0100e77:	68 94 01 00 00       	push   $0x194
+f0100e77:	68 95 01 00 00       	push   $0x195
 f0100e7c:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0100e81:	e8 05 f2 ff ff       	call   f010008b <_panic>
 		//根据页目录的虚拟地址，加上页表的索引偏移量就得到了va对应的页表项的物理地址
@@ -2282,7 +2282,7 @@ f0100ece:	72 15                	jb     f0100ee5 <pgdir_walk+0xac>
 		_panic(file, line, "KADDR called with invalid pa %08lx", pa);
 f0100ed0:	50                   	push   %eax
 f0100ed1:	68 68 3e 10 f0       	push   $0xf0103e68
-f0100ed6:	68 a1 01 00 00       	push   $0x1a1
+f0100ed6:	68 a2 01 00 00       	push   $0x1a2
 f0100edb:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0100ee0:	e8 a6 f1 ff ff       	call   f010008b <_panic>
 			//最后根据页目录的虚拟地址和页表索引找到va对应的页表项物理地址
@@ -2775,7 +2775,7 @@ f01011ce:	75 17                	jne    f01011e7 <mem_init+0x15a>
 		panic("'pages' is a null pointer!");
 f01011d0:	83 ec 04             	sub    $0x4,%esp
 f01011d3:	68 38 3c 10 f0       	push   $0xf0103c38
-f01011d8:	68 84 02 00 00       	push   $0x284
+f01011d8:	68 85 02 00 00       	push   $0x285
 f01011dd:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01011e2:	e8 a4 ee ff ff       	call   f010008b <_panic>
 
@@ -2809,7 +2809,7 @@ f010120b:	85 c0                	test   %eax,%eax
 f010120d:	75 19                	jne    f0101228 <mem_init+0x19b>
 f010120f:	68 53 3c 10 f0       	push   $0xf0103c53
 f0101214:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101219:	68 8c 02 00 00       	push   $0x28c
+f0101219:	68 8d 02 00 00       	push   $0x28d
 f010121e:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101223:	e8 63 ee ff ff       	call   f010008b <_panic>
 	assert((pp1 = page_alloc(0)));
@@ -2822,7 +2822,7 @@ f0101237:	85 c0                	test   %eax,%eax
 f0101239:	75 19                	jne    f0101254 <mem_init+0x1c7>
 f010123b:	68 69 3c 10 f0       	push   $0xf0103c69
 f0101240:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101245:	68 8d 02 00 00       	push   $0x28d
+f0101245:	68 8e 02 00 00       	push   $0x28e
 f010124a:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010124f:	e8 37 ee ff ff       	call   f010008b <_panic>
 	assert((pp2 = page_alloc(0)));
@@ -2835,7 +2835,7 @@ f0101264:	85 c0                	test   %eax,%eax
 f0101266:	75 19                	jne    f0101281 <mem_init+0x1f4>
 f0101268:	68 7f 3c 10 f0       	push   $0xf0103c7f
 f010126d:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101272:	68 8e 02 00 00       	push   $0x28e
+f0101272:	68 8f 02 00 00       	push   $0x28f
 f0101277:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010127c:	e8 0a ee ff ff       	call   f010008b <_panic>
 
@@ -2845,7 +2845,7 @@ f0101281:	39 f7                	cmp    %esi,%edi
 f0101283:	75 19                	jne    f010129e <mem_init+0x211>
 f0101285:	68 95 3c 10 f0       	push   $0xf0103c95
 f010128a:	68 84 3b 10 f0       	push   $0xf0103b84
-f010128f:	68 91 02 00 00       	push   $0x291
+f010128f:	68 92 02 00 00       	push   $0x292
 f0101294:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101299:	e8 ed ed ff ff       	call   f010008b <_panic>
 	assert(pp2 && pp2 != pp1 && pp2 != pp0);
@@ -2856,7 +2856,7 @@ f01012a5:	39 c7                	cmp    %eax,%edi
 f01012a7:	75 19                	jne    f01012c2 <mem_init+0x235>
 f01012a9:	68 d0 3f 10 f0       	push   $0xf0103fd0
 f01012ae:	68 84 3b 10 f0       	push   $0xf0103b84
-f01012b3:	68 92 02 00 00       	push   $0x292
+f01012b3:	68 93 02 00 00       	push   $0x293
 f01012b8:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01012bd:	e8 c9 ed ff ff       	call   f010008b <_panic>
 void	tlb_invalidate(pde_t *pgdir, void *va);
@@ -2877,7 +2877,7 @@ f01012db:	39 d0                	cmp    %edx,%eax
 f01012dd:	72 19                	jb     f01012f8 <mem_init+0x26b>
 f01012df:	68 a7 3c 10 f0       	push   $0xf0103ca7
 f01012e4:	68 84 3b 10 f0       	push   $0xf0103b84
-f01012e9:	68 93 02 00 00       	push   $0x293
+f01012e9:	68 94 02 00 00       	push   $0x294
 f01012ee:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01012f3:	e8 93 ed ff ff       	call   f010008b <_panic>
 	assert(page2pa(pp1) < npages*PGSIZE);
@@ -2889,7 +2889,7 @@ f0101302:	39 c2                	cmp    %eax,%edx
 f0101304:	77 19                	ja     f010131f <mem_init+0x292>
 f0101306:	68 c4 3c 10 f0       	push   $0xf0103cc4
 f010130b:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101310:	68 94 02 00 00       	push   $0x294
+f0101310:	68 95 02 00 00       	push   $0x295
 f0101315:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010131a:	e8 6c ed ff ff       	call   f010008b <_panic>
 	assert(page2pa(pp2) < npages*PGSIZE);
@@ -2901,7 +2901,7 @@ f010132a:	39 c2                	cmp    %eax,%edx
 f010132c:	77 19                	ja     f0101347 <mem_init+0x2ba>
 f010132e:	68 e1 3c 10 f0       	push   $0xf0103ce1
 f0101333:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101338:	68 95 02 00 00       	push   $0x295
+f0101338:	68 96 02 00 00       	push   $0x296
 f010133d:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101342:	e8 44 ed ff ff       	call   f010008b <_panic>
 
@@ -2923,7 +2923,7 @@ f0101366:	85 c0                	test   %eax,%eax
 f0101368:	74 19                	je     f0101383 <mem_init+0x2f6>
 f010136a:	68 fe 3c 10 f0       	push   $0xf0103cfe
 f010136f:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101374:	68 9c 02 00 00       	push   $0x29c
+f0101374:	68 9d 02 00 00       	push   $0x29d
 f0101379:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010137e:	e8 08 ed ff ff       	call   f010008b <_panic>
 
@@ -2949,7 +2949,7 @@ f01013b0:	85 c0                	test   %eax,%eax
 f01013b2:	75 19                	jne    f01013cd <mem_init+0x340>
 f01013b4:	68 53 3c 10 f0       	push   $0xf0103c53
 f01013b9:	68 84 3b 10 f0       	push   $0xf0103b84
-f01013be:	68 a3 02 00 00       	push   $0x2a3
+f01013be:	68 a4 02 00 00       	push   $0x2a4
 f01013c3:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01013c8:	e8 be ec ff ff       	call   f010008b <_panic>
 	assert((pp1 = page_alloc(0)));
@@ -2962,7 +2962,7 @@ f01013dc:	85 c0                	test   %eax,%eax
 f01013de:	75 19                	jne    f01013f9 <mem_init+0x36c>
 f01013e0:	68 69 3c 10 f0       	push   $0xf0103c69
 f01013e5:	68 84 3b 10 f0       	push   $0xf0103b84
-f01013ea:	68 a4 02 00 00       	push   $0x2a4
+f01013ea:	68 a5 02 00 00       	push   $0x2a5
 f01013ef:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01013f4:	e8 92 ec ff ff       	call   f010008b <_panic>
 	assert((pp2 = page_alloc(0)));
@@ -2975,7 +2975,7 @@ f0101409:	85 c0                	test   %eax,%eax
 f010140b:	75 19                	jne    f0101426 <mem_init+0x399>
 f010140d:	68 7f 3c 10 f0       	push   $0xf0103c7f
 f0101412:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101417:	68 a5 02 00 00       	push   $0x2a5
+f0101417:	68 a6 02 00 00       	push   $0x2a6
 f010141c:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101421:	e8 65 ec ff ff       	call   f010008b <_panic>
 	assert(pp0);
@@ -2984,7 +2984,7 @@ f0101426:	39 fe                	cmp    %edi,%esi
 f0101428:	75 19                	jne    f0101443 <mem_init+0x3b6>
 f010142a:	68 95 3c 10 f0       	push   $0xf0103c95
 f010142f:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101434:	68 a7 02 00 00       	push   $0x2a7
+f0101434:	68 a8 02 00 00       	push   $0x2a8
 f0101439:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010143e:	e8 48 ec ff ff       	call   f010008b <_panic>
 	assert(pp2 && pp2 != pp1 && pp2 != pp0);
@@ -2995,7 +2995,7 @@ f010144a:	39 c6                	cmp    %eax,%esi
 f010144c:	75 19                	jne    f0101467 <mem_init+0x3da>
 f010144e:	68 d0 3f 10 f0       	push   $0xf0103fd0
 f0101453:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101458:	68 a8 02 00 00       	push   $0x2a8
+f0101458:	68 a9 02 00 00       	push   $0x2a9
 f010145d:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101462:	e8 24 ec ff ff       	call   f010008b <_panic>
 	assert(!page_alloc(0));
@@ -3007,7 +3007,7 @@ f0101474:	85 c0                	test   %eax,%eax
 f0101476:	74 19                	je     f0101491 <mem_init+0x404>
 f0101478:	68 fe 3c 10 f0       	push   $0xf0103cfe
 f010147d:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101482:	68 a9 02 00 00       	push   $0x2a9
+f0101482:	68 aa 02 00 00       	push   $0x2aa
 f0101487:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010148c:	e8 fa eb ff ff       	call   f010008b <_panic>
 f0101491:	89 f0                	mov    %esi,%eax
@@ -3050,7 +3050,7 @@ f01014ea:	85 c0                	test   %eax,%eax
 f01014ec:	75 19                	jne    f0101507 <mem_init+0x47a>
 f01014ee:	68 0d 3d 10 f0       	push   $0xf0103d0d
 f01014f3:	68 84 3b 10 f0       	push   $0xf0103b84
-f01014f8:	68 ae 02 00 00       	push   $0x2ae
+f01014f8:	68 af 02 00 00       	push   $0x2af
 f01014fd:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101502:	e8 84 eb ff ff       	call   f010008b <_panic>
 	assert(pp && pp0 == pp);
@@ -3058,7 +3058,7 @@ f0101507:	39 c6                	cmp    %eax,%esi
 f0101509:	74 19                	je     f0101524 <mem_init+0x497>
 f010150b:	68 2b 3d 10 f0       	push   $0xf0103d2b
 f0101510:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101515:	68 af 02 00 00       	push   $0x2af
+f0101515:	68 b0 02 00 00       	push   $0x2b0
 f010151a:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010151f:	e8 67 eb ff ff       	call   f010008b <_panic>
 void	tlb_invalidate(pde_t *pgdir, void *va);
@@ -3097,7 +3097,7 @@ f010155d:	80 38 00             	cmpb   $0x0,(%eax)
 f0101560:	74 19                	je     f010157b <mem_init+0x4ee>
 f0101562:	68 3b 3d 10 f0       	push   $0xf0103d3b
 f0101567:	68 84 3b 10 f0       	push   $0xf0103b84
-f010156c:	68 b2 02 00 00       	push   $0x2b2
+f010156c:	68 b3 02 00 00       	push   $0x2b3
 f0101571:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101576:	e8 10 eb ff ff       	call   f010008b <_panic>
 f010157b:	83 c0 01             	add    $0x1,%eax
@@ -3151,7 +3151,7 @@ f01015b9:	85 db                	test   %ebx,%ebx
 f01015bb:	74 19                	je     f01015d6 <mem_init+0x549>
 f01015bd:	68 45 3d 10 f0       	push   $0xf0103d45
 f01015c2:	68 84 3b 10 f0       	push   $0xf0103b84
-f01015c7:	68 bf 02 00 00       	push   $0x2bf
+f01015c7:	68 c0 02 00 00       	push   $0x2c0
 f01015cc:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01015d1:	e8 b5 ea ff ff       	call   f010008b <_panic>
 
@@ -3173,7 +3173,7 @@ f01015f5:	85 c0                	test   %eax,%eax
 f01015f7:	75 19                	jne    f0101612 <mem_init+0x585>
 f01015f9:	68 53 3c 10 f0       	push   $0xf0103c53
 f01015fe:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101603:	68 18 03 00 00       	push   $0x318
+f0101603:	68 19 03 00 00       	push   $0x319
 f0101608:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010160d:	e8 79 ea ff ff       	call   f010008b <_panic>
 	assert((pp1 = page_alloc(0)));
@@ -3186,7 +3186,7 @@ f0101621:	85 c0                	test   %eax,%eax
 f0101623:	75 19                	jne    f010163e <mem_init+0x5b1>
 f0101625:	68 69 3c 10 f0       	push   $0xf0103c69
 f010162a:	68 84 3b 10 f0       	push   $0xf0103b84
-f010162f:	68 19 03 00 00       	push   $0x319
+f010162f:	68 1a 03 00 00       	push   $0x31a
 f0101634:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101639:	e8 4d ea ff ff       	call   f010008b <_panic>
 	assert((pp2 = page_alloc(0)));
@@ -3199,7 +3199,7 @@ f010164d:	85 c0                	test   %eax,%eax
 f010164f:	75 19                	jne    f010166a <mem_init+0x5dd>
 f0101651:	68 7f 3c 10 f0       	push   $0xf0103c7f
 f0101656:	68 84 3b 10 f0       	push   $0xf0103b84
-f010165b:	68 1a 03 00 00       	push   $0x31a
+f010165b:	68 1b 03 00 00       	push   $0x31b
 f0101660:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101665:	e8 21 ea ff ff       	call   f010008b <_panic>
 
@@ -3209,7 +3209,7 @@ f010166a:	39 5d d4             	cmp    %ebx,-0x2c(%ebp)
 f010166d:	75 19                	jne    f0101688 <mem_init+0x5fb>
 f010166f:	68 95 3c 10 f0       	push   $0xf0103c95
 f0101674:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101679:	68 1d 03 00 00       	push   $0x31d
+f0101679:	68 1e 03 00 00       	push   $0x31e
 f010167e:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101683:	e8 03 ea ff ff       	call   f010008b <_panic>
 	assert(pp2 && pp2 != pp1 && pp2 != pp0);
@@ -3219,7 +3219,7 @@ f010168c:	39 45 d4             	cmp    %eax,-0x2c(%ebp)
 f010168f:	75 19                	jne    f01016aa <mem_init+0x61d>
 f0101691:	68 d0 3f 10 f0       	push   $0xf0103fd0
 f0101696:	68 84 3b 10 f0       	push   $0xf0103b84
-f010169b:	68 1e 03 00 00       	push   $0x31e
+f010169b:	68 1f 03 00 00       	push   $0x31f
 f01016a0:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01016a5:	e8 e1 e9 ff ff       	call   f010008b <_panic>
 
@@ -3241,7 +3241,7 @@ f01016c9:	85 c0                	test   %eax,%eax
 f01016cb:	74 19                	je     f01016e6 <mem_init+0x659>
 f01016cd:	68 fe 3c 10 f0       	push   $0xf0103cfe
 f01016d2:	68 84 3b 10 f0       	push   $0xf0103b84
-f01016d7:	68 25 03 00 00       	push   $0x325
+f01016d7:	68 26 03 00 00       	push   $0x326
 f01016dc:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01016e1:	e8 a5 e9 ff ff       	call   f010008b <_panic>
 
@@ -3258,7 +3258,7 @@ f01016fd:	85 c0                	test   %eax,%eax
 f01016ff:	74 19                	je     f010171a <mem_init+0x68d>
 f0101701:	68 10 40 10 f0       	push   $0xf0104010
 f0101706:	68 84 3b 10 f0       	push   $0xf0103b84
-f010170b:	68 28 03 00 00       	push   $0x328
+f010170b:	68 29 03 00 00       	push   $0x329
 f0101710:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101715:	e8 71 e9 ff ff       	call   f010008b <_panic>
 
@@ -3274,7 +3274,7 @@ f010172d:	85 c0                	test   %eax,%eax
 f010172f:	78 19                	js     f010174a <mem_init+0x6bd>
 f0101731:	68 48 40 10 f0       	push   $0xf0104048
 f0101736:	68 84 3b 10 f0       	push   $0xf0103b84
-f010173b:	68 2b 03 00 00       	push   $0x32b
+f010173b:	68 2c 03 00 00       	push   $0x32c
 f0101740:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101745:	e8 41 e9 ff ff       	call   f010008b <_panic>
 
@@ -3294,7 +3294,7 @@ f0101768:	85 c0                	test   %eax,%eax
 f010176a:	74 19                	je     f0101785 <mem_init+0x6f8>
 f010176c:	68 78 40 10 f0       	push   $0xf0104078
 f0101771:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101776:	68 2f 03 00 00       	push   $0x32f
+f0101776:	68 30 03 00 00       	push   $0x330
 f010177b:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101780:	e8 06 e9 ff ff       	call   f010008b <_panic>
 	assert(PTE_ADDR(kern_pgdir[0]) == page2pa(pp0));
@@ -3318,7 +3318,7 @@ f01017a8:	39 c2                	cmp    %eax,%edx
 f01017aa:	74 19                	je     f01017c5 <mem_init+0x738>
 f01017ac:	68 a8 40 10 f0       	push   $0xf01040a8
 f01017b1:	68 84 3b 10 f0       	push   $0xf0103b84
-f01017b6:	68 30 03 00 00       	push   $0x330
+f01017b6:	68 31 03 00 00       	push   $0x331
 f01017bb:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01017c0:	e8 c6 e8 ff ff       	call   f010008b <_panic>
 	assert(check_va2pa(kern_pgdir, 0x0) == page2pa(pp1));
@@ -3333,7 +3333,7 @@ f01017dc:	39 d0                	cmp    %edx,%eax
 f01017de:	74 19                	je     f01017f9 <mem_init+0x76c>
 f01017e0:	68 d0 40 10 f0       	push   $0xf01040d0
 f01017e5:	68 84 3b 10 f0       	push   $0xf0103b84
-f01017ea:	68 31 03 00 00       	push   $0x331
+f01017ea:	68 32 03 00 00       	push   $0x332
 f01017ef:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01017f4:	e8 92 e8 ff ff       	call   f010008b <_panic>
 	assert(pp1->pp_ref == 1);
@@ -3341,7 +3341,7 @@ f01017f9:	66 83 7b 04 01       	cmpw   $0x1,0x4(%ebx)
 f01017fe:	74 19                	je     f0101819 <mem_init+0x78c>
 f0101800:	68 50 3d 10 f0       	push   $0xf0103d50
 f0101805:	68 84 3b 10 f0       	push   $0xf0103b84
-f010180a:	68 32 03 00 00       	push   $0x332
+f010180a:	68 33 03 00 00       	push   $0x333
 f010180f:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101814:	e8 72 e8 ff ff       	call   f010008b <_panic>
 	assert(pp0->pp_ref == 1);
@@ -3350,7 +3350,7 @@ f010181c:	66 83 78 04 01       	cmpw   $0x1,0x4(%eax)
 f0101821:	74 19                	je     f010183c <mem_init+0x7af>
 f0101823:	68 61 3d 10 f0       	push   $0xf0103d61
 f0101828:	68 84 3b 10 f0       	push   $0xf0103b84
-f010182d:	68 33 03 00 00       	push   $0x333
+f010182d:	68 34 03 00 00       	push   $0x334
 f0101832:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101837:	e8 4f e8 ff ff       	call   f010008b <_panic>
 
@@ -3366,7 +3366,7 @@ f010184d:	85 c0                	test   %eax,%eax
 f010184f:	74 19                	je     f010186a <mem_init+0x7dd>
 f0101851:	68 00 41 10 f0       	push   $0xf0104100
 f0101856:	68 84 3b 10 f0       	push   $0xf0103b84
-f010185b:	68 36 03 00 00       	push   $0x336
+f010185b:	68 37 03 00 00       	push   $0x337
 f0101860:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101865:	e8 21 e8 ff ff       	call   f010008b <_panic>
 	assert(check_va2pa(kern_pgdir, PGSIZE) == page2pa(pp2));
@@ -3381,7 +3381,7 @@ f0101887:	39 d0                	cmp    %edx,%eax
 f0101889:	74 19                	je     f01018a4 <mem_init+0x817>
 f010188b:	68 3c 41 10 f0       	push   $0xf010413c
 f0101890:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101895:	68 37 03 00 00       	push   $0x337
+f0101895:	68 38 03 00 00       	push   $0x338
 f010189a:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010189f:	e8 e7 e7 ff ff       	call   f010008b <_panic>
 	assert(pp2->pp_ref == 1);
@@ -3389,7 +3389,7 @@ f01018a4:	66 83 7e 04 01       	cmpw   $0x1,0x4(%esi)
 f01018a9:	74 19                	je     f01018c4 <mem_init+0x837>
 f01018ab:	68 72 3d 10 f0       	push   $0xf0103d72
 f01018b0:	68 84 3b 10 f0       	push   $0xf0103b84
-f01018b5:	68 38 03 00 00       	push   $0x338
+f01018b5:	68 39 03 00 00       	push   $0x339
 f01018ba:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01018bf:	e8 c7 e7 ff ff       	call   f010008b <_panic>
 
@@ -3403,7 +3403,7 @@ f01018d1:	85 c0                	test   %eax,%eax
 f01018d3:	74 19                	je     f01018ee <mem_init+0x861>
 f01018d5:	68 fe 3c 10 f0       	push   $0xf0103cfe
 f01018da:	68 84 3b 10 f0       	push   $0xf0103b84
-f01018df:	68 3b 03 00 00       	push   $0x33b
+f01018df:	68 3c 03 00 00       	push   $0x33c
 f01018e4:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01018e9:	e8 9d e7 ff ff       	call   f010008b <_panic>
 
@@ -3419,7 +3419,7 @@ f0101904:	85 c0                	test   %eax,%eax
 f0101906:	74 19                	je     f0101921 <mem_init+0x894>
 f0101908:	68 00 41 10 f0       	push   $0xf0104100
 f010190d:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101912:	68 3e 03 00 00       	push   $0x33e
+f0101912:	68 3f 03 00 00       	push   $0x33f
 f0101917:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010191c:	e8 6a e7 ff ff       	call   f010008b <_panic>
 	assert(check_va2pa(kern_pgdir, PGSIZE) == page2pa(pp2));
@@ -3434,7 +3434,7 @@ f010193e:	39 d0                	cmp    %edx,%eax
 f0101940:	74 19                	je     f010195b <mem_init+0x8ce>
 f0101942:	68 3c 41 10 f0       	push   $0xf010413c
 f0101947:	68 84 3b 10 f0       	push   $0xf0103b84
-f010194c:	68 3f 03 00 00       	push   $0x33f
+f010194c:	68 40 03 00 00       	push   $0x340
 f0101951:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101956:	e8 30 e7 ff ff       	call   f010008b <_panic>
 	assert(pp2->pp_ref == 1);
@@ -3442,7 +3442,7 @@ f010195b:	66 83 7e 04 01       	cmpw   $0x1,0x4(%esi)
 f0101960:	74 19                	je     f010197b <mem_init+0x8ee>
 f0101962:	68 72 3d 10 f0       	push   $0xf0103d72
 f0101967:	68 84 3b 10 f0       	push   $0xf0103b84
-f010196c:	68 40 03 00 00       	push   $0x340
+f010196c:	68 41 03 00 00       	push   $0x341
 f0101971:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101976:	e8 10 e7 ff ff       	call   f010008b <_panic>
 
@@ -3457,7 +3457,7 @@ f0101988:	85 c0                	test   %eax,%eax
 f010198a:	74 19                	je     f01019a5 <mem_init+0x918>
 f010198c:	68 fe 3c 10 f0       	push   $0xf0103cfe
 f0101991:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101996:	68 44 03 00 00       	push   $0x344
+f0101996:	68 45 03 00 00       	push   $0x345
 f010199b:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01019a0:	e8 e6 e6 ff ff       	call   f010008b <_panic>
 
@@ -3479,7 +3479,7 @@ f01019bd:	72 15                	jb     f01019d4 <mem_init+0x947>
 		_panic(file, line, "KADDR called with invalid pa %08lx", pa);
 f01019bf:	50                   	push   %eax
 f01019c0:	68 68 3e 10 f0       	push   $0xf0103e68
-f01019c5:	68 47 03 00 00       	push   $0x347
+f01019c5:	68 48 03 00 00       	push   $0x348
 f01019ca:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01019cf:	e8 b7 e6 ff ff       	call   f010008b <_panic>
 f01019d4:	2d 00 00 00 10       	sub    $0x10000000,%eax
@@ -3497,7 +3497,7 @@ f01019f5:	39 d0                	cmp    %edx,%eax
 f01019f7:	74 19                	je     f0101a12 <mem_init+0x985>
 f01019f9:	68 6c 41 10 f0       	push   $0xf010416c
 f01019fe:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101a03:	68 48 03 00 00       	push   $0x348
+f0101a03:	68 49 03 00 00       	push   $0x349
 f0101a08:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101a0d:	e8 79 e6 ff ff       	call   f010008b <_panic>
 
@@ -3513,7 +3513,7 @@ f0101a28:	85 c0                	test   %eax,%eax
 f0101a2a:	74 19                	je     f0101a45 <mem_init+0x9b8>
 f0101a2c:	68 ac 41 10 f0       	push   $0xf01041ac
 f0101a31:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101a36:	68 4b 03 00 00       	push   $0x34b
+f0101a36:	68 4c 03 00 00       	push   $0x34c
 f0101a3b:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101a40:	e8 46 e6 ff ff       	call   f010008b <_panic>
 	assert(check_va2pa(kern_pgdir, PGSIZE) == page2pa(pp2));
@@ -3529,7 +3529,7 @@ f0101a65:	39 d0                	cmp    %edx,%eax
 f0101a67:	74 19                	je     f0101a82 <mem_init+0x9f5>
 f0101a69:	68 3c 41 10 f0       	push   $0xf010413c
 f0101a6e:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101a73:	68 4c 03 00 00       	push   $0x34c
+f0101a73:	68 4d 03 00 00       	push   $0x34d
 f0101a78:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101a7d:	e8 09 e6 ff ff       	call   f010008b <_panic>
 	assert(pp2->pp_ref == 1);
@@ -3537,7 +3537,7 @@ f0101a82:	66 83 7e 04 01       	cmpw   $0x1,0x4(%esi)
 f0101a87:	74 19                	je     f0101aa2 <mem_init+0xa15>
 f0101a89:	68 72 3d 10 f0       	push   $0xf0103d72
 f0101a8e:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101a93:	68 4d 03 00 00       	push   $0x34d
+f0101a93:	68 4e 03 00 00       	push   $0x34e
 f0101a98:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101a9d:	e8 e9 e5 ff ff       	call   f010008b <_panic>
 	assert(*pgdir_walk(kern_pgdir, (void*) PGSIZE, 0) & PTE_U);
@@ -3551,7 +3551,7 @@ f0101ab5:	f6 00 04             	testb  $0x4,(%eax)
 f0101ab8:	75 19                	jne    f0101ad3 <mem_init+0xa46>
 f0101aba:	68 ec 41 10 f0       	push   $0xf01041ec
 f0101abf:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101ac4:	68 4e 03 00 00       	push   $0x34e
+f0101ac4:	68 4f 03 00 00       	push   $0x34f
 f0101ac9:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101ace:	e8 b8 e5 ff ff       	call   f010008b <_panic>
 	assert(kern_pgdir[0] & PTE_U);
@@ -3560,7 +3560,7 @@ f0101ad8:	f6 00 04             	testb  $0x4,(%eax)
 f0101adb:	75 19                	jne    f0101af6 <mem_init+0xa69>
 f0101add:	68 83 3d 10 f0       	push   $0xf0103d83
 f0101ae2:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101ae7:	68 4f 03 00 00       	push   $0x34f
+f0101ae7:	68 50 03 00 00       	push   $0x350
 f0101aec:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101af1:	e8 95 e5 ff ff       	call   f010008b <_panic>
 
@@ -3576,7 +3576,7 @@ f0101b07:	85 c0                	test   %eax,%eax
 f0101b09:	74 19                	je     f0101b24 <mem_init+0xa97>
 f0101b0b:	68 00 41 10 f0       	push   $0xf0104100
 f0101b10:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101b15:	68 52 03 00 00       	push   $0x352
+f0101b15:	68 53 03 00 00       	push   $0x353
 f0101b1a:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101b1f:	e8 67 e5 ff ff       	call   f010008b <_panic>
 	assert(*pgdir_walk(kern_pgdir, (void*) PGSIZE, 0) & PTE_W);
@@ -3590,7 +3590,7 @@ f0101b3c:	f6 00 02             	testb  $0x2,(%eax)
 f0101b3f:	75 19                	jne    f0101b5a <mem_init+0xacd>
 f0101b41:	68 20 42 10 f0       	push   $0xf0104220
 f0101b46:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101b4b:	68 53 03 00 00       	push   $0x353
+f0101b4b:	68 54 03 00 00       	push   $0x354
 f0101b50:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101b55:	e8 31 e5 ff ff       	call   f010008b <_panic>
 	assert(!(*pgdir_walk(kern_pgdir, (void*) PGSIZE, 0) & PTE_U));
@@ -3604,7 +3604,7 @@ f0101b72:	f6 00 04             	testb  $0x4,(%eax)
 f0101b75:	74 19                	je     f0101b90 <mem_init+0xb03>
 f0101b77:	68 54 42 10 f0       	push   $0xf0104254
 f0101b7c:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101b81:	68 54 03 00 00       	push   $0x354
+f0101b81:	68 55 03 00 00       	push   $0x355
 f0101b86:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101b8b:	e8 fb e4 ff ff       	call   f010008b <_panic>
 
@@ -3620,7 +3620,7 @@ f0101ba8:	85 c0                	test   %eax,%eax
 f0101baa:	78 19                	js     f0101bc5 <mem_init+0xb38>
 f0101bac:	68 8c 42 10 f0       	push   $0xf010428c
 f0101bb1:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101bb6:	68 57 03 00 00       	push   $0x357
+f0101bb6:	68 58 03 00 00       	push   $0x358
 f0101bbb:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101bc0:	e8 c6 e4 ff ff       	call   f010008b <_panic>
 
@@ -3636,7 +3636,7 @@ f0101bdb:	85 c0                	test   %eax,%eax
 f0101bdd:	74 19                	je     f0101bf8 <mem_init+0xb6b>
 f0101bdf:	68 c4 42 10 f0       	push   $0xf01042c4
 f0101be4:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101be9:	68 5a 03 00 00       	push   $0x35a
+f0101be9:	68 5b 03 00 00       	push   $0x35b
 f0101bee:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101bf3:	e8 93 e4 ff ff       	call   f010008b <_panic>
 	assert(!(*pgdir_walk(kern_pgdir, (void*) PGSIZE, 0) & PTE_U));
@@ -3650,7 +3650,7 @@ f0101c10:	f6 00 04             	testb  $0x4,(%eax)
 f0101c13:	74 19                	je     f0101c2e <mem_init+0xba1>
 f0101c15:	68 54 42 10 f0       	push   $0xf0104254
 f0101c1a:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101c1f:	68 5b 03 00 00       	push   $0x35b
+f0101c1f:	68 5c 03 00 00       	push   $0x35c
 f0101c24:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101c29:	e8 5d e4 ff ff       	call   f010008b <_panic>
 
@@ -3670,7 +3670,7 @@ f0101c53:	39 c1                	cmp    %eax,%ecx
 f0101c55:	74 19                	je     f0101c70 <mem_init+0xbe3>
 f0101c57:	68 00 43 10 f0       	push   $0xf0104300
 f0101c5c:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101c61:	68 5e 03 00 00       	push   $0x35e
+f0101c61:	68 5f 03 00 00       	push   $0x35f
 f0101c66:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101c6b:	e8 1b e4 ff ff       	call   f010008b <_panic>
 	assert(check_va2pa(kern_pgdir, PGSIZE) == page2pa(pp1));
@@ -3681,7 +3681,7 @@ f0101c7c:	39 45 c8             	cmp    %eax,-0x38(%ebp)
 f0101c7f:	74 19                	je     f0101c9a <mem_init+0xc0d>
 f0101c81:	68 2c 43 10 f0       	push   $0xf010432c
 f0101c86:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101c8b:	68 5f 03 00 00       	push   $0x35f
+f0101c8b:	68 60 03 00 00       	push   $0x360
 f0101c90:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101c95:	e8 f1 e3 ff ff       	call   f010008b <_panic>
 	// ... and ref counts should reflect this
@@ -3690,7 +3690,7 @@ f0101c9a:	66 83 7b 04 02       	cmpw   $0x2,0x4(%ebx)
 f0101c9f:	74 19                	je     f0101cba <mem_init+0xc2d>
 f0101ca1:	68 99 3d 10 f0       	push   $0xf0103d99
 f0101ca6:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101cab:	68 61 03 00 00       	push   $0x361
+f0101cab:	68 62 03 00 00       	push   $0x362
 f0101cb0:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101cb5:	e8 d1 e3 ff ff       	call   f010008b <_panic>
 	assert(pp2->pp_ref == 0);
@@ -3698,7 +3698,7 @@ f0101cba:	66 83 7e 04 00       	cmpw   $0x0,0x4(%esi)
 f0101cbf:	74 19                	je     f0101cda <mem_init+0xc4d>
 f0101cc1:	68 aa 3d 10 f0       	push   $0xf0103daa
 f0101cc6:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101ccb:	68 62 03 00 00       	push   $0x362
+f0101ccb:	68 63 03 00 00       	push   $0x363
 f0101cd0:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101cd5:	e8 b1 e3 ff ff       	call   f010008b <_panic>
 
@@ -3714,7 +3714,7 @@ f0101ceb:	39 c6                	cmp    %eax,%esi
 f0101ced:	74 19                	je     f0101d08 <mem_init+0xc7b>
 f0101cef:	68 5c 43 10 f0       	push   $0xf010435c
 f0101cf4:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101cf9:	68 65 03 00 00       	push   $0x365
+f0101cf9:	68 66 03 00 00       	push   $0x366
 f0101cfe:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101d03:	e8 83 e3 ff ff       	call   f010008b <_panic>
 
@@ -3734,7 +3734,7 @@ f0101d2d:	83 f8 ff             	cmp    $0xffffffff,%eax
 f0101d30:	74 19                	je     f0101d4b <mem_init+0xcbe>
 f0101d32:	68 80 43 10 f0       	push   $0xf0104380
 f0101d37:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101d3c:	68 69 03 00 00       	push   $0x369
+f0101d3c:	68 6a 03 00 00       	push   $0x36a
 f0101d41:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101d46:	e8 40 e3 ff ff       	call   f010008b <_panic>
 	assert(check_va2pa(kern_pgdir, PGSIZE) == page2pa(pp1));
@@ -3749,7 +3749,7 @@ f0101d65:	39 d0                	cmp    %edx,%eax
 f0101d67:	74 19                	je     f0101d82 <mem_init+0xcf5>
 f0101d69:	68 2c 43 10 f0       	push   $0xf010432c
 f0101d6e:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101d73:	68 6a 03 00 00       	push   $0x36a
+f0101d73:	68 6b 03 00 00       	push   $0x36b
 f0101d78:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101d7d:	e8 09 e3 ff ff       	call   f010008b <_panic>
 	assert(pp1->pp_ref == 1);
@@ -3757,7 +3757,7 @@ f0101d82:	66 83 7b 04 01       	cmpw   $0x1,0x4(%ebx)
 f0101d87:	74 19                	je     f0101da2 <mem_init+0xd15>
 f0101d89:	68 50 3d 10 f0       	push   $0xf0103d50
 f0101d8e:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101d93:	68 6b 03 00 00       	push   $0x36b
+f0101d93:	68 6c 03 00 00       	push   $0x36c
 f0101d98:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101d9d:	e8 e9 e2 ff ff       	call   f010008b <_panic>
 	assert(pp2->pp_ref == 0);
@@ -3765,7 +3765,7 @@ f0101da2:	66 83 7e 04 00       	cmpw   $0x0,0x4(%esi)
 f0101da7:	74 19                	je     f0101dc2 <mem_init+0xd35>
 f0101da9:	68 aa 3d 10 f0       	push   $0xf0103daa
 f0101dae:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101db3:	68 6c 03 00 00       	push   $0x36c
+f0101db3:	68 6d 03 00 00       	push   $0x36d
 f0101db8:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101dbd:	e8 c9 e2 ff ff       	call   f010008b <_panic>
 
@@ -3781,7 +3781,7 @@ f0101dd3:	85 c0                	test   %eax,%eax
 f0101dd5:	74 19                	je     f0101df0 <mem_init+0xd63>
 f0101dd7:	68 a4 43 10 f0       	push   $0xf01043a4
 f0101ddc:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101de1:	68 6f 03 00 00       	push   $0x36f
+f0101de1:	68 70 03 00 00       	push   $0x370
 f0101de6:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101deb:	e8 9b e2 ff ff       	call   f010008b <_panic>
 	assert(pp1->pp_ref);
@@ -3789,7 +3789,7 @@ f0101df0:	66 83 7b 04 00       	cmpw   $0x0,0x4(%ebx)
 f0101df5:	75 19                	jne    f0101e10 <mem_init+0xd83>
 f0101df7:	68 bb 3d 10 f0       	push   $0xf0103dbb
 f0101dfc:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101e01:	68 70 03 00 00       	push   $0x370
+f0101e01:	68 71 03 00 00       	push   $0x371
 f0101e06:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101e0b:	e8 7b e2 ff ff       	call   f010008b <_panic>
 	assert(pp1->pp_link == NULL);
@@ -3797,7 +3797,7 @@ f0101e10:	83 3b 00             	cmpl   $0x0,(%ebx)
 f0101e13:	74 19                	je     f0101e2e <mem_init+0xda1>
 f0101e15:	68 c7 3d 10 f0       	push   $0xf0103dc7
 f0101e1a:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101e1f:	68 71 03 00 00       	push   $0x371
+f0101e1f:	68 72 03 00 00       	push   $0x372
 f0101e24:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101e29:	e8 5d e2 ff ff       	call   f010008b <_panic>
 
@@ -3817,7 +3817,7 @@ f0101e56:	83 f8 ff             	cmp    $0xffffffff,%eax
 f0101e59:	74 19                	je     f0101e74 <mem_init+0xde7>
 f0101e5b:	68 80 43 10 f0       	push   $0xf0104380
 f0101e60:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101e65:	68 75 03 00 00       	push   $0x375
+f0101e65:	68 76 03 00 00       	push   $0x376
 f0101e6a:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101e6f:	e8 17 e2 ff ff       	call   f010008b <_panic>
 	assert(check_va2pa(kern_pgdir, PGSIZE) == ~0);
@@ -3828,7 +3828,7 @@ f0101e80:	83 f8 ff             	cmp    $0xffffffff,%eax
 f0101e83:	74 19                	je     f0101e9e <mem_init+0xe11>
 f0101e85:	68 dc 43 10 f0       	push   $0xf01043dc
 f0101e8a:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101e8f:	68 76 03 00 00       	push   $0x376
+f0101e8f:	68 77 03 00 00       	push   $0x377
 f0101e94:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101e99:	e8 ed e1 ff ff       	call   f010008b <_panic>
 	assert(pp1->pp_ref == 0);
@@ -3836,7 +3836,7 @@ f0101e9e:	66 83 7b 04 00       	cmpw   $0x0,0x4(%ebx)
 f0101ea3:	74 19                	je     f0101ebe <mem_init+0xe31>
 f0101ea5:	68 dc 3d 10 f0       	push   $0xf0103ddc
 f0101eaa:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101eaf:	68 77 03 00 00       	push   $0x377
+f0101eaf:	68 78 03 00 00       	push   $0x378
 f0101eb4:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101eb9:	e8 cd e1 ff ff       	call   f010008b <_panic>
 	assert(pp2->pp_ref == 0);
@@ -3844,7 +3844,7 @@ f0101ebe:	66 83 7e 04 00       	cmpw   $0x0,0x4(%esi)
 f0101ec3:	74 19                	je     f0101ede <mem_init+0xe51>
 f0101ec5:	68 aa 3d 10 f0       	push   $0xf0103daa
 f0101eca:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101ecf:	68 78 03 00 00       	push   $0x378
+f0101ecf:	68 79 03 00 00       	push   $0x379
 f0101ed4:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101ed9:	e8 ad e1 ff ff       	call   f010008b <_panic>
 
@@ -3860,7 +3860,7 @@ f0101eef:	85 c0                	test   %eax,%eax
 f0101ef1:	75 19                	jne    f0101f0c <mem_init+0xe7f>
 f0101ef3:	68 04 44 10 f0       	push   $0xf0104404
 f0101ef8:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101efd:	68 7b 03 00 00       	push   $0x37b
+f0101efd:	68 7c 03 00 00       	push   $0x37c
 f0101f02:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101f07:	e8 7f e1 ff ff       	call   f010008b <_panic>
 
@@ -3874,7 +3874,7 @@ f0101f19:	85 c0                	test   %eax,%eax
 f0101f1b:	74 19                	je     f0101f36 <mem_init+0xea9>
 f0101f1d:	68 fe 3c 10 f0       	push   $0xf0103cfe
 f0101f22:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101f27:	68 7e 03 00 00       	push   $0x37e
+f0101f27:	68 7f 03 00 00       	push   $0x37f
 f0101f2c:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101f31:	e8 55 e1 ff ff       	call   f010008b <_panic>
 
@@ -3891,7 +3891,7 @@ f0101f53:	39 c2                	cmp    %eax,%edx
 f0101f55:	74 19                	je     f0101f70 <mem_init+0xee3>
 f0101f57:	68 a8 40 10 f0       	push   $0xf01040a8
 f0101f5c:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101f61:	68 81 03 00 00       	push   $0x381
+f0101f61:	68 82 03 00 00       	push   $0x382
 f0101f66:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101f6b:	e8 1b e1 ff ff       	call   f010008b <_panic>
 	kern_pgdir[0] = 0;
@@ -3902,7 +3902,7 @@ f0101f79:	66 83 78 04 01       	cmpw   $0x1,0x4(%eax)
 f0101f7e:	74 19                	je     f0101f99 <mem_init+0xf0c>
 f0101f80:	68 61 3d 10 f0       	push   $0xf0103d61
 f0101f85:	68 84 3b 10 f0       	push   $0xf0103b84
-f0101f8a:	68 83 03 00 00       	push   $0x383
+f0101f8a:	68 84 03 00 00       	push   $0x384
 f0101f8f:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101f94:	e8 f2 e0 ff ff       	call   f010008b <_panic>
 	pp0->pp_ref = 0;
@@ -3942,7 +3942,7 @@ f0101fe5:	72 15                	jb     f0101ffc <mem_init+0xf6f>
 		_panic(file, line, "KADDR called with invalid pa %08lx", pa);
 f0101fe7:	52                   	push   %edx
 f0101fe8:	68 68 3e 10 f0       	push   $0xf0103e68
-f0101fed:	68 8a 03 00 00       	push   $0x38a
+f0101fed:	68 8b 03 00 00       	push   $0x38b
 f0101ff2:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0101ff7:	e8 8f e0 ff ff       	call   f010008b <_panic>
 	assert(ptep == ptep1 + PTX(va));
@@ -3951,7 +3951,7 @@ f0102002:	39 55 c8             	cmp    %edx,-0x38(%ebp)
 f0102005:	74 19                	je     f0102020 <mem_init+0xf93>
 f0102007:	68 ed 3d 10 f0       	push   $0xf0103ded
 f010200c:	68 84 3b 10 f0       	push   $0xf0103b84
-f0102011:	68 8b 03 00 00       	push   $0x38b
+f0102011:	68 8c 03 00 00       	push   $0x38c
 f0102016:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010201b:	e8 6b e0 ff ff       	call   f010008b <_panic>
 	kern_pgdir[PDX(va)] = 0;
@@ -4041,7 +4041,7 @@ f01020cb:	f6 00 01             	testb  $0x1,(%eax)
 f01020ce:	74 19                	je     f01020e9 <mem_init+0x105c>
 f01020d0:	68 05 3e 10 f0       	push   $0xf0103e05
 f01020d5:	68 84 3b 10 f0       	push   $0xf0103b84
-f01020da:	68 95 03 00 00       	push   $0x395
+f01020da:	68 96 03 00 00       	push   $0x396
 f01020df:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01020e4:	e8 a2 df ff ff       	call   f010008b <_panic>
 f01020e9:	83 c0 04             	add    $0x4,%eax
@@ -4196,7 +4196,7 @@ f0102214:	77 15                	ja     f010222b <mem_init+0x119e>
 		_panic(file, line, "PADDR called with invalid kva %08lx", kva);
 f0102216:	57                   	push   %edi
 f0102217:	68 ac 3f 10 f0       	push   $0xf0103fac
-f010221c:	68 d7 02 00 00       	push   $0x2d7
+f010221c:	68 d8 02 00 00       	push   $0x2d8
 f0102221:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0102226:	e8 60 de ff ff       	call   f010008b <_panic>
 f010222b:	8d 94 1f 00 00 00 10 	lea    0x10000000(%edi,%ebx,1),%edx
@@ -4204,7 +4204,7 @@ f0102232:	39 c2                	cmp    %eax,%edx
 f0102234:	74 19                	je     f010224f <mem_init+0x11c2>
 f0102236:	68 28 44 10 f0       	push   $0xf0104428
 f010223b:	68 84 3b 10 f0       	push   $0xf0103b84
-f0102240:	68 d7 02 00 00       	push   $0x2d7
+f0102240:	68 d8 02 00 00       	push   $0x2d8
 f0102245:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010224a:	e8 3c de ff ff       	call   f010008b <_panic>
 
@@ -4233,7 +4233,7 @@ f0102274:	39 c3                	cmp    %eax,%ebx
 f0102276:	74 19                	je     f0102291 <mem_init+0x1204>
 f0102278:	68 5c 44 10 f0       	push   $0xf010445c
 f010227d:	68 84 3b 10 f0       	push   $0xf0103b84
-f0102282:	68 dc 02 00 00       	push   $0x2dc
+f0102282:	68 dd 02 00 00       	push   $0x2dd
 f0102287:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010228c:	e8 fa dd ff ff       	call   f010008b <_panic>
 	for (i = 0; i < n; i += PGSIZE)
@@ -4259,7 +4259,7 @@ f01022af:	39 c2                	cmp    %eax,%edx
 f01022b1:	74 19                	je     f01022cc <mem_init+0x123f>
 f01022b3:	68 84 44 10 f0       	push   $0xf0104484
 f01022b8:	68 84 3b 10 f0       	push   $0xf0103b84
-f01022bd:	68 e0 02 00 00       	push   $0x2e0
+f01022bd:	68 e1 02 00 00       	push   $0x2e1
 f01022c2:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01022c7:	e8 bf dd ff ff       	call   f010008b <_panic>
 f01022cc:	81 c3 00 10 00 00    	add    $0x1000,%ebx
@@ -4280,7 +4280,7 @@ f01022e6:	83 f8 ff             	cmp    $0xffffffff,%eax
 f01022e9:	74 51                	je     f010233c <mem_init+0x12af>
 f01022eb:	68 cc 44 10 f0       	push   $0xf01044cc
 f01022f0:	68 84 3b 10 f0       	push   $0xf0103b84
-f01022f5:	68 e1 02 00 00       	push   $0x2e1
+f01022f5:	68 e2 02 00 00       	push   $0x2e2
 f01022fa:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01022ff:	e8 87 dd ff ff       	call   f010008b <_panic>
 
@@ -4301,7 +4301,7 @@ f0102319:	f6 04 86 01          	testb  $0x1,(%esi,%eax,4)
 f010231d:	0f 85 83 00 00 00    	jne    f01023a6 <mem_init+0x1319>
 f0102323:	68 35 3e 10 f0       	push   $0xf0103e35
 f0102328:	68 84 3b 10 f0       	push   $0xf0103b84
-f010232d:	68 e9 02 00 00       	push   $0x2e9
+f010232d:	68 ea 02 00 00       	push   $0x2ea
 f0102332:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0102337:	e8 4f dd ff ff       	call   f010008b <_panic>
 		assert(check_va2pa(pgdir, KERNBASE + i) == i);
@@ -4325,7 +4325,7 @@ f010234b:	f6 c2 01             	test   $0x1,%dl
 f010234e:	75 19                	jne    f0102369 <mem_init+0x12dc>
 f0102350:	68 35 3e 10 f0       	push   $0xf0103e35
 f0102355:	68 84 3b 10 f0       	push   $0xf0103b84
-f010235a:	68 ed 02 00 00       	push   $0x2ed
+f010235a:	68 ee 02 00 00       	push   $0x2ee
 f010235f:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0102364:	e8 22 dd ff ff       	call   f010008b <_panic>
 				assert(pgdir[i] & PTE_W);
@@ -4333,7 +4333,7 @@ f0102369:	f6 c2 02             	test   $0x2,%dl
 f010236c:	75 38                	jne    f01023a6 <mem_init+0x1319>
 f010236e:	68 46 3e 10 f0       	push   $0xf0103e46
 f0102373:	68 84 3b 10 f0       	push   $0xf0103b84
-f0102378:	68 ee 02 00 00       	push   $0x2ee
+f0102378:	68 ef 02 00 00       	push   $0x2ef
 f010237d:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0102382:	e8 04 dd ff ff       	call   f010008b <_panic>
 			} else
@@ -4342,7 +4342,7 @@ f0102387:	83 3c 86 00          	cmpl   $0x0,(%esi,%eax,4)
 f010238b:	74 19                	je     f01023a6 <mem_init+0x1319>
 f010238d:	68 57 3e 10 f0       	push   $0xf0103e57
 f0102392:	68 84 3b 10 f0       	push   $0xf0103b84
-f0102397:	68 f0 02 00 00       	push   $0x2f0
+f0102397:	68 f1 02 00 00       	push   $0x2f1
 f010239c:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01023a1:	e8 e5 dc ff ff       	call   f010008b <_panic>
 	for (i = 0; i < KSTKSIZE; i += PGSIZE)
@@ -4428,7 +4428,7 @@ f0102414:	85 c0                	test   %eax,%eax
 f0102416:	75 19                	jne    f0102431 <mem_init+0x13a4>
 f0102418:	68 53 3c 10 f0       	push   $0xf0103c53
 f010241d:	68 84 3b 10 f0       	push   $0xf0103b84
-f0102422:	68 b0 03 00 00       	push   $0x3b0
+f0102422:	68 b1 03 00 00       	push   $0x3b1
 f0102427:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010242c:	e8 5a dc ff ff       	call   f010008b <_panic>
 	assert((pp1 = page_alloc(0)));
@@ -4441,7 +4441,7 @@ f0102440:	85 c0                	test   %eax,%eax
 f0102442:	75 19                	jne    f010245d <mem_init+0x13d0>
 f0102444:	68 69 3c 10 f0       	push   $0xf0103c69
 f0102449:	68 84 3b 10 f0       	push   $0xf0103b84
-f010244e:	68 b1 03 00 00       	push   $0x3b1
+f010244e:	68 b2 03 00 00       	push   $0x3b2
 f0102453:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0102458:	e8 2e dc ff ff       	call   f010008b <_panic>
 	assert((pp2 = page_alloc(0)));
@@ -4454,7 +4454,7 @@ f010246c:	85 c0                	test   %eax,%eax
 f010246e:	75 19                	jne    f0102489 <mem_init+0x13fc>
 f0102470:	68 7f 3c 10 f0       	push   $0xf0103c7f
 f0102475:	68 84 3b 10 f0       	push   $0xf0103b84
-f010247a:	68 b2 03 00 00       	push   $0x3b2
+f010247a:	68 b3 03 00 00       	push   $0x3b3
 f010247f:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0102484:	e8 02 dc ff ff       	call   f010008b <_panic>
 	page_free(pp0);
@@ -4541,7 +4541,7 @@ f0102532:	66 83 7f 04 01       	cmpw   $0x1,0x4(%edi)
 f0102537:	74 19                	je     f0102552 <mem_init+0x14c5>
 f0102539:	68 50 3d 10 f0       	push   $0xf0103d50
 f010253e:	68 84 3b 10 f0       	push   $0xf0103b84
-f0102543:	68 b7 03 00 00       	push   $0x3b7
+f0102543:	68 b8 03 00 00       	push   $0x3b8
 f0102548:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010254d:	e8 39 db ff ff       	call   f010008b <_panic>
 	assert(*(uint32_t *)PGSIZE == 0x01010101U);
@@ -4550,7 +4550,7 @@ f0102559:	01 01 01
 f010255c:	74 19                	je     f0102577 <mem_init+0x14ea>
 f010255e:	68 1c 45 10 f0       	push   $0xf010451c
 f0102563:	68 84 3b 10 f0       	push   $0xf0103b84
-f0102568:	68 b8 03 00 00       	push   $0x3b8
+f0102568:	68 b9 03 00 00       	push   $0x3b9
 f010256d:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0102572:	e8 14 db ff ff       	call   f010008b <_panic>
 	page_insert(kern_pgdir, pp2, (void*) PGSIZE, PTE_W);
@@ -4566,7 +4566,7 @@ f0102594:	02 02 02
 f0102597:	74 19                	je     f01025b2 <mem_init+0x1525>
 f0102599:	68 40 45 10 f0       	push   $0xf0104540
 f010259e:	68 84 3b 10 f0       	push   $0xf0103b84
-f01025a3:	68 ba 03 00 00       	push   $0x3ba
+f01025a3:	68 bb 03 00 00       	push   $0x3bb
 f01025a8:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01025ad:	e8 d9 da ff ff       	call   f010008b <_panic>
 	assert(pp2->pp_ref == 1);
@@ -4574,7 +4574,7 @@ f01025b2:	66 83 7e 04 01       	cmpw   $0x1,0x4(%esi)
 f01025b7:	74 19                	je     f01025d2 <mem_init+0x1545>
 f01025b9:	68 72 3d 10 f0       	push   $0xf0103d72
 f01025be:	68 84 3b 10 f0       	push   $0xf0103b84
-f01025c3:	68 bb 03 00 00       	push   $0x3bb
+f01025c3:	68 bc 03 00 00       	push   $0x3bc
 f01025c8:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01025cd:	e8 b9 da ff ff       	call   f010008b <_panic>
 	assert(pp1->pp_ref == 0);
@@ -4582,7 +4582,7 @@ f01025d2:	66 83 7f 04 00       	cmpw   $0x0,0x4(%edi)
 f01025d7:	74 19                	je     f01025f2 <mem_init+0x1565>
 f01025d9:	68 dc 3d 10 f0       	push   $0xf0103ddc
 f01025de:	68 84 3b 10 f0       	push   $0xf0103b84
-f01025e3:	68 bc 03 00 00       	push   $0x3bc
+f01025e3:	68 bd 03 00 00       	push   $0x3bd
 f01025e8:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01025ed:	e8 99 da ff ff       	call   f010008b <_panic>
 	*(uint32_t *)PGSIZE = 0x03030303U;
@@ -4620,7 +4620,7 @@ f0102630:	03 03 03
 f0102633:	74 19                	je     f010264e <mem_init+0x15c1>
 f0102635:	68 64 45 10 f0       	push   $0xf0104564
 f010263a:	68 84 3b 10 f0       	push   $0xf0103b84
-f010263f:	68 be 03 00 00       	push   $0x3be
+f010263f:	68 bf 03 00 00       	push   $0x3bf
 f0102644:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f0102649:	e8 3d da ff ff       	call   f010008b <_panic>
 	page_remove(kern_pgdir, (void*) PGSIZE);
@@ -4634,7 +4634,7 @@ f0102664:	66 83 7e 04 00       	cmpw   $0x0,0x4(%esi)
 f0102669:	74 19                	je     f0102684 <mem_init+0x15f7>
 f010266b:	68 aa 3d 10 f0       	push   $0xf0103daa
 f0102670:	68 84 3b 10 f0       	push   $0xf0103b84
-f0102675:	68 c0 03 00 00       	push   $0x3c0
+f0102675:	68 c1 03 00 00       	push   $0x3c1
 f010267a:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f010267f:	e8 07 da ff ff       	call   f010008b <_panic>
 
@@ -4651,7 +4651,7 @@ f01026a0:	39 c2                	cmp    %eax,%edx
 f01026a2:	74 19                	je     f01026bd <mem_init+0x1630>
 f01026a4:	68 a8 40 10 f0       	push   $0xf01040a8
 f01026a9:	68 84 3b 10 f0       	push   $0xf0103b84
-f01026ae:	68 c3 03 00 00       	push   $0x3c3
+f01026ae:	68 c4 03 00 00       	push   $0x3c4
 f01026b3:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01026b8:	e8 ce d9 ff ff       	call   f010008b <_panic>
 	kern_pgdir[0] = 0;
@@ -4661,7 +4661,7 @@ f01026c3:	66 83 7b 04 01       	cmpw   $0x1,0x4(%ebx)
 f01026c8:	74 19                	je     f01026e3 <mem_init+0x1656>
 f01026ca:	68 61 3d 10 f0       	push   $0xf0103d61
 f01026cf:	68 84 3b 10 f0       	push   $0xf0103b84
-f01026d4:	68 c5 03 00 00       	push   $0x3c5
+f01026d4:	68 c6 03 00 00       	push   $0x3c6
 f01026d9:	68 5e 3b 10 f0       	push   $0xf0103b5e
 f01026de:	e8 a8 d9 ff ff       	call   f010008b <_panic>
 	pp0->pp_ref = 0;
